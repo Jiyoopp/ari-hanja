@@ -1,0 +1,1887 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>아리 한자 카드</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="아리 한자 카드" />
+    <meta name="application-name" content="아리 한자 카드" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&family=Noto+Serif+KR:wght@500&display=swap"
+    />
+    <style>
+/* Hark's design tokens and component styles. Each component's rules follow its @component comment. style-gates: data */
+
+/* @component foundations */
+:root {
+  color-scheme: light dark;
+
+  --text-primary: light-dark(#1d1d1f, #f5f5f7);         /* body text */
+  --text-secondary: light-dark(#636366, #a1a1a6);       /* supporting grey text */
+  --text-tertiary: light-dark(#1d1d1f4d, #f5f5f74d);    /* hollow dots, faint marks; never body text */
+  --text-primary-on: light-dark(#f5f5f7, #1d1d1f);      /* text on --fill-primary */
+  --text-secondary-on: light-dark(#aeaeb2, #5c5c60);    /* grey text on --fill-primary */
+  --fill-primary: light-dark(#1d1d1f, #f5f5f7);         /* the strong fill: solid chips, the nav, the badge */
+  --fill-primary-on: light-dark(#f5f5f7, #1d1d1f);      /* the page background */
+  --fill-secondary: light-dark(#1d1d1f80, #f5f5f780);
+  --fill-tertiary: light-dark(#e8e8ea, #2a2a2d);        /* the grey card, panel and row tint */
+  --fill-segment: light-dark(#3a3a3c, #e2e2e4);         /* the nav's tab track */
+  --fill-system-green: #00a665;                         /* status: done, ready */
+  --fill-system-orange: #ff4d00;                        /* status: now, current */
+  --fill-system-red: light-dark(#da2f35, #f1555b);      /* status: blocked, error */
+  --transparent-primary: light-dark(#1d1d1f4d, #f5f5f74d);
+  --stroke-primary: light-dark(#1d1d1f24, #f5f5f724);   /* strong hairline */
+  --stroke-secondary: light-dark(#1d1d1f12, #f5f5f712); /* faint hairline between rows */
+  --stroke-primary-on: light-dark(#f5f5f71a, #1d1d1f1a);
+  --stroke-composer: light-dark(#f5f5f780, #1d1d1f80);  /* the callout's glass edge */
+  --stroke-system-orange: #ff4d0026;
+  --hover-wash: light-dark(#1d1d1f0d, #f5f5f70d);
+  --hover-wash-primary-on: light-dark(#f9f9fa26, #1d1d1f14);
+
+  /* The hero is light text over a dark photo in both themes. */
+  --hero-surface: #161f39;
+  --hero-text: #f5f5f7;
+  --hero-text-muted: #f5f5f7cc;
+  --hero-scrim-strong: rgb(22 31 57 / 0.78);
+  --hero-scrim-soft: rgb(22 31 57 / 0.3);
+  --hero-scrim-side: rgb(22 31 57 / 0.45);
+  --hero-glass: rgb(22 31 57 / 0.42);
+  --hero-glass-faint: rgb(22 31 57 / 0.35);
+  --hero-glass-stroke: rgb(245 245 247 / 0.28);
+
+  --mat-regular: light-dark(rgb(255 255 255 / 0.56), rgb(29 29 31 / 0.55));
+  --mat-thin: light-dark(rgb(255 255 255 / 0.22), rgb(29 29 31 / 0.4));
+  --mat-agent: light-dark(rgb(255 255 255 / 0.84), rgb(29 29 31 / 0.66));
+  --mat-inverse: color-mix(in srgb, var(--fill-primary) 86%, transparent);  /* the nav: dark on light, light on dark */
+  --hark-blur: blur(50px) saturate(1.6);
+  --hark-shadow: 0 8px 40px #1d1d1f1f;
+
+  --sans: "GT Standard", "GT Standard L", "Geist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --lh: 1.3;                                            /* every text style is 130% */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 600;
+  --size-caption: 12px;                                 /* the smallest text allowed */
+  --size-meta: 13px;
+  --size-small: 14px;
+  --size-body: 15px;
+  --size-prose: 16px;
+  --size-heading: 20px;
+  --size-figure: clamp(24px, 3vw, 32px);
+  --size-title: clamp(26px, 3vw, 32px);
+  --size-display: clamp(34px, 5vw, 48px);
+  --size-lede: clamp(16px, 1.7vw, 20px);
+
+  --type-caption: var(--weight-regular) var(--size-caption)/var(--lh) var(--sans);
+  --type-tag: var(--weight-medium) var(--size-caption)/var(--lh) var(--sans);
+  --type-small: var(--weight-regular) var(--size-small)/var(--lh) var(--sans);
+  --type-label: var(--weight-medium) var(--size-small)/var(--lh) var(--sans);
+  --type-body: var(--weight-regular) var(--size-body)/var(--lh) var(--sans);
+  --type-body-strong: var(--weight-medium) var(--size-body)/var(--lh) var(--sans);
+  --type-heading: var(--weight-medium) var(--size-heading)/var(--lh) var(--sans);
+  --type-lede: var(--weight-medium) var(--size-lede)/var(--lh) var(--sans);
+  --type-figure: var(--weight-regular) var(--size-figure)/var(--lh) var(--sans);
+  --type-title: var(--weight-regular) var(--size-title)/var(--lh) var(--sans);
+  --type-display: var(--weight-medium) var(--size-display)/var(--lh) var(--sans);
+  --type-numeral: var(--weight-regular) 48px/1 var(--sans);
+
+  --r-s: 12px;
+  --r-m: 16px;
+  --r-l: 24px;
+  --r-xl: 32px;
+  --r-pill: 100px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-quick: 160ms;
+  --dur-draw: 1400ms;
+
+  --page-max: 1120px;
+  --gutter: clamp(16px, 3vw, 32px);                     /* the page's side padding */
+  --tap: 44px;                                          /* the smallest touch target */
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--fill-primary-on);
+  color: var(--text-primary);
+  font: var(--type-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+figure { margin-inline: 0; }
+a { color: inherit; }
+b, strong { font-weight: var(--weight-bold); }
+p { margin: 0; text-wrap: pretty; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+small { font-size: max(var(--size-caption), 0.85em); }
+.sub { color: var(--text-secondary); }
+
+:focus-visible { outline: 2px solid var(--fill-primary); outline-offset: 3px; border-radius: 6px; }
+
+/* @component page */
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  padding-block: 12px 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; min-width: 0; }
+
+.glass {
+  background: var(--mat-inverse);
+  -webkit-backdrop-filter: var(--hark-blur);
+  backdrop-filter: var(--hark-blur);
+  border: 1px solid var(--stroke-primary-on);
+}
+.nav {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  z-index: 20;
+  justify-self: center;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  border-radius: var(--r-pill);
+  box-shadow: var(--hark-shadow);
+}
+.nav :focus-visible { outline-color: var(--fill-primary-on); }
+.seg {
+  display: flex;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-radius: var(--r-pill);
+  background: var(--fill-segment);
+}
+.seg::-webkit-scrollbar { display: none; }
+.seg a {
+  flex: none;
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  font: var(--type-label);
+  color: var(--text-secondary-on);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.seg a:hover { color: var(--text-primary-on); }
+/* The active tab carries its own fill so its text is measured against it. */
+.seg a[aria-current="true"] { background: var(--fill-primary-on); color: var(--text-primary); }
+.theme-btn {
+  flex: none;
+  width: 36px; height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--hover-wash-primary-on);
+  color: var(--text-primary-on);
+  cursor: pointer;
+}
+.theme-btn:hover { box-shadow: inset 0 0 0 100px var(--hover-wash-primary-on); }
+.theme-btn::before { content: ""; width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px currentColor; background: linear-gradient(to right, light-dark(currentColor, transparent) 50%, light-dark(transparent, currentColor) 50%); }
+@media (max-width: 599px) {
+  .seg a { display: flex; align-items: center; min-height: var(--tap); }
+  .theme-btn { width: var(--tap); height: var(--tap); }
+}
+
+/* @component footer */
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--stroke-secondary);
+  font-size: var(--size-small);
+  color: var(--text-secondary);
+}
+.foot strong { color: var(--text-primary); }
+.foot nav { display: flex; flex-wrap: wrap; gap: 6px; }
+.foot nav a {
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--fill-tertiary);
+  color: var(--text-primary);
+  font: var(--type-tag);
+  text-decoration: none;
+}
+.foot nav a:hover { box-shadow: inset 0 0 0 100px var(--hover-wash); }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--r-xl);
+  background: var(--fill-primary);
+  color: var(--text-primary-on);
+  box-shadow: var(--hark-shadow);
+  font: var(--weight-medium) var(--size-body)/1.1 var(--sans);
+  text-decoration: none;
+}
+.badge:hover { box-shadow: var(--hark-shadow), inset 0 0 0 100px var(--hover-wash-primary-on); }
+.hark-mark { display: inline-grid; place-items: center; }
+.hark-mark svg { display: block; }
+@media (max-width: 599px) {
+  .foot nav a { display: inline-flex; align-items: center; min-height: var(--tap); min-width: var(--tap); }
+  .badge { min-height: var(--tap); }
+}
+
+/* @component chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  border-radius: var(--r-pill);
+  font: var(--type-tag);
+  max-width: 100%;
+  background: var(--fill-tertiary);
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+.chip::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex: none;
+  box-shadow: inset 0 0 0 1.5px var(--text-tertiary);
+}
+.chip--solid { background: var(--fill-primary); color: var(--text-primary-on); }
+.chip--solid::before { background: var(--fill-system-green); box-shadow: none; }
+td .chip { white-space: nowrap; }
+/* @component dot */
+.dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font: var(--type-tag);
+  color: var(--text-primary);
+}
+.dot::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--fill-system-green); }
+tbody th .dot { display: flex; width: fit-content; }
+/* @component pill */
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: var(--r-pill);
+  background: var(--fill-tertiary);
+  color: var(--text-secondary);
+  font: var(--type-tag);
+  white-space: normal;
+  vertical-align: 1px;
+}
+/* @component button, link and links */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 5px 12px;
+  border-radius: var(--r-s);
+  background: var(--fill-primary-on);
+  color: var(--text-primary);
+  border: 1px solid var(--stroke-primary);
+  font: var(--type-tag);
+  text-decoration: none;
+  max-width: 100%;
+  transition: box-shadow var(--dur-quick) ease;
+}
+.btn:hover { box-shadow: inset 0 0 0 100px var(--hover-wash); }
+.btn[target="_blank"]::after { content: "\2197"; font-size: 11px; color: var(--text-secondary); }
+.link {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--stroke-primary);
+  text-underline-offset: 3px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.link:hover { text-decoration-color: currentColor; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (pointer: coarse), (max-width: 599px) { .btn { min-height: var(--tap); padding-inline: 14px; } }
+@media (max-width: 599px) {
+  .link { display: inline-flex; align-items: center; min-width: var(--tap); min-height: var(--tap); margin: -13px 0; vertical-align: middle; }
+}
+/* @component text and fineprint */
+.prose { display: grid; gap: 12px; max-width: 68ch; font-size: var(--size-prose); }
+.fineprint { font-size: var(--size-small); color: var(--text-secondary); max-width: 70ch; }
+/* @component hero */
+.hero {
+  position: relative;
+  min-height: clamp(460px, 64vh, 660px);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  color: var(--hero-text);
+  isolation: isolate;
+  box-shadow: var(--hark-shadow);
+  background: var(--hero-surface);
+}
+/* Without a photo the hero is as tall as its copy, so the callout sits beside the copy instead of over it. */
+.hero:not(:has(.hero__img)) { min-height: 0; background: var(--hero-surface) center / cover no-repeat; }
+.hero:not(:has(.hero__img))::after { background: linear-gradient(to right, var(--hero-scrim-side) 0%, transparent 60%); }
+@media (min-width: 761px) {
+  .hero:not(:has(.hero__img)) > .callout { position: static; flex: none; align-self: flex-start; margin: clamp(16px, 2.4vw, 24px) clamp(16px, 2.4vw, 24px) clamp(16px, 2.4vw, 24px) auto; }
+}
+.hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 40% 60%;
+  z-index: -2;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, var(--hero-scrim-strong) 0%, var(--hero-scrim-soft) 42%, transparent 66%),
+    linear-gradient(to right, var(--hero-scrim-side) 0%, transparent 60%);
+}
+.hero__copy {
+  display: grid;
+  gap: 14px;
+  max-width: 40rem;
+  padding: clamp(24px, 4vw, 48px);
+  padding-bottom: clamp(28px, 3.4vw, 44px);
+}
+.hero__eyebrow {
+  justify-self: start;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--hero-glass);
+  border: 1px solid var(--hero-glass-stroke);
+  -webkit-backdrop-filter: var(--hark-blur);
+  backdrop-filter: var(--hark-blur);
+  font: var(--type-label);
+}
+.hero h1 { font: var(--type-display); letter-spacing: 0; }
+.hero h1 em { font-style: normal; }
+.hero__sub { font: var(--type-lede); max-width: 34ch; }
+.hero__meta { font-size: var(--size-small); color: var(--hero-text-muted); }
+.hero__credit {
+  position: absolute;
+  right: clamp(20px, 3vw, 32px);
+  bottom: 16px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--hero-glass-faint);
+  -webkit-backdrop-filter: var(--hark-blur);
+  backdrop-filter: var(--hark-blur);
+  font: var(--type-caption);
+  color: var(--hero-text-muted);
+}
+.hero > .callout {
+  position: absolute;
+  top: clamp(16px, 2.4vw, 24px);
+  right: clamp(16px, 2.4vw, 24px);
+  width: min(320px, calc(100% - 32px));
+}
+@media (max-width: 760px) {
+  .hero { flex-direction: column; justify-content: flex-end; align-items: stretch; min-height: 0; }
+  .hero__img { object-position: 22% 50%; }
+  .hero__copy { padding-top: 260px; padding-bottom: 28px; }
+  .hero:not(:has(.hero__img)) .hero__copy { padding-top: clamp(24px, 4vw, 48px); }
+  .hero__credit { top: 16px; right: 16px; bottom: auto; }
+  .hero > .callout { position: static; width: auto; margin: 0 12px 12px; }
+}
+/* @component callout */
+.callout {
+  max-width: 420px;
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px 18px;
+  border-radius: var(--r-l);
+  background: var(--mat-agent);
+  -webkit-backdrop-filter: var(--hark-blur);
+  backdrop-filter: var(--hark-blur);
+  border: 1px solid var(--stroke-composer);
+  box-shadow: var(--hark-shadow);
+  color: var(--text-primary);
+  font-size: var(--size-small);
+}
+.callout__head { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-weight: var(--weight-medium); }
+.callout__head svg { color: var(--text-primary); }
+.callout__lead { font-size: var(--size-body); }
+.callout .fineprint { font-size: var(--size-caption); }
+.callout .btn { justify-self: start; }
+/* @component stats */
+.stats { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); padding-top: 8px; }
+.stat {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 4px;
+  padding: 12px 24px;
+  border-left: 1px solid var(--stroke-secondary);
+}
+.stat:first-child { border-left: 0; padding-left: 0; }
+.stat__fig { font: var(--type-figure); font-variant-numeric: tabular-nums; }
+.stat__label { font-size: var(--size-small); color: var(--text-secondary); }
+@media (max-width: 760px) {
+  .stats { grid-auto-flow: row; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; padding-top: 0; }
+  .stat { grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline; gap: 12px; padding: 14px 0; border-left: 0; border-top: 1px solid var(--stroke-secondary); }
+  .stat:first-child { border-top: 0; }
+}
+/* @component section */
+.section {
+  padding-block: clamp(40px, 6vw, 72px) clamp(16px, 2vw, 24px);
+  border-top: 1px solid var(--stroke-secondary);
+  scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 72px); /* Clears the sticky .nav: its top offset plus its tallest height, 56px. */
+  min-width: 0;
+}
+.section > * + * { margin-top: clamp(20px, 2.4vw, 28px); }
+.section > .head + * { margin-top: 0; }
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: 10px 40px;
+  align-items: end;
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+.head__eyebrow { grid-column: 1 / -1; font: var(--type-label); color: var(--text-secondary); }
+.head h2 { font: var(--type-title); }
+.head__sub { justify-self: end; font-size: var(--size-body); color: var(--text-secondary); max-width: 44ch; text-align: right; }
+@media (max-width: 900px) { .head { grid-template-columns: 1fr; } .head__sub { justify-self: start; text-align: left; } }
+/* @component table */
+.table-wrap { margin-inline: -12px; padding-inline: 12px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font: var(--type-small); font-variant-numeric: tabular-nums; }
+caption { text-align: left; font: var(--type-caption); color: var(--text-secondary); padding: 0 0 10px; }
+th, td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--stroke-secondary); }
+th:first-child, td:first-child { padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; }
+thead th {
+  font: var(--type-tag);
+  color: var(--text-secondary);
+  border-bottom-color: var(--stroke-primary);
+  padding-top: 0;
+  padding-bottom: 8px;
+  white-space: nowrap;
+}
+tbody th { font-weight: var(--weight-bold); }
+tbody tr:last-child > * { border-bottom: 0; }
+.rowhead { white-space: nowrap; }
+td small, th small { display: block; font: var(--type-caption); color: var(--text-secondary); margin-top: 2px; }
+td.num { font-weight: var(--weight-bold); white-space: nowrap; }
+td.num small { white-space: normal; }
+.muted { color: var(--text-secondary); }
+tr.is-highlight > * { background: var(--fill-tertiary); }
+tr.is-highlight > :first-child { box-shadow: -12px 0 var(--fill-tertiary); }
+tr.is-highlight > :last-child { box-shadow: 12px 0 var(--fill-tertiary); }
+.after-table { margin-top: 20px; padding-inline: 12px; }
+@media (max-width: 599px) {
+  .table-wrap table, .table-wrap tbody, .table-wrap tr, .table-wrap th, .table-wrap td { display: block; }
+  .table-wrap thead { display: none; }
+  .table-wrap caption { display: block; text-align: left; }
+  .table-wrap tbody tr { padding: 12px 0; border-bottom: 1px solid var(--stroke-secondary); }
+  .table-wrap tbody tr.is-highlight { margin-inline: -12px; padding-inline: 12px; background: var(--fill-tertiary); }
+  .table-wrap tbody tr.is-highlight > * { background: none; box-shadow: none; }
+  .table-wrap tbody tr > * { border-bottom: 0; padding: 2px 0; }
+  .table-wrap tbody td.is-empty { display: none; }
+  .table-wrap tbody td[data-label] { display: grid; grid-template-columns: minmax(0, 8em) minmax(0, 1fr); column-gap: 12px; }
+  .table-wrap tbody td[data-label]::before { content: attr(data-label) " "; color: var(--text-secondary); font-size: var(--size-caption); }
+  .rowhead { white-space: normal; }
+}
+/* @component compare */
+.compare { margin-inline: -12px; overflow-x: auto; scroll-snap-type: x mandatory; }
+.compare table { table-layout: fixed; min-width: calc(var(--compare-cols, 3) * 200px); }
+.compare th, .compare td { scroll-snap-align: start; padding-inline: 12px; }
+.compare thead th { font: var(--type-body-strong); color: var(--text-primary); white-space: normal; padding-top: 0; padding-bottom: 14px; border-bottom-color: var(--stroke-secondary); }
+/* On light tiles a white product backdrop blends into the grey. */
+.compare__media { position: relative; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; width: 100%; aspect-ratio: 4 / 3; max-height: 240px; margin: 0 0 12px; padding: 16px; border-radius: var(--r-m); background: var(--fill-tertiary); }
+.compare__media img { max-width: 100%; max-height: 100%; mix-blend-mode: multiply; }
+.compare thead th > .chip { display: flex; width: fit-content; margin-top: 8px; }
+.compare:has(.compare__media) thead th:not(:has(.compare__media))::before { content: ""; display: block; width: 100%; aspect-ratio: 4 / 3; max-height: 240px; margin-bottom: 12px; border-radius: var(--r-m); background: var(--fill-tertiary); }
+:root[data-theme="dark"] .compare__media img { mix-blend-mode: normal; border-radius: var(--r-s); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .compare__media img { mix-blend-mode: normal; border-radius: var(--r-s); } }
+/* The header column shrinks to nothing on screen but stays in the table, so screen readers keep each value's row header. */
+.js .compare tbody th[scope="row"], .js .compare thead td:first-child { width: 0; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js .compare td[data-label]::before { content: attr(data-label); content: attr(data-label) / ""; display: block; margin-bottom: 4px; font: var(--type-caption); color: var(--text-secondary); }
+@media (max-width: 599px) { .compare table { min-width: calc(var(--compare-cols, 3) * 68vw); } }
+/* @component steps */
+.step {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) minmax(220px, 0.78fr);
+  gap: 16px 28px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--stroke-secondary);
+}
+.step > * { min-width: 0; }
+.steps > .step:last-child { border-bottom: 0; }
+.step p + p { margin-top: 8px; }
+.step__num { font: var(--type-numeral); color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.step__eyebrow { margin-top: 8px; font: var(--type-label); color: var(--text-secondary); }
+.step h3 { font: var(--type-heading); margin-bottom: 12px; }
+.step__pills { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.step__pills li {
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--stroke-primary);
+  font-size: var(--size-meta);
+  color: var(--text-secondary);
+  max-width: 100%;
+}
+.step__pills b { color: var(--text-primary); font-weight: var(--weight-bold); }
+.step__panel {
+  align-self: start;
+  margin: 0;
+  padding: 16px 18px;
+  border-radius: var(--r-m);
+  background: var(--fill-tertiary);
+  font-size: var(--size-small);
+}
+.step__panel dt { font-size: var(--size-caption); color: var(--text-secondary); margin-bottom: 2px; }
+.step__panel dd { margin: 0 0 12px; }
+.step__panel dd:last-child { margin-bottom: 0; }
+.step__panel .fineprint { display: block; margin-top: 6px; font-size: var(--size-caption); }
+.step__panel .btn { margin-top: 8px; }
+.step__figure { grid-column: 2 / span 2; margin: 0; }
+.step__figure img { width: 100%; height: clamp(200px, 26vw, 320px); object-fit: cover; border-radius: var(--r-m); }
+.step__figure figcaption { font-size: var(--size-caption); color: var(--text-secondary); padding-top: 10px; }
+@media (min-width: 901px) {
+  .step:not(:has(> .step__panel)) { grid-template-columns: 112px minmax(0, 1fr); }
+  .step:not(:has(> .step__panel)) > .step__figure { grid-column: 2; }
+}
+@media (max-width: 900px) {
+  .step { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .step__figure { grid-column: 1; }
+  .step__intro { display: flex; align-items: baseline; gap: 14px; }
+  .step__num { font-size: 40px; }
+  .step__eyebrow { margin-top: 0; }
+}
+/* @component checklist */
+.checklist { display: grid; grid-template-columns: minmax(0, 1.4fr) auto minmax(0, 1fr); column-gap: 20px; list-style: none; margin: 0; padding: 0; }
+.checklist:not(:has(.checklist__note)) { grid-template-columns: minmax(0, 1fr) auto; }
+.checklist > li {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  row-gap: 8px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--stroke-secondary);
+}
+.checklist > li:last-child { border-bottom: 0; }
+.checklist__item { grid-column: 1; font-weight: var(--weight-bold); }
+.checklist > li > .chip { grid-column: 2; justify-self: start; }
+.checklist:not(:has(.checklist__note)) > li > .chip { justify-self: end; }
+.checklist__item small { display: block; font-weight: var(--weight-regular); font-size: var(--size-caption); color: var(--text-secondary); margin-top: 2px; }
+.checklist__note { grid-column: 3; font-size: var(--size-small); color: var(--text-secondary); }
+.checklist > li.is-done .checklist__item { text-decoration: line-through; text-decoration-color: var(--text-tertiary); }
+@media (max-width: 760px) {
+  .checklist { grid-template-columns: minmax(0, 1fr) auto; }
+  .checklist > li > .chip { justify-self: end; }
+  .checklist__note { grid-column: 1 / -1; }
+}
+/* @component breakdown */
+.breakdown { max-width: 720px; }
+@media (min-width: 901px) { .section > .breakdown, .section > .aside { max-width: calc((100% - 40px) * 1.65 / 2.65); } }
+.breakdown dl { margin: 0; }
+.breakdown .row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--stroke-secondary);
+}
+.breakdown dt { font-size: var(--size-body); }
+.breakdown dt small { display: block; color: var(--text-secondary); font-size: var(--size-meta); margin-top: 2px; }
+.breakdown dd { margin: 0; font-weight: var(--weight-bold); font-size: var(--size-body); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.breakdown .row--total {
+  margin-top: -1px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--stroke-primary);
+  border-bottom: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.breakdown .row--total dt { font: var(--type-body-strong); }
+.breakdown .row--total dd { font: var(--type-figure); white-space: normal; }
+.breakdown .fineprint { margin-top: 16px; }
+/* @component pair */
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.pair:has(> :is(.callout, .aside):last-child) { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); column-gap: 40px; }
+.pair > .callout { max-width: none; }
+@media (max-width: 760px) { .pair, .pair:has(> :is(.callout, .aside):last-child) { grid-template-columns: minmax(0, 1fr); } }
+/* @component timeline */
+.timeline { display: grid; grid-template-columns: 210px minmax(0, 1fr) auto; column-gap: 28px; list-style: none; margin-inline: 0; margin-bottom: 0; padding: 0; }
+.timeline > li {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  row-gap: 8px;
+  align-items: start;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--stroke-secondary);
+}
+.timeline > li:first-child { padding-top: 0; }
+.timeline > li:last-child { border-bottom: 0; padding-bottom: 0; }
+.timeline__when { display: flex; align-items: baseline; gap: 12px; font-weight: var(--weight-bold); }
+.timeline__when::before {
+  content: "";
+  width: 8px; height: 8px;
+  flex: none;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--text-tertiary);
+  transform: translateY(-1px);
+}
+.timeline > li.is-current .timeline__when::before { background: var(--fill-system-orange); box-shadow: 0 0 0 4px var(--stroke-system-orange); }
+.timeline > li > p:has(> .chip:only-child) { justify-self: end; }
+.timeline__what ul { margin: 0; padding-left: 18px; }
+.timeline__what li { margin-bottom: 4px; }
+.timeline__what li:last-child { margin-bottom: 0; }
+.timeline__what p + p { margin-top: 6px; }
+@media (max-width: 900px) {
+  .timeline { grid-template-columns: minmax(0, 1fr); }
+  .timeline > li > p:has(> .chip:only-child) { justify-self: start; }
+  .timeline__what, .timeline > li > p:last-child { padding-left: 20px; }
+}
+/* @component cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.cards:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cards > div { padding: 22px 24px; border-radius: var(--r-m); background: var(--fill-tertiary); }
+.cards h3 { font: var(--type-heading); margin-bottom: 10px; }
+.cards ul { margin: 0; padding: 0; list-style: none; }
+.cards li { padding: 10px 0; border-bottom: 1px solid var(--stroke-secondary); }
+.cards li:last-child { border-bottom: 0; padding-bottom: 0; }
+.cards__media { display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; aspect-ratio: 4 / 3; max-height: 220px; margin: 0 0 14px; padding: 12px; border-radius: var(--r-s); background: var(--fill-primary-on); }
+.cards__media img { max-width: 100%; max-height: 100%; mix-blend-mode: multiply; }
+:root[data-theme="dark"] .cards__media img { mix-blend-mode: normal; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cards__media img { mix-blend-mode: normal; } }
+.cards .quote { font: var(--type-heading); margin-bottom: 8px; text-wrap: balance; }
+@media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .cards:has(> :nth-child(4):last-child) { grid-template-columns: minmax(0, 1fr); } }
+/* @component aside */
+.aside {
+  max-width: 62ch;
+  padding: 20px 22px;
+  border: 1.5px dashed var(--stroke-primary);
+  border-radius: var(--r-m);
+}
+.aside h3 { font: var(--type-heading); margin-bottom: 6px; }
+/* @component chart */
+.chart { margin-bottom: 8px; padding: 20px 20px 12px; border-radius: var(--r-m); background: var(--fill-tertiary); overflow-x: auto; }
+.chart__cap { font-size: var(--size-caption); color: var(--text-secondary); margin-bottom: 12px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.pf-grid { stroke: var(--stroke-primary); stroke-width: 1; }
+.pf-line { stroke: var(--fill-primary); stroke-width: 2.4; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.pf-fill { fill: var(--fill-primary); opacity: 0.07; }
+.pf-dot { fill: var(--fill-primary-on); stroke: var(--fill-primary); stroke-width: 2; }
+.pf-alt { fill: var(--text-primary); font: var(--weight-bold) var(--size-body) var(--sans); text-anchor: middle; }
+.pf-name { fill: var(--text-secondary); font: var(--weight-medium) var(--size-meta) var(--sans); text-anchor: middle; }
+.pf-num { fill: var(--text-tertiary); font: var(--weight-medium) var(--size-meta) var(--sans); text-anchor: middle; }
+.pf-axis { fill: var(--text-secondary); font: var(--weight-regular) var(--size-caption) var(--sans); }
+.js .chart:not(.is-in) .pf-line { stroke-dasharray: 1400; stroke-dashoffset: 1400; }
+.js .chart.is-in .pf-line { stroke-dasharray: 1400; stroke-dashoffset: 0; transition: stroke-dashoffset var(--dur-draw) var(--ease-out) 120ms; }
+@media (prefers-reduced-motion: reduce) { .js .chart .pf-line { stroke-dasharray: none; stroke-dashoffset: 0; transition: none; } }
+/* @component figure */
+.band { margin-inline: 0; margin-bottom: 0; }
+.band img { width: 100%; height: clamp(240px, 40vw, 520px); object-fit: cover; border-radius: var(--r-xl); }
+.band figcaption { font-size: var(--size-caption); color: var(--text-secondary); padding: 10px 4px 0; }
+.is-portrait img { width: auto; max-width: 100%; height: clamp(320px, 48vw, 560px); }
+
+</style>
+    <style>
+.hero:not(:has(.hero__img)) { background-image: url("data:image/webp;base64,UklGRiBoAABXRUJQVlA4IBRoAADwHgWdASoACqAFPjEYjESiIaEQBAAgAwS0t34+Rokb3fNKeqf//+x/9vT1//9uf6H//9PXf/hb//eZJ7L//uqB06/xP//1ebX/dh///th//8Tpwn//8A9KWA//+vH0C/9H9//n4B///Zj8A/+/VW78lgAAtLZOQ+2/2xDLT0u14uTfdrEo4iLFych77ZOQ99snIe+2Tl8gqBoqWOsEhYFyevFSbk33a3KoUuEtQLJdrr/XnbJvu1uVQpD32ydJi7q1KmZyHvpd39t4uTopfdqAd3G2i+S+LXHKJuOTkPfbJyHvwBAPfbJzlJWkSHvtjqJGZEZOXy2LBj2dTGMrJLlonlnog0gI2WOPOjjGUu14tZQgbc2xTY8RReNE0qKy1DS6JwXtVZl23Nrxefbch76zYLtKgPL4UpJrfYMYHvtk5FFvTsngnPd6pJJ6WcjGlYyHHmz4lRYCNd5K+q7SoFkpdLNTfT2rZz5S6Mos5p01EN0oidVvS7jebc2vFygRm0qBZLteLk4/1iI9jp059eLk4X6tkIdyGZdDzdRq2X7XOpKXS1AO1ZX6O9u9slKU0ptJN4qnBgI74IamhsfrkeEBWwrzYVWJDHqc/vu7za7kYG3NruQZ44mHk4VEtkYBuToM8nIe+7e9DnzOwOER74KV/dku0hpUCyahEZuss4N81jgp/yvkPoX0vK40JDGwaGl5skXLMqkUMWEau0hxnfMDY5lKSq/5T20qBZLlm0qBZKfFHXop7T2xznjgRZF6F9LlkOsSWwRcnIe+2U2vW8sJ+cL1nokBf+ntk5ykX0vDTsJAAnoqDdP4cbt27zZOQ9+AR6mwXaXud/09snC+Q+1dezALoGySlKbV2XCoi1kREOoch/Kb7ZOQ99snIb/8jQE5aDEmwXaREjhAkYG+0qBZOeqhSerel2vFych71ZFeTkPfbJyHvrNgu2HRBdpDMolsq6IimPj/LXJiyndvswl791v7ERERDIpS7X+Mpojuw8nIe+2UNDSWGM+szi216hajFXe1OazepowOnSo2Pae1bOKOGHJsCZgbME4z8DenCKQiIidiIvMF51vUQQobAs/gmNv0iEUUhGzHx5RBhlM50kS1N5yc0aWAe+2Y96skaCEaba7M47uU3OG+tk2ThhQRkwreL2KFbbOcRMt+o8RQTK5adKREROEUlH6ttmCtlZ8ojsS2glyH7yKq9hEFhztKz3+N5tWu8psF2kNKgWS8cajOS7Wa11lN1/lirkHBhiIuOfniwvEtovSRPNN6gZFD2/bTAojqQIiIfaxUAbjoXBShEAHdXv8S2ZSZo2rGjAoiGREREQyIoEqU+dE0pQGeTkPfasiKuc04LHpWpMzKIal5LNiKEqF1UHIOAaJSCZbgfeSBRPyoqFLV4iKXXghlJ8CJ6sBCJKI27kRd0q1f5yxLqJFEIU/yInoimgf/Obyh410S3D82/P0Ch5MSieREQ8bVP0kUKq8RS1FKJI8VymcYGsiIZbJCRQEEA2bLEngOMJET+QKBo0RD7fgMGeuyBFNEE9MiPJFgjJYiIiJpIiIZERQZTLD2ANCRK6b6ZdxRwVCbapQJFIbCiQmU+JPTK51G7EYRont3njicZBBQoi3mUAlpmoW2gHffU3GztERNJQaOA9+54YqeabyRW9b5iK0EREMiIiIhkWgBIUxlJ7mPuoGCGbYMqxvmuSb1IQJERE7SnyXT5lgl8A1JFD1/9Qo0RDnERKz+0K0CTLgUmiGRGFyhkRFUEfYKJ8Tymk9zSX2+QzKIZERFRGCIRERUvF601P1wvkQHz3C2XRR0UST4c8YEREQ5xESuD2sUD46XJ6KSjTjp0CIiJhUk1go76VNwQUKIhkREREOcTcmk4Gp3zKZU8URFuGNEZyPNVERERDBERgmwgS8IuMrkXlVR+rYyWE/TMKGV8D+PoLhiJpJ6KT8BtOzhk/Svj/TdKx1ELlDj6LVjAgiRfAoiHTsiIiIhkWXfISpOxCKTk0kRNJPRsA4iIimKIZEWVTKdQYrdSnVXtbmWdD0DRNap2Da6Fh37RmJYlAFouUtVK8YsusRfnCfo1RM1GJE/kRGcXZsaQ2LkEQSqIZERERDIiLzzGQF3EIuxmKSjVdERNJERDLZMZIwiIiIhlJpZSMcbOPLE0vJN2O9TQOFW0IxOuH6ACokRERDKTTTIdh6iUa1w9rAha9jfTnbki1EUoUKU0U3KduSFgiu9BEQ+ehP8igS5aOXouxRSZNBAJpInIu9OIZEREUxTfaHz0JVFCCBTKKHeyxnkbnJBvNAiCcdDUVsaSWQrTom2paQT6GIYjUEBUU19CAOWxKHiITsi4UQF0PKOC5DUCwRgiUKJwXqiWyIh13LErORRSFz8RUJiJbIiHOfLTaYFY3AiIoQQKaRHoZJ+WbyqUyFF2URNyBuTRARPIEQyIiKiRQ9MbdgiwACxyWNNd9RmYqSGiDtghZ51mBSqAzNFPfSHktOgUEua8O7SWPG+hXe5FN3Zv2lEQzNlYhGposiIhTlxEoVA4h6AWuRIpSCIsfOlOLLYzxRzhzgQVEYIhEWAhQZ1ljrU+3dqyyQmMVJeEToj/TSQokidX0FNwIuL8tygCJcRJWQA/kUUhTKJbeq766i5LAgLyRERVzdGV8KiWyIlv2psK/OsnNDExQEJUXSrk+Hc0Qg22MSBU8z/ktKE4iKOHyfEtLGAHr6iBZAnGxCUK7KCjYFbwOtSCLch89AiIEQyKKSkYaCn5DSRUR34+kKiaYNC+UqiGRFlRadCZl0SIiIfPQlUB89AhCjvnuZM89EukwsKCSl7pPJEIEMiynZ1/X+CCp3c3MqQQK/vya49H0Qe/3s8c68c3hmDdIgT1A4FAymBSyNRZcCIiIihBAplEMgSJFWhmzrmivFbGLiNw2ERFom46anen+JPqVWZ5Zt8MjNq7Z2a2EKmotnEInXe6X1rnAe7AZvAUURDIjDKoSlYj+LjDuRmdxJpPC27dWbGkiVVf1XOOCu8+Fp8HABOBGQ0FU/HgIERSL8g9cQiIoJkePhFK/YEdD/rU31i4EUa/teoELciNSJDIBFKxk1QVnSLPVTh34aQKmtxC0EBi/ArmqBTHRP5oMHHFlMXGseI6XtVZBEIiJ6uSgE4Q3qPCtJSpv0omWZNtbWEeTFrMpCIoQQIbfKM+oEBERERDIigSKQRCleSJbk++dWohW7jmAEJq2domcIIndEBAsbuzyhdIts7zMyR6Fx6BDAM34ZOueNyCBMhpI0YBEMiIiIhkUa+uDkhNgxkAUTHMFu45lyinwCCtc0lHJ5DbVEdMs7STIcepklKA1Cc6y1W49PtVVpCIoksxRDQZvJ6w0RbkrMdSLSERDp3OgV4EWxRsyCDGxNusvOqb725IbiOZB/mcT7d20Bko3QlUuRW1mkIiJFjicu8PXTeJRPzD/kVNClmHYSKEKj4JB4+6rw3MWbbBAsWhD0RECLRKC9XVssVgApJgRJlNLAcDI7WzwstngFoIiGREREUIIFMooQaQ5IHNrG8YRJvrL22qo38/DHKNBDzKmiWlFHc8+hphEAERDIiIKiQ7UD/Cj1UBOMepUDQV5alEocSVHpHNn1D5yAznzXeY4gD3M9RFje3Ix7BEWN6ultqZYSwzvCMktlEy4CBSLIRkQkRjpzrLMHYA9y3FHmOipmy8YX14whQBpG0W6PLrKU4B5FPpXO/ONXts0nehfsZ9o5IAIiIZEUT4F0sjhOkgYIDWHh7ObONKP0kbAvopN4UlZSQE6uZiITJdy++XCTNe5bijVQVFp80Tp6/TFxo9HN5rwQEYdIEREe3FGvdopSm2NKixoREUIIERAnba8QVj1i3piX7JckXPNe6ucYQLUYXn2eJHq7CfPWQMfeJJP/yamNY9wIiIaXIeX1mYaf+dv+gdim5Se165PuQ8Fm0lgXzvk2iByc/QARCIike2PlrZVAkVKxhjPgi4GCJ2aBp5xeiLyD/Ny+JaNVELFzrTbCW+JTH6VEdS6QJZdPyzahw7pyI02EEviY1sRc7oJFOFnE3x5Ma9TzWD8MdZZexzhILTZAhV/cHqi6EzFFbhMfme0DFdhwtQnwnBrNOP3wSNkAFLY9DBBDnERCIWqVl4+zeB3fCd4q7d64hs3me6JMjvU46hCIQ3XekQyLYDXge4zkftb4uc49YtNiNziECOGaVXYF37SiWUEVm3omGMHDM1Q2BnxIhkREQW2Uff2EkbaVpa5QeD/hYRD1Wrp8mTEB0IZmPjx+lY7OgQwFP9OmOh9tCN8BCNEt2wgqSiCTRDp2ZyxDEnBHXbPBSgKtQ3qcTc+Nfq/jxaIYo4z6Rfq6qSbrzkUqoz5t+9ldspIGxQdd6ktO6IUMBBEV4A1Cc6yy9fKMtQJdzROtspBqvHj96yFJkXOGmyUQAXrwZ5sH89Foou1rxtS+8BSKxDqWmNmNQoNMRi4/4Tsh4rPtdRdZAJISqeymqohFoLyAVFsrf/IPE8RelwDzTuLEA7vUqoIXt/VdL440pksYX2iwBXDTXwksMA/CRDIx+egTwEU6vaKGhZqW1IrgaHqOCKgUaWpP4J0jPLTetpsXPNAZ5oUlMmxMsa2y3uRB9pt8ddt99UCuFJ5W0q/ZRoAIw7MQJubYNxsa9hFf8L+xLJuIriIDRLchvGmfBfLqw+I3/2TvpQ2RGQBAgXNihYdTbBKpr7rJzFQsq1yQjUDIixvX48o1ZZFEEfBb7rKqhg4sG4lnoVj50ExDUhBUcGofnsEQKdyMmgahOXuN2I41SqBg2ucKIfme0Rk79jId9myZQCZ0ad7XyInHTx6wGsUa9zPUOVUbsWUwl923poKO70WiiUlFO7q7ZnAg5CaReWwNIyfHdpkIhakJZkEQ0H53az3NAD0kubzdcDAUsgcGnCfrMXoo8lUYo07PpUlgfap6SizCiMZgRYa8VCt9h4oyYU0CiomEHVggvwEOWbQqf2bqvJCIycT3jugUV9Pbd0561uYDX1QGsZDW7f+KOGRE88w4st/MbjQJ84GkZ77xDrJtKVnIP+ik/TlGvcz2jNPwsb9aVOOkYSFoT3gzVmkOnxSpKLKmemxsFh+h7QIgXDDdOwzN8IUfpYcbEJWxSVL0aWGatPVjeDbR3Lisce6AJcU4YzzGTF73XauPrGusa99ucj2Wxn6FUMhEQ9LHWQ0+rdtbX4DxQWtbZmDIhuIdl5wxQVZMSlEKaprDDeTzBV5DUiE58QH7naR4e598t+pB+8kpIVZwQqOCTYvjK6YDzeY7YUabGUABPOPrRFcnVbGIRM1CHv7SdgLPhbO5o21/qZ2iWE6FvS+xV3noV1c+TQddPK2KqS4y9zPYl+NgPsMjywEOb2kY+JK+qP5geSWZCXPCi18zkEvlxd9sKFpz+t4h4qUz7QcGQ8Lom4oUVx064+VPS7XBbUp9DZmdje4ND73tRZPZakh9jOPT7rl0RiIPFskEwYv85cJiEREVlfNoHTGQGVvQ8DZgdLJDM0QgxQrw++80N1FSWZk2RkJ5Dhol9uByHJUBpENpGOZE6og13oVlvShgXHiKTD/MQHkShZ2VJnOw8yuwowh/4s4jtUgNe4HBCY/wYj5w1Cc7HGeJ/6+uzqtv5S3494gil4O5QadyMVZQ+crq2yKM2gDDF14+dvNWWRjoIiuyDkmkWIckRfdKwEWzV1+YwEdu8XYOtsn0r37j7yizJkgqBGe5WZn3hMi5R8Fh4Uo2WyDvUGRuaQU8BDVBGlMapSmO+aRC5mOdaFT0lFmE/WCqolZkZf4SPPkHfx4ea4ahqTIEObqFi+1xzj6aKzq8XtC+llcbK3qjWBcJGz+wST69wLEsDIgQKVZlg86AjgAE1ZrD9l4BWLu5cFdLwweD2l4NSZS51B2l7n3iGv8mBR7wAqLZZf/2L06GU8LIhnmlNDFJD1w51C57A/Az7iNo07CxkQvLYJVLMs8PqrWQXxpg8S5JuwWMj16eXXtdENwpBouQx1bInC5waUtFWaQEGRnDCyrpzSeuZIT65hlNxVUkB4+r7EVxrQkZgz5zqxwtT55hP1KrgETlKNiPLAWAhcXfajWiakigAmzy6EwsFSct5hrccIkshOn603yE89Kij1A+imst0VgZVdlv55kgMBC7oQfZoR8nIEeN7oyjuQShiklmQjM8fleRSrMuDERCGT3AvBdGVwny6gpKay7KkAmazx1SCo4J40YfQuaz2dGOhEVaboHHdky/VGejOXHc4AxCIj90k8gGFVxJnxpx9EOEhn7XCSkGjYOvOqKNE9jg9p/BfCkQiMNSdeQUpsfJUQ+2htLcBlMRQfsR+GN+Cih/f51kzXjB9nLFIOWaPV8PUgZw5LLpEjupCIiJIcHPvXuXVlgfixixha0nU5dSf0X1YekJ9OquyoeinqTvfhikCtkAEVwQCQbDy8AlM0CYRmeDy4TP7/01jD5ELWS3rdOt4N/XNjJe6/ojG1Yq0sxFB5OGudo7Vqm9Xqref5U5hugWUtFw5wlblCr0muMARpPoRWkySUqoiGRjphOYw+FV+GBQ6KF0m9YzokdTL/0nkLoye/yQ3bJ+b9YEgREQyIiKoWlhFtERVgf24BgeBy1pUxjl3KASV3fmwrZo3FEfm8CfIER7Zx0sl/QIEetA/GDvdNUaiRYcxJ7SD/KlAyjuejAjG/RipyQWTc6ht9BSrT7ykRkfAqldlsabZTDoG9fWsuyjYWVI2YpMxzG6sQF6czyNr/0tWCMnu8/pRM2PKNVnIlCT+eypK2CGXsND8EKSX2wFATPyUpyH1n72wlpFrMNFBneuAqcHNz5Gd1aEwQqtHzqil9gxjYT+I3bUrsgMnfre+2l9pUB322HhCCtU0aVKbu9c76nE3LlNdTSVmImvpdrMv39TyW/n3x1KH5s7Kkz8Lto09ItZhP1xbupq1xZ1QQj0YRT9XAgFy7cLRFyzgmVR5a56rRfzDqQ3zG3SWRjWtEZA7nXZk7H8+aStTx9X5pdzZQ8h1/y2uNNYoUmGaHGRce84ReHvW0IZFwFJjkfXvghZXeQQQQ7bZpnrCx+4DCeoiuwWHAArQZ3ObFfkGw6riiLZwmqXd59s6k8OFq6lj4Yhu/Y2I/DGniSBTk++yKRDNdUfEwiI11lmmqW8a0ih2Xp2OhDMEMTXEnniPmm2um6aA9bsm+PUAFYaCJpx0W67aXmlxJrzHoDdnYio9YLxmziu7g1501BFpm+R2vEpkKrbQrwD6YVMWetKRuEMhT9M7dODTeTPEnpaSdghANgfZ8ghpyQcoiWRQRN/J6wyN0EhA89V84iIdvpGj3M9Q3x0acoTIVvaVeHZb6v0iSKjqqkTTOPixQ+UrwCc8MT7mWM0gQ8CKVmNqUWbBArPJDgQ1hctOTZOx2DW+9nZeEWSGt/HMQkC6QiPZXeUkxpcuox5vvM01y9a8Z+eBIfVN6+yPSJx59tdM4yW9nnDZVA4NQJPONBVjDUJ0i5Z0MBDAy+8646n0jhDmNju+z7vmp2QInoiJ+aMRoKJxxcU7KOabh3XDZBEDcL20jHA7SUMXDymAupVEl3sf2hgT9ZPQ1is/NbVzSWfLBqEDGd1wvshzycPgG2bt9amfKJ/3GXnpBbWqffVYHkEs42nuyjkpHsBWWR6+X+0cAFjaaUIm58FuIJX6y5N0LE3gamPRvDJ2+eUFOoexQ1GKw5k9QYo6nB2a5UOKg+2Sp8G+RWnJDMt+h76iBn9/EOHOPdYaNHYfhVGEY1PyhVjHRkSIgRAWY37V+tb95ySZMxXiCDI/AOxy//LSmwkVdGP5jmOUaWsaQ+VcB2zaPTAKhqwIijpKs08oZaj3/Zoh6VTg167Va7qsnG7MxISni5qJ65UWF/FB8SNXSp3rBlUoUTF6aZV5XQsSjj98fnkupoSnh5IwCTNuJJLm17te9cjsE6MbV/+vELwQyX4RnQiUKcUEUpHNpna+8zP9veAG13hiZ3TTMmKNLSXi7ZUBBB9f72j84EuTTclLvtlFIZERfUJ5/YxRp2HmDCe+JrXiI/ty6EeJ37VFST4fPkJjAxpfhBJ8T8eHt87658VhxqsoTxdcw7drBT9Dax3fShoM4x5JLluxUhvvGgXlwzIxN0f7LGxeo4d3GQi6NUNdy8EPFa1vR4YHyf/KwQ+Egi0ufsVVlgsc7r+Fr6JuXyDRQGc9UTLPn8Ixw9nCDwjkLV3B+LnpW9p5Gnt0WFxP0cn50MSIJf6L65zEVoMgRpJLma7YTd/4Zp3Fro2mC9UWhhWpPXn2L7JqGrFl9437iKUd/oeCQRBE/D7qE83WzGUUehhnT3HNgV3Sb1jkZpx8lpXkFLPpDKR62j0c0IojXiHTvPZSBEadfhC/vmyYLgRt1pthc7Rv1sbGAuY157SRrpRV50iZq9OyFoxWECRvU29drED2iS3JQoEkrLPneJ0/VucpxsqbR2Nqy1M5dhJrmfgG04yvldRFi9Z4boBG2nonwEiVm9yLUU7zpO5pdyaAhjC0UEycSLTs/hAgvtG6Ks6PC/3YJDakChbwEtLmmFJjH6xS5UcOdrs7rtrVYIREwibrxKJ5+PWOOvKPH8tgS6r4uOm0tyWp3GQ5vlSWUO0Uh5s8NY2KgXaMJ4bte/iffmdqVyS26oCxjNQLRup7u/Upj75MI3BFShFFKv0r0DpDXs4LTEcoNGaIR0rQUhc/S9EnNKIYbztq6EeIAa8O7ekgNaOy9zkbC7zWYXx5R1OJNoeU4aSHVq3M1x6fbF1sQNqx0y910bg/akwK5PEas6oMyXnwrh5/VHpsUA+PkMos+VBEcnPCvt9HSLB0op5pe6+mryj5xFnJ4oZw2LnZzqQR7CljKhbV/igSJkkdhiLb/0zljgjBdrHPnb33lQVtlTKbQW7gIHFu2kzzHj19HO8mt4v8010p2rQ2HeS72XvkmO4iX/dRfTmcmg/DRv5DoHhh6JAxI1VodZ0iIv+vf2PM4ATiKA4wvKlYs5S+vhPGKql7T6e6PGAsYYhnUPGlF5IGaECsUBaz/3FxLrdnNSV1L51QZAdvKg3W/gBV6iQitGLxaK96mosYiHIW6T0aTF/BDJ+4c9cLR5YNPCWEvhlxTW8OTP1FwdIBzq0hGOnPOk8rfFxTiq/c9uEb/ZTEy/87zn+ur7wbsPN3N1s2RzkpTxzaisDZIh5AEPnvHHldrMab+MTrenIBd0mrlK6E1/+cjBI2YT1uAdvwzxXqB9ubHL3uLJ5Pc2CQjwuaikiZlDSUcsv2ySF6Vlz0gnK6oRn1oL+COyAy5PTuK2uBDPY1ICb1UETTV8yLQZF6CZu/DZ2jgiZaIbxKTm5qPjw0D0MqzTJNnsvxV6qEQRNRnxA5b5lhbw07dXBu1SXlXxiDVLj6MXrSXh9JpYGkWJ8bvRe5325rFu4aBSdvD622pTd7s9cuNG3/L6chbEvyrNClzfe3vCMe1ShuNl2WW2gqxhqE83WzGTt4NRGX5/DgKfCx7OAYoBpDy0hXnmfmZhndJ4VC4aB+5WlfLt0gulBQ5Mjh1PohEUExkOxAG0pEaaWrXya1/m6r7VnnHKnvc+JyZbM8WrxhtlzTEaeBaa+5jzXtDZhFN2infCSCZoUFhdYCFlnIaaiYlFzyOniJweZThq1VoY3Ou1OGyLo4cfddYUszKnusjczPE5SaiNfkv8ugqPOQK8iWuWcIkoiLjqmvHMQBEZnSkbeuO0Z9XNIk/13/Ow2tIhsaEbXnOu9BHbl3AUdzYM0U51qdDRzhmBTLKz0QdqaUF/t8/puPGk0RfYotE3L48tnFS++f/y0xL/WEgjCj8NcikcQ01hWJJLxg8/3GqMNCgGF1P7MODhZzW/68emqcMdZZfCQ2pruyk67CKNxGDXj99Jzp/sQAT/I+R777BHuvOwKJAWm6A2LniPT3OzQVPQr233JUkTOJJ6UJ+QoFwnVMND3yA/5JY60n1Cc6yy+DLaqFsA4RFKAXr0GwaABzH3eVNnplDFpol43pK29QXvI99H5QlpZ6jLOl2Rmbb+kpQBqIAfak7yAhvNREOtVsN1Q+YQbo1QQyf5kFVl8eNbdeIsgTA6nNeBgw8wwnH4/lwll1GR4uU7KGTzKVAcvXMwObBqoigSKpAHZ0tYdvWYx+poJ48c0zCdTxoA7eVw1QLZBQeqckQmikVgWaWAzEFnaWQBBpzYEMyFE7Xj5UUUxGObTD59i4vLh2HFV/3sOa92lnljhzK/de7Sa02dhwycuBRIzeiNLRMdjV8C36ixD8fZuKFAed8x+gNw2SZkz/EXisEIiIZnJwITUbdQ/VMLRYXSeLriuvydpiAL3kNa7/8n6SRxDkOXt1ll7meoTzzwiUERXi+y+ofUU5DWoN+0Td+lOdRCvEEFWrwTPVKoCGwkqK0QJo64iPpz5GNrePEK/uhHIkhU+5E3lANNHS2UohVXnuZ6hOdZZgh4QIuH5yV0R+7mQ3aFPZ+WVPsGkIfYJMQZR+4qEHE7VrZO1vabL0i8IlBOJSgTmvBAMqymv8DfX9bzddpRRrIYHBDgZxAuZn+qDI++80KUA/DTtIsIT3OGnp3PAxV7O2W2LRXiMO0+0D3PlZajOFZBAUpk4tk1hCTU5dr9pzqQi0SglrbtqM3UzkBLBQM3pFGZ4VtpY/0RWrI5pWDGxxKveGPH35O9YSbF9MfxeqHsnQKYLhjDYlu1vlgr/qrywJ/fiKmRZPdk1GF2BtltPSm9ThqKhwWnZsqcNIJOkfEs9Yvcz+VGF+GjpBru1xXAhFOVq9XGryGg/Jb0hwfpIRl64hnKpseOY+A2vJffvWbT1K2CGL6EkymGqac0l9Yx7oeBOnEEygXGG62KLONnqE83QFontJndArn87kR5fGaFaTXiPV2CamS7MpvwR/ZvPfKT4RT4Mnqfq35fIF+9Y6A9vfe00qBdjAeUF/wiX4y9sIjAsd32aBsXG9SVRqqnMesavd7F/g0nixyX13yX5W8y/pf5hXnrA2eoTnWmzhrOpy3rirGPtXx91rWZcFJSkAyLkh0F4uiV5mSGZY9AEcE1jkQnupFqhIiiEQDvCIZovv+IjEoz3qK2vAu63D300/JMw3XVyEROdZZgRt1psgfzO7qZxC15pAP6ut1/zMXBUo40A4zJ76GQlsiIZEUuV0yUNFoZmw7ZLHP0oN7W1NvGol8eWcEO+zXJPEIfWdlCp5r3M7UtbLKoigTceTJ8tKfzlxpw5dSyMaO/jfOFx2admc9OEd9+SEENU5uNqbbnjg7XAA6SSgzsQXWLSzUigsRn39l30WK4OkyK3xIv2cQ5uKt7ekZYcl59MLD4psLxH3eF4CNb5ga92ldD3OOugRXfpykQYM9J7menM5NA2OTIPb0tBUiGcCJ43j1IH0Mn0nEiIt0Lx9OpoGy0XzyuxVijERSxNvVMe6LDGkc56wm75OpkmUxlRUzTUREMmOzNltCGfYucNpgDDCAZvGBGEF9iXm8ukYOpj+21Dvs0F4hyIRRWggDZcMVQV4/PwV/l9CGbRugIFUDPo+x88JNBBTdVWETkXu1DBW9wGISaLV48cV9IvJFlqX/pETlxpTr5HoS8SEtE3TZ2WCyjq7HG6yASXfzikqDvMfKOvXs+unPotQJ1QsqxtPvuaCLRs8FKvWv8J2AIRCdGAetFQ8NQR9LUyq7pf86dQravxNkE2ODz26d5AhAiq4ra2hqMNmZh36W+ipWzrt3SI/AMHqtfCImtOqFaOkRGMeU9lSMMvaAmf1pWPTn8227DYBIwYkUCGxubQ8qc6ypBEKV8NjlwYC8eIfnct/dEoMFecyVeocb1/96d+PHoVIzZdScIfMiRc1CJpmKVcJoeVsIYb1Alse11W3CTjOUCwWAPuEzhzT1Chnq0pWgiIhziIqmIU/yMImpZ4QNE27ITnWUTT7qEjQiIiei+/oGcbmpxFj2NPuyMBifXpqnOtOqSgq1fhS/8Q1awoiZidXeniqU0HNNPK3jCmzPq0nobmi0BCRctFLT79nCvho1L/1pIbtMFuUHa6+++3NeHAV7CNYogWcFkC/kGIMhDBw93sRESyGe1dovuo+PKNaJAiQU/Yuq3P7ZJt0a4Agfzg/Rhpm8y7gmqns9eqCfQnhS5EgaBsuwPW1V90v/aH3RhrMHPaoudly/9muhM848sNrn42tBbwQvza8XHRV5M+M4AfKo4I4wUiJxNRqxWZOMfvUqwSheubOHGiDPuO0h/S+YBveKIchYQyExnqTkAI1TIo9DsoQHpZ0/kCMMuJDsowHI/xliKqUTRd/sJfQPthEJPw4ZOiMWiIs4JZHqq32yzBl0KSXykZ2+kWXfFhAqPmqkGUpm3LcyrzdR3SXccmSJKIx4AL1jzF+B3A4BcJOiAkeQomH8dgh+1amnCknH2JiAxGT/WUERxrsKByMm/dycBdq/4SJxd9UUmWu0wNEFb4FztLNrqiXIjuffWCiKBoLesyLekc8xsO3eIhAM2qyAj1RcHQABg3eQtNuXM/0B3+/E+LxFy66YXtEREMzkd00+xjVO0bEw65qBZH865CZ8lV2Vn3XVxhxEM0rZbSMEYF8/lAkCIwlNBrVz7lYvq7zuPCJohIEPzcPZBvfrKkCyllEtyrGGplJUvAv4SqTKtBldmbHegjWgQ330LZ77JjWUnX6UQERETsRFHNnqSmUYKKiSKIZv/IqzLXPhXMBhk/7hIiLBmCJ9lxL9bbKsGCphcquHiUGSO10l49hIDV3NPzsIhbakFuOrUquHhTDHu5EzLcPSDhkDwV4j8/c6ChI7SK0/zeHvJrvwpJCEQGdom32qEIwRrYFyjqZbTaRCLdCflCqYhEWKT2jBBHgki/Z4SBE/LY86ARMysiZvQPzRMjvYj2+w39ndvqhVFm8DEYaNAkzqIw4IQiEQ/v5moMVGCGBG3kc4UvAWlOXgzVeLLJhosMDIg+QbENnCws3ma1yw55RY1I6IEw7xYFAkRERQMEt2I1RxDwT2jkIRFAlZ0SEQyiIdPpBq9aJ5LNRMmEU2vFInxgiiEKNeEJTYdZYEE0Ja1ZoyR/PfHxJYB8+2HlqIgGwi51o2n33NKvedNDfyAUCKycPPmmT110kFgKfFvHsA+AfLZnhIIY4VhjAG8iIZEUEsiVyKijUF4VDV1oXeJXuXTIaZQMuPlxxZOKwIhNKQTn1axxJ8VtDj9/4ULZulFjhHb3V200m4yLM3hDDVMtrZ6iANcz/HrsgWofz0NjeP22LhbUYneg0i9QaoTXmuA1rq4/REOnZFFIXzFsK3YutIi1yjDW+0tvRIGUeGnpfQMh/NnRe/sEPEIThFJyz0noKrIKKDi/KLD8FPH/yfCPKdv3dmg/haJubsiImHqxKhjSuOUNAMU2j6CjgCaaJO2wbnvWl4yLfFdYhL1DYKlM9cCYiIpZd2cREMiJewIpNEkWuVnIiIiIZERFjToOnBGSYYtIqgepizfg+KgkfExaihEHZA9F31nkRAHuR3SpwSrU37ry9wjqbvl6YeiaSIivAGobgpy88HjOF5vlIFrBI1EDW8DkJOvgmkbU3UnZo43+ba/mEIVJ/c4VrxwtXf17HwQ24xKq6EKVVD+VQIiwbzKR8BvtYTREN2KMeBgMygQ0M2D42kARWgimgeIVhczLEVxEZWwKqTpeqlU6i/DmixA7p0qY/a6nIKUCgOFz084m2/leG06jvu4eQ3IAhTt1p99Fz7kXsQCW/X3++1PuSmwl7P1YnsVE0wROeTi4URFEEbgIiLtUREtxgaKgYmWIb5tl2/Q5v99tKNyFziIoKGRFnaqdkWnY1x+fupn3HM0G99GuyBnsi8gx055Q/+kIO4sulUcYDc7EJscNbh7UVP2v0EstqyBpN/z1Jryg9WVIQAC2sWWssjjBVo6RFAkUDEQiKGorIoPSLIuUh1XE5OX0QFSccc05CaRSCv4i53NARBqkAcSvFIiIhlJsaEZXwvpmWNACdceUKI4xmKt7GAAD+9TPrxt/zZ/zZ9ev2N/3Z/3Z9zMYYaA8YWVu6+szrrVYlzTc404AChOOPva2ybqfU4U3jEATVMHk7K9g+Jb7fEhKkv1Mw6UfF5kaPCnnjEXlz++4km2ZTK+nwsIo2Q8DKoL99VVmwKtemRZr+Zjy9BuYn0OnEpZ08HYSE11YkX/Q035Bh8Y7FnY4syZrxHyUNXgeXm4L6snX03Uw47JLTA5U6vGm/6/ZZf5+QkvMIeyfY2bfT3r2649u6Tkwy+A/Zhn73DgQQkdPb8cfJzkrCE7/KOtgf+G9/4AL/HPEV4nRu0d//WvrcDV/KVX1b7W7oHbzdoz/FP6emyo3D94VCg9QT6vnughctfjGzf/zBZ//A2fwZUL/NZv/xD4/+5X/us3z+A1dhRMuPakzvf+PlnYuyIADrwyh/AAFKJOhEQI3wGZHXY1qVZA3rdAfzJs8uc4iWuvi1VYELiH8lwgwMGM4cYbMb5MfvGdkN+yS4bVihdHQpwziTO2rxPF/KYmy/PO/wwN6jCGo/6lwgP30d4ScmczXwoJc++ImBcGR0LnZ9zKm2x+II3fblpLO/KBMRbOniLlN2xiYKzFGItUXQ/nji7Wk4y/pFIzrQCFDQDbRf8j8Aw3X5GgAAYbr8UkUMgmnrBIr6iWBIhBJhjFqEPDuAvJ5UVJ9tOk05bZYNzeht7ZwGVHD7fPc3K7Md3ckH2u/YaHpBAa+CL8vnYhB5/g2gjojhvKGLZ7u+GZsIQ9m+bZBAE2LvsmxbXLTVe1q0a2ECwgRDzNU2NqHrDBMYCpEbFdloGWLiwRDqeAvRC8nh4EV353ASoCNmjQZx8lyM5gf+rhmO5QxKrxABxWDqBgADMkBAASsZKPV30YjoU6d3YONvKEidONFU5oKSt1miAC3mHwoeyHSaK8IlfwS5e+HrurWLuGbS+LFCAFSU3EWU4nrHxUT4/U8IlT3Ri/DNnIfAboyFESc2j1gDeJ8snKNisSKlwGp4EcRKdkjcCCYMFgeQZXG4uKz06toObrV9YA4GfPyJ2S/W53Zagvg+7ZvYAqL+ckW/ScAAnoC8cfYD7dBRejVocx3AKFwN+0AAEQ6FOGSW28biM+EKItYwodAY9h55hup7w6OlQZaOYAARCWDHuGg6P932NORl2U8DhJQAdgZQ3orcCOCHoQfkRycJ7MQe14HPnQWyeivAHkD3t7uA/UxSPAGLfCviCDMMZUZEcXwAIg4zdo0xJyNSBIFOCQcfQB1AwAOS65nhBv1kkX70mwBFBNY2SUWeFmw47C0fdVGI41SMuAnWLCLNiEf6HVmNlSqx5E81Oo3DANqNEAAAARAmmJv4IAJvEnMlk6kPBk7464nrFcKc5qdIU19RHODKd+MLW65bmvD8OygSeEQnIuztIECwPCFSNGwRUa1wAAlLq/DiNGRZMPGjReYB882aoACijPREP+tLp+/Vnn102wqGXNGzLHp7VgAWKCmakamW5JWge3PAV764flJ1TwJZsO7AvMqhEAAAAsiysuKvwEv8lVQVbocqO3WbVFvjtW4SxsRGxkUsMJ4PORbf4IEx2WGAiEGnGymcWg9LyFQ6srgex9yL0dyBgIV8GXbjUqepkLE2SBtxD2EgAkOoGy5rWpUQTH/Eej5A26AqeuFBWF7k7sLw7+SZ97G+7o4BUVmkQ9YSYcng2sKq5Uo9AUQJOg7hTjHaDQtSc9OxgJzIhHQgfzjmMy4AFTvsCJnS2UrYWg4tRoDsjepO77WmpXF13e0Z6wLi1FOgNezcwgBtnp/5KDmFjdYgx0z8DwgPNbBJjTCHa1yFsjHvCXNC8B4Ajh2eXsET2zIAaBsCnSzjEyHIpVUFiE4K6kfFiJlsv21uuUSBQ20To/EUod7TgQLRM65xsRyWkr+BljQJ9dVBwzJljASRrh8TDqisH3dGFpwbX2EOB5jKeHd4wfiRQ+SkMg+5iqOiH8a5UoAcYxoy4EH5XKjdkw7hfBy664BVOGbR9hZd6ghrLSpS5gIpOTiSHJI16v7v1YpPbSQMmhr8PTf7kAawk9xM3GFsM0AAABaJlJaEftHxiaT+Q2ma8CdsxqgosQblm/aO2Q8186oQKw7Y2/BO+jAxkwkZI3hEFEP0N2jrnPtM9vrJrE1AXXF/rNhbEFzeLsPFLTLo6ovHwAlj/IRXW+PPxa+x+jl+iHAzhMxa80x5ZcZfp6nWPhDu8SFXAIO/KkkYu2n4/U5keuVXPPgNwGWzgFVn0jPgufEkhIomzz3jCoPhIvRI0y9YgYLAzDALOQsLrmWGFu0qthIin9nCeyVlHxWaYWTD4pV7mC5cOyYWEoUhArXF/N4BZqCwiChfJBCmz98jBlAlBTzTa4e7gmmoVzvUNeGuevqHwSW1n2Rf3cPcFmcbQnZGUvrymGZeJdSURbDidPwF8VeeRmx6lI0cc6sKyUZK50rtYN539oX/9uw3j3D3qBke0dJLxdmweaeJ1C3wFPb7VLlBb2nx9ywgtqAsIbx8DHtaYadHpC8lvpxkzW6+gwQpvblsd9B0G7vksgbdMuplhFwubfErta+thgQWEp00O4L6ZgXy96ZwQ2w7j9xi0/fXALxc9GXaMI0CSOQtrSQFpMUcsPq4QCYgACS/zsBi6sggtGpL5yqJ2ZHm4P3gwWQla6ydlnjLnFi9Jnrgs5jIA6SvvIYVp542CpYf46ovBYsGfRSDBxY3cqwaXUFT46Y96clkIN0PmMLwRrL64oOwY0w9YNRA+lIHMCOcBuV/OCFbEGZUaFhlr63yfPksViDWxYIAM1FnbfL+MZRXTLAAPB3+hZuOhYTk9OZvRsy49rSRhvGtXipekSmLEFTSOUYBHqri+5F5GowgBzsegagQ/bvKS2tg6xUzjIsx1UZQeYyZaLeOILcBcXDOdqO2gOOVAK+mlAZtpzk7fvF1930GoORG9ekQtF85gjI2BkvKpbPuBQhpUVpsrMtHIOfw8r03Wa8AqqvAu+4ZHhKfuK1aNBA2FxIm7eEzo7PeSlGo8vIEYH0iUwb9hGLGG6Pzh+ms3BHHSWNeuQ+tZ5iE+8lso6WhrPxhcHCl0EepNgipJq8CBMnoz1EeuU1Oicm7j3qgD01rTIYSqKAAYi4tGGLFPXVLX25KQt7myFEIOXXfiOq8AIbdYPkCCamP1YZCWb+3SrbEoBwJqZBKaNN23+Mp1/b8nZHpixR/0Wgt9klLwE6LgT54WNUHopMb/q2h4oIxiEeNS4RC7R58xFpMT+dT4hb+9u/UiAnNsLmh+AQlW5977QVPZ5MZv2B5uMrZUATgi+Z23e/NLYnOF2fTj0ExJo5GbqhaDDHgzD6C2e311MBz18Du6YlcCiLvIyNC33RhN60AmNFZZabDfSTVy4hBy1+ThXtKiMGv9jtJ6Gn18vx+R5n77B7Fzeb+rPkOCWRRpmbsYrjxVddOI9c1DmyxNTgVdZ02Htg0qPtVCD1E6hs/jOH+sQAqbe3FlVr4AApHjtoHhsBFVHUWLGLoCghj6b2h/uJZ/aLQHj3s5bHmmwKv26djx2iOvoUOV73GzFp5SjYp9H2KeILUlljodW6jLzma2eISPcGh+EQt748XSRksWF0BPs+mGfT2xeAdJsIhh8PYVBz6kfmQY6DJHRXLioI1xXnFKXWcYJI9cw+/375JM9gSZ/7cRMpm8rgsSZYZCHVcECKIvmIOQgAXKWjpC5cOsQC0b23kxkINi/J+fkfUo1unv4IrH5x6gNOQRc+dGsbVmoAS3bAVFk/FkNG8hBnXI8rrkqNo6JHOVvBZMwEyJ7jFXmnIl4N2cqUzhpfKhrDLqaNCPJD73gvDV1SOFRwSkEJS15miihMIbgk3CP+pG60Kg9v0aH9kEW1EADzbcoVyKRlaFgBd2tuhTDj/fq/xhgBYxKH97LCXzYRTAmJJJ8vn5M3U5ajR3wFguwuqQaFw0vjPtav3n0qNZwCyknhC2A0mLiyDEqTVg854RATw778Y5INLJTh9upuOYve7NyAewRpTvLdWyZaN/DuGD26Lk5Ejh36mORlUCefblRNvl6pPeaAHbOvNkkoJL0FBkWu2RlIiiYHszLfkFGrc2Bf2zM+eJvRyn80d3sRwukeeGdCVRUXEVl4y8XFhWxvOGAYmH7zmEe1TFrCeLbS0d4y5Ymr3h6NVNjOuF6wQIIE9YwCj7SJDKoHZQiRZ0Kg8V8gidUQ9xRIXe4WNQj+DlJEGhyuFmdM6RWwmUi6YoDMHEU0kA3u0fS4lzWUdi6jec0xJzvj1i1E07UqQTpiQdEbwfKc6fvvUIgpVDFET1bmO4zWBberIZtyJI9Cof7fSWUUEL2tRvT7NjfaD3QfJbxHih0McZK3I7vjSYRLYDYwFVJ+XXiygRiVS555GXeFp42B2/G0YfVUxTvxjaxRFcs22HjSeAlBha11/TXkROx7dFLWVSNM5AAU1YnwGYB+n5B4w6Vaq5P++F6QfhW/0cz07KAEOIRYrX2UhuVFaBADxdOgqork1cYN7i8vBb9AJGdVBcPegoKfO8rpSx7htWIItE05mknl3YxcVUpg4dRYeeJYEjG6rWSPBZlr38M9ABcLrDgKwB6jrWtj2eKTjIu4QFymCbrsHy/oAAEzgEcB0yFSlq7UR3ysUD1An+EoyOr2enNDlE5P8EHnjvxmEL3l3MwptFss6IOcaNKx8jMdaOerW64WyDztujH7EbNIBBMGlzc2KfJ97sVQsYfAqhNxeGsjlfWVEA8ONuitFXd3iNcxL2Uu6DJcsY4f0TLEuUVTVh1tsMbyyxMO72JdUMj8kcTq1RAogbINlsDocOuj7gsWICmBsFholr073WPk6aw0unyRfmXW3hDjOxvG/VQkSbe3n9hQak8xUgRXeE6bhL1MblOzPvRjnwnss6yWPbs/ahoR0vW/NPtQm+t4eKdgeF5yEwrLw4TnstXlxkmRhOs01mLv5Tik002aZpi1DhgpNM1i4Xcse1kM6DhzlslEbm8yhZGquWCXydBDbvSUXGFxdvLPRIAxNtuFWu6cyr/ZC2vAD8cEKy7MSl0iZr0ARN26yj+a2kTSCTZWB/fRt4BcWb7ZE7cTYm+cnii9LV34etJ0mNJW2O+u4LOhkzVvRr61kgqblRLeB6ZxalJauWGfJmABgPryEh5cCUCs+5OGTIL+ye5v+Ycgsws880aXM6Ti18t7EDTuSfIFUbcvDBOWA5eQuVgNcdYylioqHboGl9g/hJ60yF7BxGqh5nuwKvfF97g9uFyzcGd7WiaQTtnjYvVhiQOXL/0npfteWDa14y3O10ZhLazZQrg/kfnJc4zHpZ/LYt+szOWaATvgHvKiRFN+J2w1jN7REg/FM638zr+bIcy74V5etCb3zaT/S0GKCj7Xp+tPvqWXGcq2rr4sOzYjD6TJcN6kTzudK9AAGPu2b7xUqpMPPcodOw+hJDEZEshjWJ8Is63tYO6p4N/dNATmN+s2ryA3m/NcABNW2OtQy4Mk6qKBXlbezhJTjXt3jEO6ENoJpgV2+BqQEs+zQIDOtSrY3a4dhVMrl3pMa1PyobqMCGnx5IhqCSTEJQp9Z5fvHXyGjiaS6LUogAI+1WsOK/zfpG/DXmWBFauljvxPSdF2YFiE66J3TCVULNqzWIJ460dx1uyNNyCkAbom4fwXWVuXtWBCEZQJdeLQC9gGz3GcAqIBRhkdXJVBQcrpPwp3zjjuwYPLw59st4Uw0XvC55v0qzqZ7WWrMJEVWTOIY8i+prxpQEq3UVWiInpbt/WDmm80YZkb02jfOfOGcyctbD+Easik4lT8LwagXZFV62AgHEoOenaGfzRrdABH11p96JRv5Tx5mTES2YuWXRlgFV7g2TtIY9l1eHQzQCNgXsGxV2+Ocm7DyVftUvlokIRayhRMPeePJw1nKdVxCkJJjsyMCEiGecUGqP+KT8iEhFbLlkaoQ5SxpFxTPb+N82gHDcvVB+t4/XZwf7cIJcjLNTtdo0YSgtzCq7Osd3G/pwBjY3eF2RWpeVwuzkir5X29CXTw0Rpu4F+LWT5387l855Szrl56tfVlHslRm1ucweXjllnnFPPG5utHTcLd7Af9DuuMehFW6wAD68Jbg3rUYB3jo636Tb52y4DedI42BXalPms5NB8MYWz9japLWsvSMc5nFKK4JQLW9g2jA8Yb3ogzi91TKAHTAU6Xnb7eBqYUjDicpsM1o3s532DvfhgFNFTONUOyTFnV3EuPWW52RHmfC7TUIkvZbrEVGgoHh9EmhWZklL86ZksfKSziveRJ6xzY1lsX/mZr94IBhhagIb8+i3liLBXCfGJrZ+Qc7taZiM21enL+8bOtttO/FnIdxchRiu3NyoW+qDT+I3X0VOVi5fsIneOLWnnh9poKPylkzvxppNmpW6851MAxaT6iQlKMPJWJNu/pjOVKKA4AlFmPuFm3POHwunrvT3b/EXQn+aZ+ZRlnlYRiMNNYynkN/7Ke8/1YVubkO8LbI+HHpTuXpV9LmD4QQpTVUXDIbSi6KgUcvKS3hkL8a+4FW2ehM4odqEYgs/ku9XK/cwEtVaqyI5UdJDTHMgBZqC6+fI8DS9usga/rhseuZCZWhbssi74m4n+jq+PUlCc9EQJa7yz/pFbrReTJwX/P6uk0X+gxTivvkfcGGsXOP0e9b8vstQOXAl7BiDDVx0TYBHP95AMUMFcdZ1I2j3jjb0/TBp9A0Uhtqlz4pIh4P+qkHQyGquZhHciyrW5LrBBFInkQqOmR7esYQOzBeEvheEnLRZ0heVx0G4W69fTyz2YsCkJ4rFaENkFssZDBJSQnRITRf1MQsl+l+t+1PHhl2g5VXxMy3tW6AzSBwOqsl0/9wLFmC1rDoylRZ3bOuL4T32lAxmOwJIp2N7JulaAK6Wmbq9qCGzJikq4nEl4w7KsmyZ91BNhDi66feOq8+YeE6lbm1XWobHnYaZvarkTOm44K8mEzcQ98Th6H+r71nBJjqF0hNHIc/0JL+/yiVFbSaenggHdJFcHjYE9CFdzVLkGjAAVucKwA9q2olDKFCLUPdX63jO4ZithNI/tIbWkq+GncV1djYwRU0O7WT5yyIF+x3Wy/Eehjsd7uv6cFReDyj/gkdgAS3htvDyBpv/yU7TgFbMr6d8IP6jldgMt3904YDqXVvRK5kqe+d8BqLRvT3jX78nHu/0NAjnFD+bbZWz8c3WhXQgkFK4e6gfjRTvp8GieN/bwoOZ7482mldmwMA+14BDoKKs+teW8b2B2VDNEMqscNIEonmFrr5Eg2a8G5IUyj/g84roNMFviIZDQoPBpVbKmIPi9dxeZCrGvx2/kv5OB1BO+CG7431pf9ESBWKaFoMP7ogFyiGz7rcqOHdh0lghfuAJPXcjuCbd9dN0Rq3tZy2mk8/7/aOv3Cm5OSdUsizNasUvCVZAGb8NAcdb0OFHeMKfLlfH5LCpXnmnl0xwaBIh8H/zJrdVMERevIboQoDJLer1QE9EmSfrz484rpAUUUUUUT4iWft6myVBzMjGQJM4DonqF93QtsCYF+z3G0Jfujd8k9KBD1HeKDKyhi5xBTjmXc939TfNIIlcJHw6qVZ4rTV8tzzznQ6EosAh2AV86s1qtlpRYtHOEWCW9VC6buexPo2B2QY5CDbfEsYDerYIKhq1eAOujZi2PnUN/iVc2qu0q+hOyQozZDRFt39glbGTlUKSzE1z16yLWrgtRXfjMCL/0buHktT438WyYzRzw2+JTaXhf7m27AGox1TxXTwqefdfO13FdOD61+ZfTF8VcZ9n7rsLmo6qsBuveuEAO9GriW1UssiXDu6JKE4CPx5FRD4hBlEIoVyW3WWxYtx78jwKFkFkZkfFEurfpliuLvC2uyeUjSkpWa5Gq3ic/mppDTLkoYijmXLWBy9dQZ/Dq5+v+S5IsjPcv3Wpp4K88E+3zbcZTbSBjFugq09sB6e+FY4nGgEVlzEZsQIORSE4vpr8o2oTTsO/T4PlprrAXxmcWlrdfLUKrBZ6sCmQv3Ag92YDHPEI2o9tTJzckKY6mTkC/00tuWqFOt5hxZq6lZBCZB7QWtf3gfgKoe3GcevqHdZBQvRylIhMvtbQNduJGmumexLme7iFBDkpG8LKeDuTdO/w8P9Ewia7ZZfvCAAah2YmOIfc1T5oJWa5LBJFbI12XPryuaI5kGI9tc4gpiT3feAtwjKa5t12gAboADmvM2WoSfA8vmQZBm+9frckgmQmQwXQ5K2p0g/HKx3VMo+JuKf3aJ3u9O5whztQ/oqqAKLgK3yuDArZG0lBfJys0fYuhquhA4lSaq6Roy0uB5bmICWgtZwBdlTqWFQu4ilC9IoeyuFZe1hoAbQi+21RcnG8S9UwwXvrEbm5wZ7P9VaJhupkDGeMYYM9gFuLrwbnaDR4HNJds4Lnl0+5Nmo5Xpz/ftkNSY4ZDIIIGWQujYeBR4EWUxGlS3ljtVVOllIjiUvSx+DsK+bpUObiZw+JYgph4Z4ZqMCDYvaVGcx9Jxc4omwAYoZNB3yM1LLmR4q96pVQMWMs3azwf12Cyv53os3j2HtBcHoI9W2nQc6C6hIb4TDq7B5ffr6UK8fE312BU7W1EYZ8pfdxffhDaC3cUtb5HwTeKvf21vGwmtKW0Ym9qjVc/od105pq4Pgut+YKxZzVibNFMTD1fZE5DLItH7ylGr8eJ+HrQtucAEcNdJw+7YmiWcxsiIyVKJh+ue38erZjuddLA41TiBD3BwTxYICr6y4pihqyhIGit5RlHMvho3L65m87XFuceqwouMOSLEGsXKqHBW8K6N819cqJw+CyRqJ2vsJfBzjixGER06AX1n+R7F9UDA1kGHiBKKCUT9SNJTGVMfu95H/TM7OD9RK1rqRnHik0hMa2NBHjyeWGUAuNfqctYYqN1suwqLGKv1LoLEXWxgX5op7SiC23fVtu9jcCj5w2542wlOR8oiFgoG+LCi+AJZq7cguR7wkMqLV/nothrA35CICJfCAJiJmn6rqTtjQXqaow3Uik1SkPzIxGoNLLyE3JluSj7YQ5QlmqBmOVYMUbIDIHTveqSrc6lfGMTfso9BfB953n7EWGgopCYwMCBB72paqQiWdwWSwNpVTkQuIkurZnZNxHOJ1UWhemTb35gzgp5whkuDEEtLXgP4N4w75DKX9aRlXnMdReHhoi7S/4392QeEuONSDof/LhS+3sYhXd1aeHoil4l/5hj2/qzaeNGzTML8hcb8RVYH5kuoAsMxG/1Gdpyg5R4+ieXxrDfAK/058GcCAoXyogFDD1eOL7GXOGsGtQWDoXuYrr4FQluQs18v3RpZONuQe5gZEa+lfDJjNpnGwjrqniVhb5IeqzJIB2OVARJ3UX97ZMWgIAazv+M8CA7wQ3QLfNaSo0ark1JZqva3eUE18ydwxsx/WAzi0aHWsDKYNUK7cuS0EG2TByE6Kq0B+WEjcFqqt2QiBzHVClRUp2DEo/m18klSILuGA4MQNaWV4SErHL7gdmCOwisWvezxYOP4fSz+ZX2uS3QKgbM5pozLR3mwDwcwO2a/uc/STHm3oJMyztTK1p8D8GwK/D9AOaxS1Oc6O9ORhCnevY8m0cFWNoTS/xF5dU1kn7kVQCV9zfNnP1w3V4AiYowaOaJ8kXb56KF0iBwe7z0nWUWNbJVGF6ls06iMN/QdpAyeeazVWcw1HcK3cvFK9UNqZOHhagG7ma/MNiOFpwm+41U+MyhMwwOGzMjqpy6TtxN0JTKQGdbNf5yr3q93JohUjWuK5URkKcfHwj7fU2gKGw3dWqzgNQUHqP5il9EqN4eBO3GBddlc5OThGEiGVg496VD0YrjuI5xkNKOSS74P0azHMCMBNcTo53Zg6ZCzuOcPoEZniPrIDKwo5Crv7j4+UizNqLZYw8o4xsl4cvBf+9uwo3288/PWeBqQ4fKZ/tpua9TXMwGGVsVorW8yU8vh2rN4GgVQB2O4OY4fzZr+2CmyqM0xCUR3O8aCRAWf0WQAqV0FnAsHKrVi9SybAiHFgjygX/IRapi9nolDbsCZxoPoE4XX1vYDsPA+4iLt9uLaw8gzJficzggxGvaJ+WVr4xKK4S8TurklguuW9oR/Zn+JMsgn3NVV021PvE6sdjOhAK/b3somyOcNetlE7F1BOb/4dktTn1HWMYNVcl5u/Ex+UDun16vgGfaIpyQILb3/Xl7v0a3EoYK9roL8cwGHkd0HR0RGEpMkhC9ng6sh4PYfXrOs2TuWIL1CPEX65noehj4vFWZEhjyQAmIBgZ35g8kQzQjFtSTDqRugQ8H2pNUPT87Wf+dqoZRsIneG720Xg25AL8BbpteLOLjTgWaqUfNep3FoX3tWzD/ot4OTcipxHX+9oRssxUfanEK78LgBRSPKFQO+pEoHt8Iy6WUa4fcDWsBKNiwv695U55dJSyMML6oNPQXfBArPrSnlAjcI0tgCdxo8ZnfJ7F7AWl7Z4SPNT8W4s90cisSkLnskAXepw9YvHgDl3QQ4E0agNMnJrLwQLVSExUAhL7J3JzgBceZ1ulvVI5xwHYcP8jrmOuwoHgjUSu5zaP4h6EaL/Mrosv8d8kv6nBhNUVZmQgOashhULmYUQ10uibGyd78eRtXEM2Po8iENdjI34/LHSkcORRWlloqcVsdtL2c/k4xLOgy4YsR9QGCqpymtIbpLEOdJMKLjTSL6WOKKl0XG396Tnnx6LGTUGRy/kmNvHQQiXsqVFcgqajCuJS5U74vFd8yLpWCwbhC41t1qdBZh6ZZaZiorubgnT2h5Ulqnn6iysjiEyBk0tloXwBXRDsJ8lM9MeRcqRRvswal46m4bZoVKjAeaMKUU26+xGsj2Ha9MnX5xEKTzWHHFhTPut/ntHt59Mw4cjf/cPjZXp1Gxt2diNqawt5KvXglPw1acekdtzwfvonUE2NiQ2EobRhYN3vOuEjCznZ2b6rJSY2fvtP51PSPl7lpC4yoXoO4XdHF0PbWeXyiMlLnerxWaZId7J3Y4i6Z4zbY/RLuglpGkcYWQ6FAo+fZ99c9vda0DhmO0bAVQg4v0cTp2HDVXOyHEwNkVhWFHOcqabTdBWnihdnj95VPzUmoFyBGJlHSUYATeZmTzOphi5KMxC8fdnmYODa4u8itCqpgsgg45rOUzu5QxSjaAuPZQhmDc5KDC/lMnvo87pDYfBprdfshdNnDVm2yle4QZ5VwTB0MdigGm4Mx6WzfQtORk8lw0TGgWSqkY82YsMjfYUNwIH2zZUmeli9A6n3AhJKewzFbQLmiLcQQPHCxRSTg3n0c/FmePNHDjkxkD3Adj3JwpBHDpz+m3Dmvf+mbvdo1Uo1JZIPSxNVt/aBfeLvI0zNtbkwPKqif/rgP/px7Sp1p7YXsAYjk+c0GoTz5hjrVW6xM37DI13ux0rOEfLTlJdTL2b3ZZmkUc7t57YHT9c+mh00ThkHJPONVSpWr3IydjgVyGJy+h08nQ1TuQy4Myfe9UZYRIxPm8W3HGn26NA359oHpls9RHOdZKLi5c2O+DAGxfQN/5mbjQjNzq4+ZhBe43T3lTZ80tq0+ZUwCDH0mNR6IuwkgCB3yE29uyQ/qnfsMqxyeXFaU0SqzjXb/cp1bEA9eLUIGHC39CXDLGVuvzj8gentL7GVlb+FKVhEsyWdlbOaohym++fj79M6NFgnWS6tjB1/dNrV+TAQWAjE2ty3oHs0kC19eA6v5B0M1vJsFWnoAk0VUjP42ics2Ud3mbArqFLdf7GBBmryXh+/qH0BR0754ewJ9RMSdiEf0EClUfZPrDT8s6AI4/TX2Nb0dfDzvEvURT191xUvGcNwP9kN/mlVxOjKKMuuKnHyQDqGmPKYnkW1PZwlIr4prEZDsTh0JuHA6k4MGJR4dRZ1q/48jgWp0OPWvJQRBEBsyVWnYvVuaz926fU15N3CfMkk5WQB7zjHJgMlhRRAAuq+naedTSBxZc6rsvpG8UPE1tbxE/dK+zFdUymJjWIZ7fc+mMklYw9S+5NHU7YVrWgwGviigDwlS5yII5VgBHrAhaddbnsTylShFEgWTTirmTLmhrB7b9ZiyyG3d7QdbLzfAjIcsgZa3vL1xeSab1FFTsCYQKIsRQQ8dMGFXZ8UVzZ6Aew8bBkdzDDDR3qhePPv9GwFhxzDm4BC4bc28bWOrXYGpyEdM5t+a2GBrITxXej3RX5tGXAWXwg68pU62iNvZkSvULXxUd5pAbBYCG3ZK3hapx04Wot9JQ2RsKrUvnbKVE5WGCYwyb2e2DrGHIAWTGpjylb7RrwKDeakR3J2wrG8HX2e2QyiOW0VJrOXc9kYtnpvaGWp7tgOT0JNSBHWSsQx+IpPstLfDalOcybHAcu59DVGMroPFOYYWbW2YHQh15Iq69YBQwgW82Oyu79iwW0R32WMtkxAbF4mwCSOSRlQ++0nBeItnuzmfEr2j1tPAJ2R/2eEVsxwMRCBdnnVcqNHdSAHJHhlhyFGFpSHRPxYqVR8BmnKXcmfVq9qLVb5F3peTEK04I775Y+0857pY4CRQ96eWQUnwXXmuPhCTELew/vRiqUsSunTpwrZQaFwvCw2mIQxb0jmAwGkdZ8ixZ12vgCXUMCam3F9lHc0inm4GU7jVvO3gPAmWWIUkquTplQnk+ObDDhSeVVV373CUxg87OQ9CcA/zCPWqRBm90dnhqnLl/reWv3LMWLKvWCQ7umRniY9+XpWEWW1kzM9B6c7Uf8s59z/KRo0ritvQF2hJRVTB7xXdRl07vlqIbzxQtWlw5tqK/RUqII+4/T3yezqM4GS2WZsM5KrFap3zSFjV1o3R9IqfACYDWjO3XJV6JI2qUkm4d+QZUrnxBZlysjf0nZae3DOCoifawYRkdNA69iIlqUNeWwHFlDisWeHh1ltFxxydpFRhK5sJFUNIHPNTxGtqpvRKBkBU29kQvE6S5EBVok/6lJ8yJ32HG+gCN5E6u78TYk5zgQG6mVNTXHeQOpaBo2/5mDf337pGpqWj0PS5cMcAI/QlbilrcdSPDe1CHKTZbK9eeYFCNSAMnQYbIiICFdS2wKRvHvocG3DvCUisk/bP62+vnZFMlafA7rWmY8ctbYWOx7MFtDRyArdIdXlzp94Q+yPcqZBPMWgWdG3DO6E19v645xMyEWXe0mriLBa8X+iXOgaI3I5ziq1SykDntYCWcBpSFfsBI1c6bcUBCZbpQRMV0Y8Mr8cq01G093q5MYqeXUs1+X51T1bdam80LSyNnwBCuejRn2+QcQyjRS3gyyb8CFNKESzoxMqqRc60jeEn7pQR0/f22GLl0xH3SuXB0DWYktvjMN99fyUYP+5MIkiWtGPAoFnm0xhrVNsHaNyRkhJPxLliXy1mHRRcDYMfMbC3gEdmhxOP8aK6jmAL/IQ8wHpal+bmOxG+KL+FcM/ocgJPc/aiKCt+y1tDnScnBd3RQOrCHYZfr7kCBOVutUDb4vgR7fWtp9Yjv6vMCwgVyDnIjoYbVyTWxL23sSUwWbkOtUw15THmkfDCjFKeHx5A9mdPVWl8AyCJAXDoAB+WdoRiLmB6BcaPECgaUvCFBIB99QxeGkmnjc8yZH5oeYoT7uMmaTk/MXJJ6soU/x+BByZLuZjA73DLS1uEXNEcXVMu4C5DFIok18JIyWBKPV3Nl0fSqWyP2tMQNUBQH6+UZr+H84PfFVWjVAVCAk/6Jp5Lxl19mdCJgB8Yw+sTZ32Mb/4lQhJdyVUf7JsroTVCqN5jfOzICFAkYjPq8ceQpzBMG8XilQMKk92ZEXx+MhMc20OvIZsnLO3m9KX8tUDNQXwopu/9PV0iTXcKKRLNDUHxCjAeNgPTPnj3ylp5bqMjLqjdj+RLGmN2kxIzIVfqq4YEFt6+X69sndbZN09zBVHQH6sCK+54laIW7+6kis91iGB78P9StuenHCFzsbeiOblhfBLn6YENI6CdP+IuAGDkEdl/Hcg7E1SgFjfWvyprbr18m5IX6MEYXh2SiEcwXVlZNr2eOXb1DGVG475HQt0YKDgQW1/en7Oc+Ackk0nosR4lM7bxjYcLjVr3+7G8OveEdQ5Nv9wwqyQ9i1TkHHrgoEtU9a3J911T1vbj1ieVtzchPmJ0p+K1XcPqskuxmN4KG8reS7JVbP1QTlOHCGPL1Fp4xgi4Mv1KM5jG+RVu9A/v3XjsKmgYki5UyoynNyI1Ew9bPe6UBT9lwtdSigcYew6gwJ8fbfmBjCmTy73Kz1ZHuqkkkszv2N7YLYUQ0kY0xf6weU3vhMd03+XfMz56ZizZo8+c2poQ5CzCvkXLly7nPjc7DTsr3jRQ15RHswE5U4T5TY+e4qKH4iUDpBP9eSrqiHRjmImz9ar3cWqi4KzmllvXYmDmgRl9TCh+6L6Ts2a+7xEFgpvC9L9JgzlEbJh7W7IDRokpZ4hYoZnJMlS66Iy5abD1XRSjO/B9m36QnberaxVdP9xZxFs9U1Niskfi6sbnsXEAWhowB6VDFYrFZP2VMt0iRvcMC6kImuSEwaE9PWfmW0HpvabmDJK9edYyMfwQsdWuoenc7hiWxnQ9VnE3Zhz41DpwcX8+jyPkeITXUCmCP6OcWpwOP5IFlTwXyCxdN0umQkDz5E8G83OeZWJu5xMgfi7E4nTlScfBwE/oqQXCZbjPKBPa2p8BjW9ziYMx+jKjiU/+ZBfOkRhpTVf5y1yuX6MdW24UJX4G4mfb72HaQko7mb0t6Bz3bRUy2Bj/RWpwAvLFZ71ErQFtNXfDX2VwZNl76Misk47sZoSAusLnF6MGaDhO6PARxwMxh4Ku+vWUWcYUicyjVY9yO0dwc7vV9bxRruUOAhI5aCYCqCUM/FU/CqW/GNyNAfR9yPnC1kqJtOzkN6fpeaS5Ly2C/FraHrjxTosrk7jhK0XyN7ogQ3k2I/ejB4+B5vCOX9wMNg6RM2opGtmISI4e5VyG7jOd/F64vxg4VH5F9AQeiGLTXyFYStAlNk1BXzpYTLdwfnsGFegR8iNjy5LzFiQzeBLGqUmcTLtW3MfOYui9cXapxqMyvJPZxVGE0jflWW7QNKkIryfCOWE6jLlxFHFFmF/MLmwOeARIGd5um+cxRsGeaXPnQ9U6k8W1xGqdxJEpoBcrMW4g6nQPZXMHNFzIHCookvVAJIlf497eXZJyqiw5kV3cbL+1wgT5CEhNnu2QPgYjaOZAnXZkFWQtTlFwflL9oTsvgJOsPYvt0Dm48nPcaVtGCLnrq3aWGYcavcpTSGZE9+gdBY61eTSPKKQUDCY8G3koLFGmUcdOXPrIFlW65TjzRBxgmNopDJTILwS9jzJKBMvDcYvGtJwOulOr0lP2Z84laxul9T9zeKxm8qFx0Gr317+316dlddnl1lVJeixm8OkqqG199oBBiIz3crwjpyaWfujLe3a7YKvj4DJN0Er6cspVKcDwVDp2hreGwApfTXOlM21Z6SZcH422NZ8jSkJSS5RYtg65Omb3ErT7KHDNZ3wowtKLgqHFQ98TCM6mEqdSnnf+NvIPnmB3n29KPiDEKkLQ/iJVg77edXdsEx0Ua/AEIvUkoKD0BCq6qhd5buAHDmHd9s89YNSvIGxrrg+m1mw4A7h7MTZUAbH3GSjwN4apTn1EqsH0PV53WHWbUBGwuyhzKEeQVulhHtW8EcHIG17NSDuPeY0f9kc0sLzGVuKbh/7YZPCVfXK8MHjchrGuRfbBPa9beem4q/Uz8hS2HuHPGpuSmQNhvq/osmENk6fiiOuCXugbIFi2tjPrYOIrZ0JKhJCEs+Jmmp+1gzO1vPRVe5WmKVMovdp2ByyOjARJIZJBcxpCENIufpTj3HmRtvXu1EfB4bev9LKCkZ5CjT/laXMSyDOkBgtrEG/uYh6JyZRGYxBCmHGxqY+4Gyaz8vddTV3XEzfjK44OM8JB3VDCSXftqAQQ/IFPLK2ekhMHBpLvOCYHD88Tl3mgfuYYeA8eY38onKCDYqSS3/abFV/OqccO+FFh0FtZhC2otg/Rzc32qt9Q+7HIy1FXsMWRvGLiVkduoZMZ+TOr3C9h+JW14Nwb8c85RLbtAxv2k6n2LQPwJGDNWY9/ry7GUpw6Jzw+d6lPkh3F5Uo4avd2lu19j+T2YYTZ78xfdIPdboicDP+YKI5j2ltBYLobaM4aWfKR0XAQOt0jSqxCBj/bF+6w1AB5qzMit0MO7xDbtMVZqbG7KwIqyKUTvZDkj1btpoNS3FHGKGBKTL4+4/fCa/QJobs8LDkNLivxi10g0CsKu/Ut3FkKCD+CTCpPC9fhle/kxDQtz2ryWWNEoIA1aRNyzTZY/aV2V3dBR4UFc6N0PcLIiMX/6BLjnQJ4YSHorwuC5ZxbohBJC4LDxRVXBVOZPNmm5RcPGxgUptsw+cIfFFrBcCGNfG8w+cv05X1iLjCcsJZusYunNRsD//Ncl78QDMz6jTU6oiOis3tY6demOzIOBX5igRkHotPu9lRGjvgJzY8gzc550fwWf1GGT02lb1kBn2EIC8kseXqU8sqTcj4z0WfEDqni795rxk1CMEQ+HSOkac5JB0sGaFlF7fTS6cmCh2EwOWsDCSH6bOQEOO0JkoAHgWkcPYMKLYiYWuXig6hwKJsCAdWRpoR9/TyfqI4g+1uDj2Aofyen0xEA0NiXfn7A3VNmfUAbM1hvd0L5c0KO2gNjELZvtRS0nReF6mj55c1fc5LsEdGagehvndLAHj3hxPUGTCZ6sX51a6rYVCAnJZBIQXT8rN8XQgfRZyMoS3RZXmwHuwjonyyhcN6RMTLvNr6opaxkO9UpoYaF3JQTQU3768/zG1gf1XZJSW53YDv98olvAS1Ethzyk4NN1mHY9kyZ2zMnh4Ara6BbbxzCZmF/W+Hc9XiwYJCkL1BIbOPEeKayP1tyaJWDFOOle5sjsDnWGdNlnJB70pGTNBX0DlZZtIRoY4CdE19TKgRCHNrjy8syA4Zl2GFs2YUFpm/AkBLgxPx+hibOFKsI5s883u+KwQek5lmZtGSodh3kQDJRPFE1Bn+UHYsScIRUoxkvg7euNcWHWxPscSK3gg5BzPs2hA+nEVTcY5tviQBoN8mgjdx9G8JGubvY4Nler3IqY7lA9W3hR08ej90Z0yvGV+nJ6/FMf92WWXrszbzPKZzyRt33laQn3DTEkklXpNhkuCE7qecLX0q3Uyd04HGfW7HplYpfYWxwj6+TM3w1mqPaGtlNBlgYrtz/vZMwpIQ6V0WfxwqEf5i1UXVSTHClaS0qNWur2BuMvD7TeZ6EwU819XPKD95N8ZSHG+UiO3NbuH1q9qpr9RYvLZAIrKioURXKCCB8nM0RFLdmSYpJe0y9zXuCd00xVMFJfk1jZENZjFGEtBS3JbfLYStJbKSreeb8zrZT6z8+b1U5lK58dUIWSIy5N8BTkwdfq51iL4zLmAYYe+dUNWgZzDKTWDxBk/7Y+g052IwlC978lH2kj9UqObvtVBGexiEbthGzn2+pjWHhBPVegcXVrtS47DD66RNlGYWN6NGzgXvpBX19eInHHeke3wchJv+UdG0THImTfXdQZ0RdKNDPBMPsFHVt7f0j84I/NLihr2M5yY8SoqBoqXbWDt6XBTjbItDpyPA38yxk52I4BMagb5fZDax17mLDk9XDwcR4bNc/CP0NiYZEnsQIlLGErkCF+5ayoYlrAeqDLJeMlxSL90aQSP4vUcyMQIDYy3gMqiKtPkNUfT9tHW5FqdBWgekhX5WN2Ixe4ITL8wyXvPHIjI0WXRjpdkrYbI7dxfE1Vu/VgF27SWIs03sppPl4qv1Fg30TAI2cEmHdj5zRICeE51pfDtl9hEPq/Ixzt+W9hjrmU7EhE1s3dKXMcCQmB4dqLjsvoaThO/z2rNsbQv3oyH/cy1RLhTY3LNb6WT1pMlf6+a+AUBfLCO92FdvR3frEnafMeNoPLCcEAfE46hBUOLfUWrtXwxtDLxp03orjXGHWyq7SFwD5CEbixxpgZNnneKutWgLNPw8QLEB4Nbkv9bjbF17wUnxRgNgJrJhHR/xMHXAORcFwGfXdz9kqBLpFlB4ODzahzJngkIL+y8Pt3qw9mK+bQEkNVYJSYNyYu823neM6daI0Ud9m6NXOU+M4x9Oa2Nr+KDwfeuQ8Zpo33wcDLoGO4OpijPoY2G04qeJzwC/LJofBAtltaaFby8PZWmXbNRwKrcD5FAlvPpiBUbTefMWwNf0Aryfqr6ugVHJNk7Qga15YE5DtpZCFA4HSdb+vFvzmtk3qTJY95XJlX3SPo0jBvMVnyYLzQGNpo1O28nVv+VUnLoDuu7BNgGvo7pJTYpRh5qpd1+PQRUbpYq4I0018zA+WbnqfckmE8qQrzay9BEoQvuvodYhOy1ijJGTLfWQZNMvfqK5VsRPTlGv9QYmPArBW9cVt8IQMLJXy678qwrV19ouQqYkbnjopxTUhEZsnp5J07CU/vSRmBZOX7wg/b24QAB4jgnbxMx4EJgU+soGM69lVgLzhMnYz5OzmQebDZlc8U+JuyekWRerhTofej/YM20m3kEs90PYUxzHLrhSWp80qQKKo7KnDCvL256TJCvyyJs+8SgTT3rk4aq6KkTfxB539IlvQoZ6GQKlJe3LOhYgc5fLvQmgTMhdoPgf6uBjiICwOaoxBaWHgtBL5yCaQ1VgP0tuYXeQ1UxUbaJRAcfCqx8XR/V/J9eNzd4cTLfDpDQ6VTRdwXQl5i7inMFhdjUEJ67aT6iYh9JnC6ewvfqT66kwwSLY+PhPZ/+d1AD/7LG9ayqKBhoTcLz+gwm2zcsJMbJwfnfT3pGzjue6LG2EVzNh1pshSypdujQWQUAd34ozFUIuecPskiJ9zEZ/0U2pGGTty3+TGBeiDySfCSE0uhWwHolOcFLwpTwUpDj4xBzSOAiHvKa5El77Y3Jogq8DnLEEJJAJTXaQS/Uf/N1KkslKAfEGi8FCBxARkrfUz5SxWMlGZbItGEqV9tEz0ASlW8ToFD9w7mLA6meAjMNDb4jlC1mHvuq8hETxjR2ATS6J0uE2gXwjKXBtoZtYxvDtFmJzUF3vXxJVS4eNpytG9mMu6HxKIUwTJBM2tUrsY7ZB8jkHgw6A07PhYEXTmcT1iL8/IVfJ6yilLUNrxauCpO8ZmYjerHpxRbn+taaA7g/+Uo3nTi/6bhkkN7nydQSFvX+vTb8E5lH1W537TI4BEwwaL8ftRR7PdZL6D/2d6DEkQT9V9SPsdRug9dazx7A5KFHa4gBkltBy9ZgH6AScGrUBQWHOfc8RxAQTzguADP5J/QvpYzzNJxviHExkVexXa8rburXc10uKyzuwyo+URcjbAJXDpFGziaC3HVzqXSB3+b1C8Tz4//nkRO9irWsk/oqmr+EmmNurfh7/pdfCSCjjMpsMj058rLXzVEifQEYZecXEm/7FKgAGO4VNJqCUe9xoeJxOvPwdoa+ppGJE7eOnc7Vr9N8yKEOlvW2CXDTFYT/Dk7mDCn4T7j1PUGct1iCvlSHcayDocyPHXWRWk4DqhWPOy5ysQWJUHLB+kFPYzvrQ20mpPPIAFUd/fmLeoWWNa4zkGRAxzJ+rJ2Sln/ZCzeS27plnMMqsrzmxVQXyS49RYFsWZO8+CYBWVkzl1G2AZO4XFw95wBL7T4r8qTHZxEHFPEite9gUoSLbd67NGAtIvp2fwPkw//JffvyMTPwR4A++bq2O3RLoqRSFCwadFVlp+yn+C+9PEvrZhmKVbbG8OvJFBCsEVyUIq1LWPbSv57ld5u29dd+yMUIhuZrHPeZUYyI68gNyIK27uQ1ZxFJdGPAnHZaORQwY+xiXKKTNzWVlDrSxYUCuke5f/PiFiFkTHx17hIDzexgl6HL3Kidc35Rtcef44sfKB3mrCvKbSQMMXyhx8DEI3r194y6UW6ZAfTKweNdbHn3AEGWNgLQZWSXaEbnIfHPbWoNr2Lndvv2mL2fZBhuwEiLnAGWnxsid32dtCwgfWO1R1Bc6AvQROFUpFacm8K7UTPCe+sViLkys19iKaSWhu4YwMNELAuigWBk+mcgyZrm/EIl6oxl5k/J33yAWP+FvTnCbpyNGbf8GYjJx8LE04GjscMtfrAsM/y7fx/+029bO8aDpKhWIazemdWgF7Pp3SCaK6VHy0h9eQPSkDqPwFZVYmtVeXSfv/XkSBoP5Vy7UNbZAmgANkeMqykZYJdJn09YCINjhjAyTCeopaIbjNAUkPUZVeJlL9jI1anqzZlGz9FHWIpcEsAoH+Gbcjbt3Ie1uYt5dYwn5EAq4SDEnz+RJlG8zcjTYS3SE5jAYmu1kkXHmfoc2/QesFBXkS35DXtCXJUuamf4H98AJIABkVGHPN2MSqxOIUdw7FG74LW5x6YLJeC7wfz3UtYBJjWvWCRvNT7WPZeMvkUB60AezXgMaeNq3n29n1flxXEhoJxzRaCTZMMV2VtIh9kmo1cFDDYbpW5QYNdTVsg0Z7T2aaU8DKJJ66PKdryBccUMkEz3zEFH7VmkNsAABiIvHG50Akq/K+cAH3iGNIhWryXxhjUSmlBe+dr75dX4/BNrUlIR2AjYvtuxMYzZCuov2WccUWHZaj3kZrccpcLrZ85ToFEBTC80HmN6cUc7RSb9GHmPkuoyh49nAKqn4KbQbjVkpJhcZhW0PowSwXxQnn4MqUUFAGjWi5XwXZiiO95sm69WD8j1Nn9j8L0AWyJFVp1b0ch79H3S+ucBd8tnetkz9+jS8s7Nl51UFonzh+eWR4VvCBCGtdANmkkDWrDbqTobs2dkvp73+2h8gb6IIqu4S3pcxECgPkkCdLL+X/FrrAfypn/VC3MQGaENZFrHI68W9qdTY2bULyQxJATTyQJQlfLP6IiWbJSMKjivIPEmexBxdlmIka8H7mIH7QSMgThn8lpaZIbs4Q7h9aYjIScJvWNUdobgyY41oybJKC5EIHGSS85a1o11SRVtZWPeijq3aZvqFKZpRePUwiNSq0fyrxwx3UB3WEXZQ16utjxWSQ4qd92VvpctYc5gRPe/IZvOfRTAQmkPthog4VC0HvP52qkPBFhHwSmJ3ZtgKdYxwP78azRT+Ng5eV1gTAkmBljj6FsVEExgYXGEcL4gm/AdVefUwU8B5kgDjCuXnwj4AwIYByOpNcmNPmOb62E2/UcL44c/+bKiZ+NzS5XHsT+ElKkTEmJiMLpvJ3bsZBrlqemQD6b1OMstMYCcHxGc8PT+YrpNXg3ToEtuPnioqxwCt3Gmj2ISmsR5FbyLH3PlxNA8WIwFFB77pB5O4VQ1bEKZA7mDlMMYsuIuPnkzDFArWMHiVFDXLVcu2JuAEnvIZsmCAkVXHxbc5BHgId2kMg856ybVHhqOnZBQNcB1sKNZCy6w70Dx7mru+/qNKb5bcEbYKBHYbMgChkQqf3TEbRZtxiEZNz/8Xn+6+57NPrx/thDatZeRALQaMH//+zoiVr4G9tbekqErbBMRQI6aCsuB6fqMEodn/LiQn1q6cOjgyW1bJ11jQgAr8qI38JExSXuxEdK3Fezdt3dZ0hwNXSqIRtahkIm/db6EAAAA"); }
+
+</style>
+    <style>
+      :root { --x-serif: "Noto Serif KR", "Nanum Myeongjo", "AppleMyungjo", "Batang", "Songti SC", serif; }
+      html, body { height: 100%; overscroll-behavior: none; }
+      body { overflow: hidden; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+      button, select { font: inherit; color: inherit; touch-action: manipulation; }
+      button { cursor: pointer; }
+
+      .x-screen {
+        position: fixed; inset: 0;
+        display: none; flex-direction: column;
+        background: var(--fill-primary-on);
+        padding:
+          max(env(safe-area-inset-top), 12px)
+          calc(var(--gutter) + env(safe-area-inset-right))
+          max(env(safe-area-inset-bottom), 16px)
+          calc(var(--gutter) + env(safe-area-inset-left));
+      }
+      .x-screen.is-active { display: flex; }
+      .x-scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+      .x-col { width: 100%; max-width: 640px; margin: 0 auto; display: grid; gap: 16px; }
+
+      /* home */
+      .x-title { padding: 20px 0 4px; }
+      .x-title p { margin: 0 0 4px; font: var(--type-label); color: var(--text-secondary); }
+      .x-title h1 { margin: 0; font: var(--type-display); letter-spacing: -0.02em; }
+      .x-panel { background: var(--fill-tertiary); border-radius: var(--r-l); padding: 18px; display: grid; gap: 14px; }
+      .x-panel h2 { margin: 0; font: var(--type-label); color: var(--text-secondary); }
+      .x-range { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: end; }
+      .x-range span.x-arrow { padding-bottom: 14px; color: var(--text-secondary); }
+      .x-field { display: grid; gap: 6px; font: var(--type-tag); color: var(--text-secondary); }
+      .x-select { position: relative; }
+      .x-select select {
+        appearance: none; -webkit-appearance: none; width: 100%;
+        min-height: 52px; padding: 0 36px 0 14px;
+        border-radius: var(--r-s); border: 1px solid var(--stroke-primary);
+        background: var(--fill-primary-on); color: var(--text-primary);
+        font: var(--weight-medium) 18px/1 var(--sans);
+      }
+      .x-select::after { content: "▾"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-secondary); }
+      .x-count { margin: 0; font: var(--type-heading); }
+      .x-count b { font-weight: var(--weight-bold); }
+      .x-presets { display: flex; flex-wrap: wrap; gap: 8px; }
+      .x-preset {
+        min-height: var(--tap); padding: 0 14px; border-radius: var(--r-pill);
+        border: 1px solid var(--stroke-primary); background: var(--fill-primary-on);
+        font: var(--type-label);
+      }
+      .x-preset[aria-pressed="true"] { background: var(--fill-primary); color: var(--text-primary-on); border-color: transparent; }
+      .x-opt { display: grid; gap: 6px; }
+      .x-opt > span { font: var(--type-tag); color: var(--text-secondary); }
+      .x-seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 4px; gap: 4px; border-radius: var(--r-s); background: var(--fill-primary-on); border: 1px solid var(--stroke-secondary); }
+      .x-seg button { min-height: var(--tap); border: 0; border-radius: 9px; background: transparent; font: var(--type-label); color: var(--text-secondary); }
+      .x-seg button[aria-pressed="true"] { background: var(--fill-primary); color: var(--text-primary-on); }
+      .x-big {
+        width: 100%; min-height: 60px; border-radius: var(--r-m); border: 0;
+        background: var(--fill-primary); color: var(--text-primary-on);
+        font: var(--weight-bold) 19px/1 var(--sans);
+        transition: transform var(--dur-quick) var(--ease-out), opacity var(--dur-quick);
+      }
+      .x-big:active { transform: scale(0.98); }
+      .x-big:disabled, .x-btn:disabled { opacity: 0.4; cursor: default; }
+      .x-big--soft { background: var(--fill-tertiary); color: var(--text-primary); }
+      .x-btn {
+        min-height: 52px; padding: 0 18px; border-radius: var(--r-m);
+        border: 1px solid var(--stroke-primary); background: var(--fill-primary-on);
+        font: var(--weight-medium) 16px/1 var(--sans);
+      }
+      .x-btn:active { transform: scale(0.98); }
+      .x-review { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .x-review__n { flex: 1; min-width: 140px; margin: 0; font: var(--type-body); color: var(--text-secondary); }
+      .x-review__n b { display: block; font: var(--type-figure); color: var(--text-primary); }
+      .x-btnrow { display: flex; gap: 8px; flex-wrap: wrap; }
+      .x-msg { margin: 0; font: var(--type-small); color: var(--fill-system-red); min-height: 0; }
+      .x-msg:empty { display: none; }
+
+      /* top bar */
+      .x-bar { display: flex; align-items: center; gap: 12px; min-height: 52px; max-width: 640px; width: 100%; margin: 0 auto; }
+      .x-icon {
+        flex: none; width: var(--tap); height: var(--tap); border-radius: 50%;
+        border: 0; background: var(--fill-tertiary); font: var(--weight-medium) 18px/1 var(--sans);
+        display: grid; place-items: center;
+      }
+      .x-icon:disabled { opacity: 0.35; cursor: default; }
+      .x-prog { flex: 1; display: grid; gap: 6px; }
+      .x-prog__txt { font: var(--weight-medium) 16px/1 var(--sans); font-variant-numeric: tabular-nums; text-align: center; }
+      .x-prog__track { height: 4px; border-radius: 4px; background: var(--fill-tertiary); overflow: hidden; }
+      .x-prog__fill { height: 100%; width: 0; background: var(--fill-primary); border-radius: 4px; transition: width var(--dur-quick) var(--ease-out); }
+      .x-bar__title { flex: 1; margin: 0; font: var(--type-heading); }
+
+      /* card */
+      .x-stage { flex: 1; min-height: 0; display: flex; align-items: stretch; justify-content: center; padding: 12px 0; perspective: 1600px; }
+      .x-card {
+        position: relative; width: 100%; max-width: 560px; max-height: 760px;
+        touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+        cursor: pointer; container-type: size; outline: none;
+      }
+      .x-card:focus-visible .x-face { box-shadow: 0 0 0 3px var(--fill-primary); }
+      .x-card.is-enter { animation: x-enter 260ms var(--ease-out); }
+      .x-card.is-enter-back { animation: x-enter-back 260ms var(--ease-out); }
+      @keyframes x-enter { from { opacity: 0; transform: translateX(40px); } }
+      @keyframes x-enter-back { from { opacity: 0; transform: translateX(-40px); } }
+      .x-flip { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 520ms var(--ease-out); }
+      .x-card.is-flipped .x-flip { transform: rotateY(180deg); }
+      .x-noanim .x-flip { transition: none !important; }
+      .x-face {
+        position: absolute; inset: 0; border-radius: var(--r-xl);
+        backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: var(--fill-primary-on); border: 1px solid var(--stroke-primary); box-shadow: var(--hark-shadow);
+        overflow: hidden;
+      }
+      .x-face--back { transform: rotateY(180deg); background: var(--fill-tertiary); gap: 3cqh; padding: 24px; text-align: center; }
+      .x-lv { position: absolute; top: 16px; left: 16px; padding: 6px 12px; border-radius: var(--r-pill); background: var(--fill-tertiary); color: var(--text-secondary); font: var(--type-label); }
+      .x-face--back .x-lv { background: var(--fill-primary-on); }
+      .x-flag { position: absolute; top: 16px; right: 16px; display: none; align-items: center; gap: 6px; font: var(--type-tag); color: var(--text-secondary); }
+      .x-flag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--fill-system-orange); }
+      .x-card.is-review .x-flag { display: inline-flex; }
+      .x-han { font-family: var(--x-serif); font-weight: 500; line-height: 1; font-size: min(60vw, 40vh); font-size: min(76cqw, 66cqh); }
+      .x-mean { font: var(--weight-bold) min(10cqw, 11cqh)/1.25 var(--sans); word-break: keep-all; }
+      .x-mean span { display: block; }
+      .x-han-sm { font-family: var(--x-serif); font-weight: 500; line-height: 1; font-size: min(26cqw, 22cqh); color: var(--text-secondary); }
+      .x-hint { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; font: var(--type-caption); color: var(--text-secondary); }
+
+      .x-ctrl { max-width: 560px; width: 100%; margin: 0 auto; display: grid; gap: 10px; }
+      .x-navrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+      .x-navrow .x-btn { min-width: 96px; }
+      .x-navrow p { margin: 0; font: var(--type-caption); color: var(--text-secondary); text-align: center; }
+      .x-marks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .x-marks .x-big { min-height: 68px; font-size: 18px; }
+
+      /* done */
+      .x-done { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 20px; max-width: 560px; width: 100%; margin: 0 auto; }
+      .x-done h1 { margin: 0; font: var(--type-display); }
+      .x-done .stats { margin: 0; }
+      .x-chars { margin: 0; font-family: var(--x-serif); font-size: 28px; line-height: 1.4; letter-spacing: 0.15em; word-break: break-all; }
+      .x-chars:empty { display: none; }
+
+      /* list */
+      .x-listtools { display: grid; gap: 8px; max-width: 900px; width: 100%; margin: 0 auto 12px; }
+      .x-listtools p { margin: 0; font: var(--type-caption); color: var(--text-secondary); }
+      .x-list { max-width: 900px; margin: 0 auto; padding-bottom: 24px; }
+      .x-group { margin-bottom: 20px; }
+      .x-group h2 { position: sticky; top: 0; z-index: 1; margin: 0; padding: 10px 0; background: var(--fill-primary-on); font: var(--type-heading); display: flex; align-items: baseline; gap: 8px; }
+      .x-group h2 small { font: var(--type-small); color: var(--text-secondary); }
+      .x-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+      .x-tile { position: relative; }
+      .x-tile__main {
+        width: 100%; height: 104px; border: 1px solid transparent; border-radius: var(--r-m);
+        background: var(--fill-tertiary); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+        padding: 6px; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+      }
+      .x-tile__h { font-family: var(--x-serif); font-weight: 500; font-size: 44px; line-height: 1; }
+      .x-tile__m { display: none; font: var(--type-tag); text-align: center; word-break: keep-all; }
+      .x-tile.is-open .x-tile__main { background: var(--fill-primary-on); border-color: var(--stroke-primary); }
+      .x-tile.is-open .x-tile__h { font-size: 30px; }
+      .x-tile.is-open .x-tile__m { display: block; }
+      .x-tile__star {
+        position: absolute; top: 0; right: 0; width: var(--tap); height: var(--tap); border: 0; background: transparent;
+        display: grid; place-items: center; padding: 0;
+      }
+      .x-tile__star::before { content: ""; width: 10px; height: 10px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--text-tertiary); }
+      .x-tile.is-review .x-tile__star::before { background: var(--fill-system-orange); box-shadow: none; }
+      .x-tile.is-review .x-tile__main { box-shadow: inset 0 0 0 1.5px var(--stroke-system-orange); }
+      .x-empty { padding: 40px 0; text-align: center; color: var(--text-secondary); }
+
+      .x-seg button { padding: 6px 8px; line-height: 1.25; word-break: keep-all; }
+      /* home: action row */
+      .x-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .x-done > :first-child, .x-qd__main > :first-child { margin-top: auto; }
+      .x-done > :last-child, .x-qd__main > :last-child { margin-bottom: auto; }
+      .x-done { overflow-y: auto; justify-content: flex-start; padding-block: 8px; }
+
+      /* study direction: 훈음 → 한자 */
+      .x-mean--front { display: none; padding: 0 24px; text-align: center; font: var(--weight-bold) min(13cqw, 15cqh)/1.25 var(--sans); }
+      .x-card.is-rev .x-face--front .x-han { display: none; }
+      .x-card.is-rev .x-mean--front { display: block; }
+      .x-card.is-rev .x-face--back .x-han-sm { font-size: min(62cqw, 52cqh); color: var(--text-primary); }
+      .x-card.is-rev .x-face--back .x-mean { font-size: min(7cqw, 8cqh); color: var(--text-secondary); }
+
+      /* quiz */
+      .x-score { flex: none; min-width: var(--tap); padding: 0 12px; height: var(--tap); border-radius: var(--r-pill); background: var(--fill-tertiary); display: grid; place-items: center; font: var(--weight-medium) 15px/1 var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .x-qcard { cursor: default; touch-action: manipulation; }
+      .x-qcard .x-face { box-shadow: var(--hark-shadow); }
+      .x-qcard.is-m2h .x-mean--front { display: block; }
+      .x-qcard.is-m2h .x-han-q { display: none; }
+      .x-qcard .x-han-q { font-family: var(--x-serif); font-weight: 500; line-height: 1; font-size: min(70cqw, 62cqh); }
+      .x-qcard .x-qsub { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; font: var(--type-label); color: var(--text-secondary); }
+      .x-qcard .x-qsub:empty { display: none; }
+      .x-tick {
+        position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; opacity: 0;
+        font: var(--weight-bold) min(40cqw, 36cqh)/1 var(--sans); color: var(--fill-system-green);
+      }
+      .x-qcard.is-ok .x-tick { animation: x-tick 800ms var(--ease-out); }
+      @keyframes x-tick { 0% { opacity: 0; transform: scale(0.6); } 25% { opacity: 1; transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; } }
+      .x-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .x-choice {
+        position: relative; min-height: 64px; padding: 8px 12px; border-radius: var(--r-m);
+        border: 2px solid var(--stroke-primary); background: var(--fill-primary-on); color: var(--text-primary);
+        font: var(--weight-bold) 19px/1.25 var(--sans); word-break: keep-all;
+        transition: transform var(--dur-quick) var(--ease-out), background-color var(--dur-quick), border-color var(--dur-quick);
+      }
+      .x-choice:active { transform: scale(0.97); }
+      .x-choice--han { font: var(--weight-medium) 44px/1 var(--x-serif); min-height: 72px; }
+      .x-choice.is-correct { background: var(--fill-system-green); border-color: var(--fill-system-green); color: #fff; }
+      .x-choice.is-wrong { background: var(--fill-system-red); border-color: var(--fill-system-red); color: #fff; }
+      .x-choice.is-correct::after, .x-choice.is-wrong::after { position: absolute; top: 6px; right: 10px; font: var(--weight-bold) 16px/1 var(--sans); }
+      .x-choice.is-correct::after { content: "✓"; }
+      .x-choice.is-wrong::after { content: "✕"; }
+      .x-choices.is-locked .x-choice { cursor: default; }
+      .x-choices.is-locked .x-choice:active { transform: none; }
+      .x-qfoot { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; min-height: 60px; }
+      .x-qfb { margin: 0; font: var(--type-body); color: var(--text-secondary); word-break: keep-all; }
+      .x-qfb b { color: var(--text-primary); }
+      .x-qfb .x-qfb__h { font-family: var(--x-serif); font-weight: 500; font-size: 22px; color: var(--text-primary); }
+      .x-qfoot .x-big { width: auto; min-width: 128px; padding: 0 24px; }
+      .x-qfoot .x-big[hidden] { display: none; }
+
+      /* quiz results */
+      .x-qd { flex: 1; min-height: 0; width: 100%; max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; overflow-y: auto; padding-block: 8px; }
+      .x-qd__main { display: flex; flex-direction: column; gap: 20px; }
+      .x-qd__main h1 { margin: 0; font: var(--type-display); }
+      .x-qd__main .stats { margin: 0; }
+      .x-qd__btns { display: grid; gap: 10px; }
+      .x-qd__miss h2 { margin: 0 0 10px; font: var(--type-heading); display: flex; align-items: baseline; gap: 8px; }
+      .x-qd__miss h2 small { font: var(--type-small); color: var(--text-secondary); }
+      .x-misslist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+      .x-misslist li { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: var(--r-m); background: var(--fill-tertiary); }
+      .x-misslist b { font: var(--weight-medium) 34px/1 var(--x-serif); }
+      .x-misslist span { font: var(--type-label); word-break: keep-all; }
+      .x-misslist small { display: block; font: var(--type-caption); color: var(--text-secondary); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .x-flip, .x-prog__fill, .x-big, .x-choice { transition: none; }
+        .x-card.is-enter, .x-card.is-enter-back { animation: none; }
+        .x-qcard.is-ok .x-tick { animation: none; opacity: 1; }
+      }
+      @media (min-width: 700px) {
+        .x-han-sm { font-size: min(22cqw, 22cqh); }
+      }
+
+      /* ---------- landscape ---------- */
+      @media (orientation: landscape) and (min-aspect-ratio: 5/4) {
+        .x-screen {
+          --x-pad-t: max(env(safe-area-inset-top), 10px);
+          --x-pad-b: max(env(safe-area-inset-bottom), 12px);
+          padding:
+            var(--x-pad-t)
+            calc(var(--gutter) + env(safe-area-inset-right))
+            var(--x-pad-b)
+            calc(var(--gutter) + env(safe-area-inset-left));
+          --x-avail-h: calc(100vh - var(--x-pad-t) - var(--x-pad-b) - 16px);
+        }
+        @supports (height: 100dvh) {
+          .x-screen { --x-avail-h: calc(100dvh - var(--x-pad-t) - var(--x-pad-b) - 16px); }
+        }
+
+        /* home: two columns of settings */
+        .x-col { max-width: 1080px; grid-template-columns: 1fr 1fr; column-gap: 16px; align-items: start; }
+        .x-col > .x-title, .x-col > .x-msg, .x-col > .x-actions, .x-col > .x-spacer { grid-column: 1 / -1; }
+        .x-col > .x-a-range { grid-column: 1; grid-row: 2 / span 2; }
+        .x-col > .x-a-opts { grid-column: 2; grid-row: 2; }
+        .x-col > .x-a-quiz { grid-column: 2; grid-row: 3; }
+        .x-col > .x-msg { grid-row: 4; }
+        .x-col > .x-actions { grid-row: 5; }
+        .x-col > .x-a-review { grid-column: 1 / -1; grid-row: 6; }
+        .x-col > .x-spacer { grid-row: 7; }
+        .x-title { padding-top: 8px; }
+
+        /* card study + quiz: card left, controls right */
+        #s-study.is-active, #s-quiz.is-active {
+          display: grid;
+          grid-template-columns: auto minmax(0, 1fr);
+          grid-template-rows: auto minmax(0, 1fr);
+          column-gap: clamp(16px, 3vw, 40px);
+        }
+        #s-study .x-stage, #s-quiz .x-stage { grid-column: 1; grid-row: 1 / span 2; padding: 8px 0; }
+        #s-study .x-bar, #s-quiz .x-bar { grid-column: 2; grid-row: 1; max-width: 520px; }
+        #s-study .x-ctrl, #s-quiz .x-ctrl { grid-column: 2; grid-row: 2; align-self: center; max-width: 520px; }
+        #s-study .x-card, #s-quiz .x-card {
+          height: 100%; max-height: none; max-width: none;
+          width: min(calc(var(--x-avail-h) * 0.92), 56vw);
+        }
+        .x-han { font-size: min(76cqw, 62cqh); }
+        .x-lv { top: 12px; left: 12px; }
+        .x-flag { top: 12px; right: 12px; }
+        .x-hint, .x-qcard .x-qsub { bottom: 10px; }
+        .x-ctrl { gap: 12px; }
+
+        /* done screens */
+        .x-done { max-width: 720px; }
+        .x-qd { max-width: 1080px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(20px, 4vw, 48px); overflow: hidden; }
+        .x-qd__main, .x-qd__miss { min-height: 0; overflow-y: auto; }
+        .x-qd__miss { padding-top: 8px; }
+        .x-qd__main .stats { grid-auto-flow: column; grid-template-columns: none; padding-top: 0; }
+        .x-qd__main .stat { grid-column: auto; grid-template-columns: none; border-top: 0; padding: 4px 20px; border-left: 1px solid var(--stroke-secondary); }
+        .x-qd__main .stat:first-child { padding-left: 0; border-left: 0; }
+
+        /* list: wider, tools in one row */
+        #s-list .x-bar { max-width: 1280px !important; min-height: 48px; }
+        .x-listtools { max-width: 1280px; grid-template-columns: minmax(240px, 340px) 1fr; align-items: center; column-gap: 16px; margin-bottom: 8px; }
+        .x-list { max-width: 1280px; }
+        .x-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+      }
+      /* short landscape (phones): tighten vertical rhythm */
+      @media (orientation: landscape) and (max-height: 500px) {
+        .x-bar { min-height: 44px; gap: 10px; }
+        .x-ctrl { gap: 8px; }
+        .x-btn { min-height: 48px; }
+        .x-marks .x-big { min-height: 56px; }
+        .x-choices { gap: 8px; }
+        .x-choice { min-height: 56px; font-size: 17px; }
+        .x-choice--han { min-height: 60px; font-size: 38px; }
+        .x-qfoot { min-height: 52px; }
+        .x-qfoot .x-big { min-height: 52px; }
+        .x-big { min-height: 52px; }
+        .x-done { gap: 14px; }
+        .x-done h1, .x-qd__main h1 { font-size: 26px; }
+        .x-qd__main { gap: 14px; }
+        .x-qd__btns { gap: 8px; }
+        .x-tile__main { height: 92px; }
+        .x-group h2 { padding: 6px 0; }
+      }
+    </style>
+  <link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="data:image/png;base64,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" />
+<meta name="theme-color" content="#1c202e" />
+</head>
+  <body>
+    <div class="page" id="top">
+      <main class="main">
+        <!-- 홈 / 설정 -->
+        <section class="x-screen is-active" id="s-home" aria-label="홈">
+          <div class="x-scroll">
+            <div class="x-col">
+              <div class="x-title">
+                <p>한국어문회 한자능력검정 · 8급~4급</p>
+                <h1>아리 한자 카드</h1>
+              </div>
+
+              <div class="x-panel x-a-range">
+                <h2>급수 범위</h2>
+                <div class="x-range">
+                  <label class="x-field">시작 급수
+                    <span class="x-select"><select id="sel-start"></select></span>
+                  </label>
+                  <span class="x-arrow" aria-hidden="true">→</span>
+                  <label class="x-field">끝 급수
+                    <span class="x-select"><select id="sel-end"></select></span>
+                  </label>
+                </div>
+                <p class="x-count" id="range-count" aria-live="polite"></p>
+                <div class="x-presets" id="presets"></div>
+              </div>
+
+              <div class="x-panel x-a-opts">
+                <h2>학습 설정</h2>
+                <div class="x-opt">
+                  <span>순서</span>
+                  <div class="x-seg" data-opt="order">
+                    <button type="button" data-v="seq">차례대로</button>
+                    <button type="button" data-v="shuffle">섞기</button>
+                  </div>
+                </div>
+                <div class="x-opt">
+                  <span>학습 대상</span>
+                  <div class="x-seg" data-opt="target">
+                    <button type="button" data-v="all">전체</button>
+                    <button type="button" data-v="review">다시 볼 한자만</button>
+                  </div>
+                </div>
+                <div class="x-opt">
+                  <span>학습 방향 (카드)</span>
+                  <div class="x-seg" data-opt="dir">
+                    <button type="button" data-v="h2m">한자 → 훈음</button>
+                    <button type="button" data-v="m2h">훈음 → 한자</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="x-panel x-a-quiz">
+                <h2>퀴즈 설정</h2>
+                <div class="x-opt">
+                  <span>퀴즈 유형</span>
+                  <div class="x-seg" data-opt="qtype">
+                    <button type="button" data-v="h2m">한자 보고 훈음 고르기</button>
+                    <button type="button" data-v="m2h">훈음 보고 한자 고르기</button>
+                  </div>
+                </div>
+                <div class="x-opt">
+                  <span>문제 수</span>
+                  <div class="x-seg" data-opt="qcount">
+                    <button type="button" data-v="10">10</button>
+                    <button type="button" data-v="20">20</button>
+                    <button type="button" data-v="50">50</button>
+                    <button type="button" data-v="all">전체</button>
+                  </div>
+                </div>
+              </div>
+
+              <p class="x-msg" id="home-msg" role="status"></p>
+              <div class="x-actions">
+                <button type="button" class="x-big" id="btn-start">시작하기</button>
+                <button type="button" class="x-big x-big--soft" id="btn-quiz">퀴즈</button>
+              </div>
+
+              <div class="x-panel x-a-review">
+                <div class="x-review">
+                  <p class="x-review__n"><b id="review-n">0자</b>다시 볼 한자</p>
+                  <div class="x-btnrow">
+                    <button type="button" class="x-btn" id="btn-review">복습하기</button>
+                    <button type="button" class="x-btn" id="btn-list">목록 보기</button>
+                  </div>
+                </div>
+              </div>
+              <div class="x-spacer" style="height: 8px"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 카드 학습 -->
+        <section class="x-screen" id="s-study" aria-label="카드 학습">
+          <div class="x-bar">
+            <button type="button" class="x-icon" id="btn-close" aria-label="처음으로">✕</button>
+            <div class="x-prog">
+              <span class="x-prog__txt" id="prog-txt">1 / 1</span>
+              <div class="x-prog__track" role="progressbar" id="prog-bar" aria-valuemin="0"><div class="x-prog__fill" id="prog-fill"></div></div>
+            </div>
+            <span style="width: var(--tap); flex: none"></span>
+          </div>
+          <div class="x-stage">
+            <div class="x-card" id="card" tabindex="0" role="button" aria-label="카드 뒤집기">
+              <div class="x-flip">
+                <div class="x-face x-face--front">
+                  <span class="x-lv" id="c-lv"></span>
+                  <span class="x-flag">다시 볼 한자</span>
+                  <span class="x-han" id="c-han" lang="zh-Hant"></span>
+                  <div class="x-mean x-mean--front" id="c-meanf"></div>
+                  <span class="x-hint">눌러서 뒤집기 · 옆으로 밀어 넘기기</span>
+                </div>
+                <div class="x-face x-face--back" aria-hidden="true">
+                  <span class="x-lv" id="c-lv2"></span>
+                  <span class="x-han-sm" id="c-han2" lang="zh-Hant"></span>
+                  <div class="x-mean" id="c-mean"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="x-ctrl">
+            <div class="x-navrow">
+              <button type="button" class="x-btn" id="btn-prev" aria-label="이전 카드">‹ 이전</button>
+              <p>표시 없이 넘기기</p>
+              <button type="button" class="x-btn" id="btn-next" aria-label="다음 카드">다음 ›</button>
+            </div>
+            <div class="x-marks">
+              <button type="button" class="x-big" id="btn-know">알겠어요 ✓</button>
+              <button type="button" class="x-big x-big--soft" id="btn-again">다시 볼래요 ↺</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 완료 -->
+        <section class="x-screen" id="s-done" aria-label="완료">
+          <div class="x-done">
+            <h1>완료! 잘했어요 👏</h1>
+            <section class="stats">
+              <div class="stat"><span class="stat__fig" id="d-know">0</span><span class="stat__label">알겠어요 ✓</span></div>
+              <div class="stat"><span class="stat__fig" id="d-again">0</span><span class="stat__label">다시 볼래요 ↺</span></div>
+            </section>
+            <p class="x-chars" id="d-chars" lang="zh-Hant"></p>
+            <div class="x-marks">
+              <button type="button" class="x-big" id="btn-d-review">다시 볼 한자 복습</button>
+              <button type="button" class="x-big x-big--soft" id="btn-d-home">처음으로</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 퀴즈 -->
+        <section class="x-screen" id="s-quiz" aria-label="퀴즈">
+          <div class="x-bar">
+            <button type="button" class="x-icon" id="q-close" aria-label="처음으로">✕</button>
+            <div class="x-prog">
+              <span class="x-prog__txt" id="q-prog-txt">1 / 1</span>
+              <div class="x-prog__track" role="progressbar" id="q-prog-bar" aria-valuemin="0"><div class="x-prog__fill" id="q-prog-fill"></div></div>
+            </div>
+            <span class="x-score" id="q-score" aria-live="polite">점수 0</span>
+          </div>
+          <div class="x-stage">
+            <div class="x-card x-qcard" id="q-card">
+              <div class="x-face">
+                <span class="x-lv" id="q-lv"></span>
+                <span class="x-flag">다시 볼 한자</span>
+                <span class="x-han-q" id="q-han" lang="zh-Hant"></span>
+                <div class="x-mean x-mean--front" id="q-mean"></div>
+                <span class="x-qsub" id="q-sub"></span>
+                <span class="x-tick" aria-hidden="true">✓</span>
+              </div>
+            </div>
+          </div>
+          <div class="x-ctrl">
+            <div class="x-choices" id="q-choices" role="group" aria-label="보기"></div>
+            <div class="x-qfoot">
+              <p class="x-qfb" id="q-fb" aria-live="polite"></p>
+              <button type="button" class="x-big" id="q-next" hidden>다음 ›</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 퀴즈 결과 -->
+        <section class="x-screen" id="s-qdone" aria-label="퀴즈 결과">
+          <div class="x-qd">
+            <div class="x-qd__main">
+              <h1 id="qd-title">퀴즈 끝!</h1>
+              <section class="stats">
+                <div class="stat"><span class="stat__fig" id="qd-score">0 / 0</span><span class="stat__label">점수 (맞힌 수 / 전체)</span></div>
+                <div class="stat"><span class="stat__fig" id="qd-pct">0%</span><span class="stat__label">정답률</span></div>
+              </section>
+              <div class="x-qd__btns">
+                <button type="button" class="x-big" id="qd-retry">틀린 한자 다시 풀기</button>
+                <button type="button" class="x-big x-big--soft" id="qd-cards">카드로 복습</button>
+                <button type="button" class="x-big x-big--soft" id="qd-home">처음으로</button>
+              </div>
+            </div>
+            <div class="x-qd__miss">
+              <h2>틀린 한자 <small id="qd-miss-n">0자</small></h2>
+              <ul class="x-misslist" id="qd-miss"></ul>
+              <p class="x-empty" id="qd-none">모두 맞혔어요! 틀린 한자가 없어요.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 목록 -->
+        <section class="x-screen" id="s-list" aria-label="목록">
+          <div class="x-bar" style="max-width: 900px">
+            <button type="button" class="x-icon" id="btn-list-close" aria-label="처음으로">✕</button>
+            <p class="x-bar__title" id="list-title">목록</p>
+          </div>
+          <div class="x-listtools">
+            <div class="x-seg" id="list-filter">
+              <button type="button" data-v="all">전체</button>
+              <button type="button" data-v="review">다시 볼 한자만</button>
+            </div>
+            <p>한자를 누르면 훈음이 보여요 · 오른쪽 위 점을 누르거나 길게 누르면 다시 볼 한자에 넣고 빼요</p>
+          </div>
+          <div class="x-scroll" id="list-scroll">
+            <div class="x-list" id="list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+/* Page behaviors for Hark's component library: the nav, the theme toggle, tables, line charts and images. style-gates: data */
+(function () {
+  "use strict";
+  var doc = document, root = doc.documentElement;
+  root.classList.add("js");
+  var LOGO = '<svg width="SIZE" height="SIZE" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path fill="currentColor" d="M25.096 30c-.072 0-.12-.048-.168-.12-4.776-6.384-12.216-10.8-20.736-11.688C4.048 18.168 4 18.096 4 18s.048-.168.192-.192c8.52-.888 15.96-5.304 20.736-11.688.048-.072.096-.12.168-.12s.096.024.168.072A15.02 15.02 0 0 1 31.12 18a15.02 15.02 0 0 1-5.856 11.928c-.072.048-.096.072-.168.072"/></svg>';
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function each(a, f) { return (a || []).map(f).join(""); }
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+  function niceBounds(vals) {
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+    var step = Math.pow(10, Math.floor(Math.log10(Math.max(hi - lo, 1e-9))));
+    lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+    return hi === lo ? [lo - step, hi + step] : [lo, hi];
+  }
+  function fmtNum(v) { return Number(v).toLocaleString("en-US", { maximumFractionDigits: 2 }); }
+  function chartSVG(pts, opt, W) {
+    W = Math.max(320, Math.round(W || 960));
+    var L = 40, R = W - 40, T = 30, Bt = 210;
+    var stagger = pts.length > 1 && (R - L) / (pts.length - 1) < 96;
+    var nameY = function (i) { return 236 + (stagger && i % 2 ? 16 : 0); };
+    var valueY = function (i, py) { return stagger && i % 2 ? Math.min(py + 22, Bt - 4) : py - 13; };
+    var H = (opt.numbered ? 268 : 248) + (stagger ? 16 : 0);
+    var bounds = niceBounds(pts.length ? pts.map(function (p) { return +p[1]; }) : [0, 1]), lo = bounds[0], hi = bounds[1];
+    var x = function (i) { return L + (R - L) * (pts.length < 2 ? 0.5 : i / (pts.length - 1)); };
+    var y = function (v) { return Bt - (Bt - T) * (v - lo) / (hi - lo || 1); };
+    var unit = opt.unit ? " " + opt.unit : "";
+    var line = pts.map(function (p, i) { return (i ? "L" : "M") + x(i).toFixed(1) + "," + y(p[1]).toFixed(1); }).join(" ");
+    var svg = '<g class="pf-grid">' + [30, 120, 210].map(function (gy) { return '<line x1="' + L + '" y1="' + gy + '" x2="' + R + '" y2="' + gy + '"></line>'; }).join("") + "</g>" +
+      '<text class="pf-axis" x="0" y="34">' + fmtNum(hi) + '</text><text class="pf-axis" x="0" y="124">' + fmtNum((lo + hi) / 2) + '</text><text class="pf-axis" x="0" y="214">' + fmtNum(lo) + "</text>" +
+      '<path class="pf-fill" d="' + line + " L" + R + "," + Bt + " L" + L + "," + Bt + ' Z"></path><path class="pf-line" d="' + line + '"></path>';
+    pts.forEach(function (p, i) {
+      var anchor = i === 0 ? ' text-anchor="start"' : i === pts.length - 1 ? ' text-anchor="end"' : "";
+      svg += '<circle class="pf-dot" cx="' + x(i) + '" cy="' + y(p[1]) + '" r="4.5"></circle>' +
+        '<text class="pf-alt" x="' + x(i) + '" y="' + valueY(i, y(p[1])) + '"' + anchor + ">" + esc(fmtNum(p[1]) + unit) + "</text>" +
+        '<text class="pf-name" x="' + x(i) + '" y="' + nameY(i) + '"' + anchor + ">" + esc(p[0]) + "</text>";
+      if (i && opt.numbered) svg += '<text class="pf-num" x="' + ((x(i - 1) + x(i)) / 2) + '" y="' + (H - 10) + '">' + pad2(i) + "</text>";
+    });
+    return ((opt.caption ? '<p class="chart__cap">' + esc(opt.caption) + "</p>" : "") +
+      '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(opt.label || opt.caption || "Line chart") + '">' + svg + "</svg>");
+  }
+
+  function contentWidth(el) {
+    var cs = getComputedStyle(el);
+    return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  }
+  function drawCharts() {
+    [].slice.call(doc.querySelectorAll(".chart[data-points]")).forEach(function (p) {
+      var pts = p.getAttribute("data-points").split(",").map(function (x) { var m = x.split(":"); return [m[0].trim(), +m[1]]; });
+      p.innerHTML = chartSVG(pts, { caption: p.getAttribute("data-caption"), unit: p.getAttribute("data-unit"),
+        label: p.getAttribute("aria-label"), numbered: p.hasAttribute("data-numbered") }, contentWidth(p));
+    });
+  }
+  function autoNav() {
+    var sections = [].slice.call(doc.querySelectorAll("section[data-nav]"));
+    var header = doc.querySelector("header.nav[data-auto]");
+    if (header) {
+      header.innerHTML = '<nav class="seg" aria-label="Sections">' +
+        each(sections, function (s) { return '<a href="#' + esc(s.id) + '">' + esc(s.getAttribute("data-nav")) + "</a>"; }) + "</nav>" +
+        '<button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to dark theme"></button>';
+    }
+    [].slice.call(doc.querySelectorAll(".foot nav[data-auto]")).forEach(function (n) {
+      n.innerHTML = '<a href="#top">Top</a>' + each(sections, function (s) { return '<a href="#' + esc(s.id) + '">' + esc(s.getAttribute("data-nav")) + "</a>"; });
+    });
+    drawCharts();
+    window.addEventListener("resize", function () { clearTimeout(drawCharts.t); drawCharts.t = setTimeout(drawCharts, 150); }, { passive: true });
+    [].slice.call(doc.querySelectorAll(".table-wrap table")).forEach(function (t) {
+      var names = [].map.call(t.querySelectorAll("thead th"), function (th) { return th.textContent.trim(); });
+      [].slice.call(t.querySelectorAll("tbody tr")).forEach(function (tr) {
+        [].slice.call(tr.children).forEach(function (c, i) {
+          if (c.tagName !== "TD") return;
+          if (!c.textContent.trim() && !c.querySelector("img, svg")) c.classList.add("is-empty");
+          else if (names[i] && !c.hasAttribute("data-label")) c.setAttribute("data-label", names[i]);
+        });
+      });
+    });
+    [].slice.call(doc.querySelectorAll(".compare table")).forEach(function (t) {
+      t.parentNode.style.setProperty("--compare-cols", t.querySelectorAll("thead th").length);
+      [].slice.call(t.querySelectorAll(".compare__media .chip")).forEach(function (chip) {
+        chip.closest("th").appendChild(chip);
+      });
+      [].slice.call(t.querySelectorAll("tbody tr")).forEach(function (tr) {
+        var head = tr.querySelector("th"), label = head ? head.textContent.trim() : "";
+        [].slice.call(tr.querySelectorAll("td")).forEach(function (td) {
+          if (label && !td.hasAttribute("data-label")) td.setAttribute("data-label", label);
+        });
+      });
+    });
+    [].slice.call(doc.querySelectorAll(".step__figure img, .band img")).forEach(function (im) {
+      var mark = function () { if (im.naturalHeight > im.naturalWidth) im.parentNode.classList.add("is-portrait"); };
+      if (im.complete) mark(); else im.addEventListener("load", mark);
+    });
+    [].slice.call(doc.querySelectorAll(".hark-mark:empty")).forEach(function (m) { m.innerHTML = LOGO.replace(/SIZE/g, m.getAttribute("data-size") || "20"); });
+  }
+
+  function behaviors() {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var btn = doc.getElementById("theme-btn"), mq = window.matchMedia("(prefers-color-scheme: dark)");
+    try { var saved = localStorage.getItem("hark-theme"); if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved); } catch (e) { /* storage blocked: follow the system theme */ }
+    function current() { var t = root.getAttribute("data-theme"); return t === "light" || t === "dark" ? t : (mq.matches ? "dark" : "light"); }
+    function label() { if (btn) btn.setAttribute("aria-label", current() === "dark" ? "Switch to light theme" : "Switch to dark theme"); }
+    if (btn) btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("hark-theme", next); } catch (e) { /* storage blocked: the choice lasts this visit */ }
+      label();
+    });
+    label();
+
+    var seg = doc.querySelector(".seg");
+    if (seg) {
+      var links = [].slice.call(seg.querySelectorAll("a"));
+      var targets = links.map(function (a) { return doc.getElementById(a.getAttribute("href").slice(1)); });
+      var active = -2;
+      var reveal = function (i) {
+        if (i < 0) return;
+        var a = links[i];
+        var l = a.offsetLeft - 8, r = a.offsetLeft + a.offsetWidth + 8;
+        if (l < seg.scrollLeft || r > seg.scrollLeft + seg.clientWidth) seg.scrollTo({ left: l, behavior: reduce ? "auto" : "smooth" });
+      };
+      var sync = function (force) {
+        var line = window.innerHeight * 0.32, cur = -1;
+        targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) cur = i; });
+        if (cur === active && !force) return;
+        active = cur;
+        links.forEach(function (a, i) { if (i === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+        reveal(cur);
+      };
+      var ticking = false;
+      window.addEventListener("scroll", function () {
+        if (ticking) return; ticking = true;
+        window.requestAnimationFrame(function () { sync(false); ticking = false; });
+      }, { passive: true });
+      window.addEventListener("resize", function () { sync(true); }, { passive: true });
+      if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { sync(true); });
+      sync(true);
+    }
+
+    [].slice.call(doc.querySelectorAll(".chart")).forEach(function (chart) {
+      if (reduce || !("IntersectionObserver" in window)) { chart.classList.add("is-in"); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { chart.classList.add("is-in"); io.disconnect(); } });
+      }, { threshold: 0.3 });
+      io.observe(chart);
+    });
+  }
+
+  function start() {
+    autoNav();
+    behaviors();
+  }
+  if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
+
+</script>
+    <script>
+window.HANJA_DATA = [{"id": 1, "lv": "8급", "h": "校", "m": "학교 교"}, {"id": 2, "lv": "8급", "h": "敎", "m": "가르칠 교"}, {"id": 3, "lv": "8급", "h": "九", "m": "아홉 구"}, {"id": 4, "lv": "8급", "h": "國", "m": "나라 국"}, {"id": 5, "lv": "8급", "h": "軍", "m": "군사 군"}, {"id": 6, "lv": "8급", "h": "金", "m": "쇠 금 / 성 김"}, {"id": 7, "lv": "8급", "h": "南", "m": "남녘 남"}, {"id": 8, "lv": "8급", "h": "女", "m": "계집 녀"}, {"id": 9, "lv": "8급", "h": "年", "m": "해 년"}, {"id": 10, "lv": "8급", "h": "大", "m": "큰 대"}, {"id": 11, "lv": "8급", "h": "東", "m": "동녘 동"}, {"id": 12, "lv": "8급", "h": "六", "m": "여섯 륙"}, {"id": 13, "lv": "8급", "h": "萬", "m": "일만 만"}, {"id": 14, "lv": "8급", "h": "母", "m": "어미 모"}, {"id": 15, "lv": "8급", "h": "木", "m": "나무 목"}, {"id": 16, "lv": "8급", "h": "門", "m": "문 문"}, {"id": 17, "lv": "8급", "h": "民", "m": "백성 민"}, {"id": 18, "lv": "8급", "h": "白", "m": "흰 백"}, {"id": 19, "lv": "8급", "h": "父", "m": "아비 부"}, {"id": 20, "lv": "8급", "h": "北", "m": "북녘 북 / 달아날 배"}, {"id": 21, "lv": "8급", "h": "四", "m": "넉 사"}, {"id": 22, "lv": "8급", "h": "山", "m": "메 산"}, {"id": 23, "lv": "8급", "h": "三", "m": "석 삼"}, {"id": 24, "lv": "8급", "h": "生", "m": "날 생"}, {"id": 25, "lv": "8급", "h": "西", "m": "서녘 서"}, {"id": 26, "lv": "8급", "h": "先", "m": "먼저 선"}, {"id": 27, "lv": "8급", "h": "小", "m": "작을 소"}, {"id": 28, "lv": "8급", "h": "水", "m": "물 수"}, {"id": 29, "lv": "8급", "h": "室", "m": "집 실"}, {"id": 30, "lv": "8급", "h": "十", "m": "열 십"}, {"id": 31, "lv": "8급", "h": "五", "m": "다섯 오"}, {"id": 32, "lv": "8급", "h": "王", "m": "임금 왕"}, {"id": 33, "lv": "8급", "h": "外", "m": "바깥 외"}, {"id": 34, "lv": "8급", "h": "月", "m": "달 월"}, {"id": 35, "lv": "8급", "h": "二", "m": "두 이"}, {"id": 36, "lv": "8급", "h": "人", "m": "사람 인"}, {"id": 37, "lv": "8급", "h": "一", "m": "한 일"}, {"id": 38, "lv": "8급", "h": "日", "m": "날 일"}, {"id": 39, "lv": "8급", "h": "長", "m": "긴 장"}, {"id": 40, "lv": "8급", "h": "弟", "m": "아우 제"}, {"id": 41, "lv": "8급", "h": "中", "m": "가운데 중"}, {"id": 42, "lv": "8급", "h": "靑", "m": "푸를 청"}, {"id": 43, "lv": "8급", "h": "寸", "m": "마디 촌"}, {"id": 44, "lv": "8급", "h": "七", "m": "일곱 칠"}, {"id": 45, "lv": "8급", "h": "土", "m": "흙 토"}, {"id": 46, "lv": "8급", "h": "八", "m": "여덟 팔"}, {"id": 47, "lv": "8급", "h": "學", "m": "배울 학"}, {"id": 48, "lv": "8급", "h": "韓", "m": "한국/나라 한"}, {"id": 49, "lv": "8급", "h": "兄", "m": "형 형"}, {"id": 50, "lv": "8급", "h": "火", "m": "불 화"}, {"id": 51, "lv": "7급Ⅱ", "h": "家", "m": "집 가"}, {"id": 52, "lv": "7급Ⅱ", "h": "間", "m": "사이 간"}, {"id": 53, "lv": "7급Ⅱ", "h": "江", "m": "강 강"}, {"id": 54, "lv": "7급Ⅱ", "h": "車", "m": "수레 거 / 수레 차"}, {"id": 55, "lv": "7급Ⅱ", "h": "工", "m": "장인 공"}, {"id": 56, "lv": "7급Ⅱ", "h": "空", "m": "빌 공"}, {"id": 57, "lv": "7급Ⅱ", "h": "氣", "m": "기운 기"}, {"id": 58, "lv": "7급Ⅱ", "h": "記", "m": "기록할 기"}, {"id": 59, "lv": "7급Ⅱ", "h": "男", "m": "사내 남"}, {"id": 60, "lv": "7급Ⅱ", "h": "內", "m": "안 내"}, {"id": 61, "lv": "7급Ⅱ", "h": "農", "m": "농사 농"}, {"id": 62, "lv": "7급Ⅱ", "h": "答", "m": "대답 답"}, {"id": 63, "lv": "7급Ⅱ", "h": "道", "m": "길 도"}, {"id": 64, "lv": "7급Ⅱ", "h": "動", "m": "움직일 동"}, {"id": 65, "lv": "7급Ⅱ", "h": "力", "m": "힘 력"}, {"id": 66, "lv": "7급Ⅱ", "h": "立", "m": "설 립"}, {"id": 67, "lv": "7급Ⅱ", "h": "每", "m": "매양 매"}, {"id": 68, "lv": "7급Ⅱ", "h": "名", "m": "이름 명"}, {"id": 69, "lv": "7급Ⅱ", "h": "物", "m": "물건 물"}, {"id": 70, "lv": "7급Ⅱ", "h": "方", "m": "모 방"}, {"id": 71, "lv": "7급Ⅱ", "h": "不", "m": "아닐 불"}, {"id": 72, "lv": "7급Ⅱ", "h": "事", "m": "일 사"}, {"id": 73, "lv": "7급Ⅱ", "h": "上", "m": "윗 상"}, {"id": 74, "lv": "7급Ⅱ", "h": "姓", "m": "성 성"}, {"id": 75, "lv": "7급Ⅱ", "h": "世", "m": "인간 세"}, {"id": 76, "lv": "7급Ⅱ", "h": "手", "m": "손 수"}, {"id": 77, "lv": "7급Ⅱ", "h": "時", "m": "때 시"}, {"id": 78, "lv": "7급Ⅱ", "h": "市", "m": "저자 시"}, {"id": 79, "lv": "7급Ⅱ", "h": "食", "m": "밥/먹을 식"}, {"id": 80, "lv": "7급Ⅱ", "h": "安", "m": "편안 안"}, {"id": 81, "lv": "7급Ⅱ", "h": "午", "m": "낮 오"}, {"id": 82, "lv": "7급Ⅱ", "h": "右", "m": "오를/오른(쪽) 우"}, {"id": 83, "lv": "7급Ⅱ", "h": "子", "m": "아들 자"}, {"id": 84, "lv": "7급Ⅱ", "h": "自", "m": "스스로 자"}, {"id": 85, "lv": "7급Ⅱ", "h": "場", "m": "마당 장"}, {"id": 86, "lv": "7급Ⅱ", "h": "電", "m": "번개 전"}, {"id": 87, "lv": "7급Ⅱ", "h": "前", "m": "앞 전"}, {"id": 88, "lv": "7급Ⅱ", "h": "全", "m": "온전 전"}, {"id": 89, "lv": "7급Ⅱ", "h": "正", "m": "바를 정"}, {"id": 90, "lv": "7급Ⅱ", "h": "足", "m": "발 족"}, {"id": 91, "lv": "7급Ⅱ", "h": "左", "m": "왼 좌"}, {"id": 92, "lv": "7급Ⅱ", "h": "直", "m": "곧을 직"}, {"id": 93, "lv": "7급Ⅱ", "h": "平", "m": "평평할 평"}, {"id": 94, "lv": "7급Ⅱ", "h": "下", "m": "아래 하"}, {"id": 95, "lv": "7급Ⅱ", "h": "漢", "m": "한수/한나라 한"}, {"id": 96, "lv": "7급Ⅱ", "h": "海", "m": "바다 해"}, {"id": 97, "lv": "7급Ⅱ", "h": "話", "m": "말씀 화"}, {"id": 98, "lv": "7급Ⅱ", "h": "活", "m": "살 활"}, {"id": 99, "lv": "7급Ⅱ", "h": "孝", "m": "효도 효"}, {"id": 100, "lv": "7급Ⅱ", "h": "後", "m": "뒤 후"}, {"id": 101, "lv": "7급", "h": "歌", "m": "노래 가"}, {"id": 102, "lv": "7급", "h": "口", "m": "입 구"}, {"id": 103, "lv": "7급", "h": "旗", "m": "기 기"}, {"id": 104, "lv": "7급", "h": "同", "m": "한가지 동"}, {"id": 105, "lv": "7급", "h": "洞", "m": "골 동 / 밝을 통"}, {"id": 106, "lv": "7급", "h": "冬", "m": "겨울 동"}, {"id": 107, "lv": "7급", "h": "登", "m": "오를 등"}, {"id": 108, "lv": "7급", "h": "來", "m": "올 래"}, {"id": 109, "lv": "7급", "h": "老", "m": "늙을 로"}, {"id": 110, "lv": "7급", "h": "里", "m": "마을 리"}, {"id": 111, "lv": "7급", "h": "林", "m": "수풀 림"}, {"id": 112, "lv": "7급", "h": "面", "m": "낯 면"}, {"id": 113, "lv": "7급", "h": "命", "m": "목숨 명"}, {"id": 114, "lv": "7급", "h": "文", "m": "글월 문"}, {"id": 115, "lv": "7급", "h": "問", "m": "물을 문"}, {"id": 116, "lv": "7급", "h": "百", "m": "일백 백"}, {"id": 117, "lv": "7급", "h": "夫", "m": "지아비 부"}, {"id": 118, "lv": "7급", "h": "算", "m": "셈 산"}, {"id": 119, "lv": "7급", "h": "色", "m": "빛 색"}, {"id": 120, "lv": "7급", "h": "夕", "m": "저녁 석"}, {"id": 121, "lv": "7급", "h": "少", "m": "적을 소"}, {"id": 122, "lv": "7급", "h": "所", "m": "바 소"}, {"id": 123, "lv": "7급", "h": "數", "m": "셈 수"}, {"id": 124, "lv": "7급", "h": "植", "m": "심을 식"}, {"id": 125, "lv": "7급", "h": "心", "m": "마음 심"}, {"id": 126, "lv": "7급", "h": "語", "m": "말씀 어"}, {"id": 127, "lv": "7급", "h": "然", "m": "그럴 연"}, {"id": 128, "lv": "7급", "h": "有", "m": "있을 유"}, {"id": 129, "lv": "7급", "h": "育", "m": "기를 육"}, {"id": 130, "lv": "7급", "h": "邑", "m": "고을 읍"}, {"id": 131, "lv": "7급", "h": "入", "m": "들 입"}, {"id": 132, "lv": "7급", "h": "字", "m": "글자 자"}, {"id": 133, "lv": "7급", "h": "祖", "m": "할아비 조"}, {"id": 134, "lv": "7급", "h": "住", "m": "살 주"}, {"id": 135, "lv": "7급", "h": "主", "m": "임금/주인 주"}, {"id": 136, "lv": "7급", "h": "重", "m": "무거울 중"}, {"id": 137, "lv": "7급", "h": "紙", "m": "종이 지"}, {"id": 138, "lv": "7급", "h": "地", "m": "땅 지"}, {"id": 139, "lv": "7급", "h": "千", "m": "일천 천"}, {"id": 140, "lv": "7급", "h": "天", "m": "하늘 천"}, {"id": 141, "lv": "7급", "h": "川", "m": "내 천"}, {"id": 142, "lv": "7급", "h": "草", "m": "풀 초"}, {"id": 143, "lv": "7급", "h": "村", "m": "마을 촌"}, {"id": 144, "lv": "7급", "h": "秋", "m": "가을 추"}, {"id": 145, "lv": "7급", "h": "春", "m": "봄 춘"}, {"id": 146, "lv": "7급", "h": "出", "m": "날 출"}, {"id": 147, "lv": "7급", "h": "便", "m": "편할 편 / 똥오줌 변"}, {"id": 148, "lv": "7급", "h": "夏", "m": "여름 하"}, {"id": 149, "lv": "7급", "h": "花", "m": "꽃 화"}, {"id": 150, "lv": "7급", "h": "休", "m": "쉴 휴"}, {"id": 151, "lv": "6급Ⅱ", "h": "各", "m": "각각 각"}, {"id": 152, "lv": "6급Ⅱ", "h": "角", "m": "뿔 각"}, {"id": 153, "lv": "6급Ⅱ", "h": "界", "m": "지경 계"}, {"id": 154, "lv": "6급Ⅱ", "h": "計", "m": "셀 계"}, {"id": 155, "lv": "6급Ⅱ", "h": "高", "m": "높을 고"}, {"id": 156, "lv": "6급Ⅱ", "h": "公", "m": "공평할 공"}, {"id": 157, "lv": "6급Ⅱ", "h": "共", "m": "한가지 공"}, {"id": 158, "lv": "6급Ⅱ", "h": "功", "m": "공 공"}, {"id": 159, "lv": "6급Ⅱ", "h": "果", "m": "열매 과"}, {"id": 160, "lv": "6급Ⅱ", "h": "科", "m": "과목 과"}, {"id": 161, "lv": "6급Ⅱ", "h": "光", "m": "빛 광"}, {"id": 162, "lv": "6급Ⅱ", "h": "球", "m": "공 구"}, {"id": 163, "lv": "6급Ⅱ", "h": "今", "m": "이제 금"}, {"id": 164, "lv": "6급Ⅱ", "h": "急", "m": "급할 급"}, {"id": 165, "lv": "6급Ⅱ", "h": "短", "m": "짧을 단"}, {"id": 166, "lv": "6급Ⅱ", "h": "堂", "m": "집 당"}, {"id": 167, "lv": "6급Ⅱ", "h": "代", "m": "대신할 대"}, {"id": 168, "lv": "6급Ⅱ", "h": "對", "m": "대할 대"}, {"id": 169, "lv": "6급Ⅱ", "h": "圖", "m": "그림 도"}, {"id": 170, "lv": "6급Ⅱ", "h": "讀", "m": "읽을 독 / 구절 두"}, {"id": 171, "lv": "6급Ⅱ", "h": "童", "m": "아이 동"}, {"id": 172, "lv": "6급Ⅱ", "h": "等", "m": "무리 등"}, {"id": 173, "lv": "6급Ⅱ", "h": "樂", "m": "즐길 락 / 노래 악 / 좋아할 요"}, {"id": 174, "lv": "6급Ⅱ", "h": "利", "m": "이할 리"}, {"id": 175, "lv": "6급Ⅱ", "h": "理", "m": "다스릴 리"}, {"id": 176, "lv": "6급Ⅱ", "h": "明", "m": "밝을 명"}, {"id": 177, "lv": "6급Ⅱ", "h": "聞", "m": "들을 문"}, {"id": 178, "lv": "6급Ⅱ", "h": "半", "m": "반 반"}, {"id": 179, "lv": "6급Ⅱ", "h": "反", "m": "돌이킬/돌아올 반"}, {"id": 180, "lv": "6급Ⅱ", "h": "班", "m": "나눌 반"}, {"id": 181, "lv": "6급Ⅱ", "h": "發", "m": "필 발"}, {"id": 182, "lv": "6급Ⅱ", "h": "放", "m": "놓을 방"}, {"id": 183, "lv": "6급Ⅱ", "h": "部", "m": "떼 부"}, {"id": 184, "lv": "6급Ⅱ", "h": "分", "m": "나눌 분"}, {"id": 185, "lv": "6급Ⅱ", "h": "社", "m": "모일 사"}, {"id": 186, "lv": "6급Ⅱ", "h": "書", "m": "글 서"}, {"id": 187, "lv": "6급Ⅱ", "h": "線", "m": "줄 선"}, {"id": 188, "lv": "6급Ⅱ", "h": "雪", "m": "눈 설"}, {"id": 189, "lv": "6급Ⅱ", "h": "成", "m": "이룰 성"}, {"id": 190, "lv": "6급Ⅱ", "h": "省", "m": "살필 성 / 덜 생"}, {"id": 191, "lv": "6급Ⅱ", "h": "消", "m": "사라질 소"}, {"id": 192, "lv": "6급Ⅱ", "h": "術", "m": "재주 술"}, {"id": 193, "lv": "6급Ⅱ", "h": "始", "m": "비로소 시"}, {"id": 194, "lv": "6급Ⅱ", "h": "身", "m": "몸 신"}, {"id": 195, "lv": "6급Ⅱ", "h": "神", "m": "귀신 신"}, {"id": 196, "lv": "6급Ⅱ", "h": "信", "m": "믿을 신"}, {"id": 197, "lv": "6급Ⅱ", "h": "新", "m": "새 신"}, {"id": 198, "lv": "6급Ⅱ", "h": "弱", "m": "약할 약"}, {"id": 199, "lv": "6급Ⅱ", "h": "藥", "m": "약 약"}, {"id": 200, "lv": "6급Ⅱ", "h": "業", "m": "업 업"}, {"id": 201, "lv": "6급Ⅱ", "h": "勇", "m": "날랠 용"}, {"id": 202, "lv": "6급Ⅱ", "h": "用", "m": "쓸 용"}, {"id": 203, "lv": "6급Ⅱ", "h": "運", "m": "옮길 운"}, {"id": 204, "lv": "6급Ⅱ", "h": "音", "m": "소리 음"}, {"id": 205, "lv": "6급Ⅱ", "h": "飮", "m": "마실 음"}, {"id": 206, "lv": "6급Ⅱ", "h": "意", "m": "뜻 의"}, {"id": 207, "lv": "6급Ⅱ", "h": "作", "m": "지을 작"}, {"id": 208, "lv": "6급Ⅱ", "h": "昨", "m": "어제 작"}, {"id": 209, "lv": "6급Ⅱ", "h": "才", "m": "재주 재"}, {"id": 210, "lv": "6급Ⅱ", "h": "戰", "m": "싸움 전"}, {"id": 211, "lv": "6급Ⅱ", "h": "庭", "m": "뜰 정"}, {"id": 212, "lv": "6급Ⅱ", "h": "第", "m": "차례 제"}, {"id": 213, "lv": "6급Ⅱ", "h": "題", "m": "제목 제"}, {"id": 214, "lv": "6급Ⅱ", "h": "注", "m": "부을 주"}, {"id": 215, "lv": "6급Ⅱ", "h": "集", "m": "모을 집"}, {"id": 216, "lv": "6급Ⅱ", "h": "窓", "m": "창 창"}, {"id": 217, "lv": "6급Ⅱ", "h": "淸", "m": "맑을 청"}, {"id": 218, "lv": "6급Ⅱ", "h": "體", "m": "몸 체"}, {"id": 219, "lv": "6급Ⅱ", "h": "表", "m": "겉 표"}, {"id": 220, "lv": "6급Ⅱ", "h": "風", "m": "바람 풍"}, {"id": 221, "lv": "6급Ⅱ", "h": "幸", "m": "다행 행"}, {"id": 222, "lv": "6급Ⅱ", "h": "現", "m": "나타날 현"}, {"id": 223, "lv": "6급Ⅱ", "h": "形", "m": "모양 형"}, {"id": 224, "lv": "6급Ⅱ", "h": "和", "m": "화할 화"}, {"id": 225, "lv": "6급Ⅱ", "h": "會", "m": "모일 회"}, {"id": 226, "lv": "6급", "h": "感", "m": "느낄 감"}, {"id": 227, "lv": "6급", "h": "強", "m": "강할 강"}, {"id": 228, "lv": "6급", "h": "開", "m": "열 개"}, {"id": 229, "lv": "6급", "h": "京", "m": "서울 경"}, {"id": 230, "lv": "6급", "h": "古", "m": "옛 고"}, {"id": 231, "lv": "6급", "h": "苦", "m": "쓸 고"}, {"id": 232, "lv": "6급", "h": "交", "m": "사귈 교"}, {"id": 233, "lv": "6급", "h": "區", "m": "구분할/지경 구"}, {"id": 234, "lv": "6급", "h": "郡", "m": "고을 군"}, {"id": 235, "lv": "6급", "h": "根", "m": "뿌리 근"}, {"id": 236, "lv": "6급", "h": "近", "m": "가까울 근"}, {"id": 237, "lv": "6급", "h": "級", "m": "등급 급"}, {"id": 238, "lv": "6급", "h": "多", "m": "많을 다"}, {"id": 239, "lv": "6급", "h": "待", "m": "기다릴 대"}, {"id": 240, "lv": "6급", "h": "度", "m": "법도 도 / 헤아릴 탁"}, {"id": 241, "lv": "6급", "h": "頭", "m": "머리 두"}, {"id": 242, "lv": "6급", "h": "例", "m": "법식 례"}, {"id": 243, "lv": "6급", "h": "禮", "m": "예도 례"}, {"id": 244, "lv": "6급", "h": "路", "m": "길 로"}, {"id": 245, "lv": "6급", "h": "綠", "m": "푸를 록"}, {"id": 246, "lv": "6급", "h": "李", "m": "오얏/성 리"}, {"id": 247, "lv": "6급", "h": "目", "m": "눈 목"}, {"id": 248, "lv": "6급", "h": "美", "m": "아름다울 미"}, {"id": 249, "lv": "6급", "h": "米", "m": "쌀 미"}, {"id": 250, "lv": "6급", "h": "朴", "m": "성 박"}, {"id": 251, "lv": "6급", "h": "番", "m": "차례 번"}, {"id": 252, "lv": "6급", "h": "別", "m": "다를/나눌 별"}, {"id": 253, "lv": "6급", "h": "病", "m": "병 병"}, {"id": 254, "lv": "6급", "h": "服", "m": "옷 복"}, {"id": 255, "lv": "6급", "h": "本", "m": "근본 본"}, {"id": 256, "lv": "6급", "h": "使", "m": "하여금/부릴 사"}, {"id": 257, "lv": "6급", "h": "死", "m": "죽을 사"}, {"id": 258, "lv": "6급", "h": "席", "m": "자리 석"}, {"id": 259, "lv": "6급", "h": "石", "m": "돌 석"}, {"id": 260, "lv": "6급", "h": "速", "m": "빠를 속"}, {"id": 261, "lv": "6급", "h": "孫", "m": "손자 손"}, {"id": 262, "lv": "6급", "h": "樹", "m": "나무 수"}, {"id": 263, "lv": "6급", "h": "習", "m": "익힐 습"}, {"id": 264, "lv": "6급", "h": "勝", "m": "이길 승"}, {"id": 265, "lv": "6급", "h": "式", "m": "법 식"}, {"id": 266, "lv": "6급", "h": "失", "m": "잃을 실"}, {"id": 267, "lv": "6급", "h": "愛", "m": "사랑 애"}, {"id": 268, "lv": "6급", "h": "夜", "m": "밤 야"}, {"id": 269, "lv": "6급", "h": "野", "m": "들 야"}, {"id": 270, "lv": "6급", "h": "陽", "m": "볕 양"}, {"id": 271, "lv": "6급", "h": "洋", "m": "큰바다 양"}, {"id": 272, "lv": "6급", "h": "言", "m": "말씀 언"}, {"id": 273, "lv": "6급", "h": "英", "m": "꽃부리 영"}, {"id": 274, "lv": "6급", "h": "永", "m": "길 영"}, {"id": 275, "lv": "6급", "h": "溫", "m": "따뜻할 온"}, {"id": 276, "lv": "6급", "h": "園", "m": "동산 원"}, {"id": 277, "lv": "6급", "h": "遠", "m": "멀 원"}, {"id": 278, "lv": "6급", "h": "由", "m": "말미암을 유"}, {"id": 279, "lv": "6급", "h": "油", "m": "기름 유"}, {"id": 280, "lv": "6급", "h": "銀", "m": "은 은"}, {"id": 281, "lv": "6급", "h": "醫", "m": "의원 의"}, {"id": 282, "lv": "6급", "h": "衣", "m": "옷 의"}, {"id": 283, "lv": "6급", "h": "者", "m": "놈 자"}, {"id": 284, "lv": "6급", "h": "章", "m": "글 장"}, {"id": 285, "lv": "6급", "h": "在", "m": "있을 재"}, {"id": 286, "lv": "6급", "h": "定", "m": "정할 정"}, {"id": 287, "lv": "6급", "h": "朝", "m": "아침 조"}, {"id": 288, "lv": "6급", "h": "族", "m": "겨레 족"}, {"id": 289, "lv": "6급", "h": "晝", "m": "낮 주"}, {"id": 290, "lv": "6급", "h": "親", "m": "친할 친"}, {"id": 291, "lv": "6급", "h": "太", "m": "클 태"}, {"id": 292, "lv": "6급", "h": "通", "m": "통할 통"}, {"id": 293, "lv": "6급", "h": "特", "m": "특별할 특"}, {"id": 294, "lv": "6급", "h": "合", "m": "합할 합"}, {"id": 295, "lv": "6급", "h": "行", "m": "다닐 행 / 항렬 항"}, {"id": 296, "lv": "6급", "h": "向", "m": "향할 향"}, {"id": 297, "lv": "6급", "h": "號", "m": "이름 호"}, {"id": 298, "lv": "6급", "h": "畫", "m": "그림 화 / 그을 획"}, {"id": 299, "lv": "6급", "h": "黃", "m": "누를 황"}, {"id": 300, "lv": "6급", "h": "訓", "m": "가르칠 훈"}, {"id": 301, "lv": "5급Ⅱ", "h": "價", "m": "값 가"}, {"id": 302, "lv": "5급Ⅱ", "h": "客", "m": "손 객"}, {"id": 303, "lv": "5급Ⅱ", "h": "格", "m": "격식 격"}, {"id": 304, "lv": "5급Ⅱ", "h": "見", "m": "볼 견 / 뵈올 현"}, {"id": 305, "lv": "5급Ⅱ", "h": "結", "m": "맺을 결"}, {"id": 306, "lv": "5급Ⅱ", "h": "決", "m": "결단할 결"}, {"id": 307, "lv": "5급Ⅱ", "h": "敬", "m": "공경 경"}, {"id": 308, "lv": "5급Ⅱ", "h": "告", "m": "고할 고"}, {"id": 309, "lv": "5급Ⅱ", "h": "課", "m": "공부할/과정 과"}, {"id": 310, "lv": "5급Ⅱ", "h": "過", "m": "지날 과"}, {"id": 311, "lv": "5급Ⅱ", "h": "觀", "m": "볼 관"}, {"id": 312, "lv": "5급Ⅱ", "h": "關", "m": "관계할 관"}, {"id": 313, "lv": "5급Ⅱ", "h": "廣", "m": "넓을 광"}, {"id": 314, "lv": "5급Ⅱ", "h": "具", "m": "갖출 구"}, {"id": 315, "lv": "5급Ⅱ", "h": "舊", "m": "옛 구"}, {"id": 316, "lv": "5급Ⅱ", "h": "局", "m": "판 국"}, {"id": 317, "lv": "5급Ⅱ", "h": "基", "m": "터 기"}, {"id": 318, "lv": "5급Ⅱ", "h": "己", "m": "몸 기"}, {"id": 319, "lv": "5급Ⅱ", "h": "念", "m": "생각 념"}, {"id": 320, "lv": "5급Ⅱ", "h": "能", "m": "능할 능"}, {"id": 321, "lv": "5급Ⅱ", "h": "團", "m": "둥글 단"}, {"id": 322, "lv": "5급Ⅱ", "h": "當", "m": "마땅 당"}, {"id": 323, "lv": "5급Ⅱ", "h": "德", "m": "큰 덕"}, {"id": 324, "lv": "5급Ⅱ", "h": "到", "m": "이를 도"}, {"id": 325, "lv": "5급Ⅱ", "h": "獨", "m": "홀로 독"}, {"id": 326, "lv": "5급Ⅱ", "h": "朗", "m": "밝을 랑"}, {"id": 327, "lv": "5급Ⅱ", "h": "良", "m": "어질 량"}, {"id": 328, "lv": "5급Ⅱ", "h": "旅", "m": "나그네 려"}, {"id": 329, "lv": "5급Ⅱ", "h": "歷", "m": "지날 력"}, {"id": 330, "lv": "5급Ⅱ", "h": "練", "m": "익힐 련"}, {"id": 331, "lv": "5급Ⅱ", "h": "勞", "m": "일할 로"}, {"id": 332, "lv": "5급Ⅱ", "h": "流", "m": "흐를 류"}, {"id": 333, "lv": "5급Ⅱ", "h": "類", "m": "무리 류"}, {"id": 334, "lv": "5급Ⅱ", "h": "陸", "m": "뭍 륙"}, {"id": 335, "lv": "5급Ⅱ", "h": "望", "m": "바랄 망"}, {"id": 336, "lv": "5급Ⅱ", "h": "法", "m": "법 법"}, {"id": 337, "lv": "5급Ⅱ", "h": "變", "m": "변할 변"}, {"id": 338, "lv": "5급Ⅱ", "h": "兵", "m": "병사 병"}, {"id": 339, "lv": "5급Ⅱ", "h": "福", "m": "복 복"}, {"id": 340, "lv": "5급Ⅱ", "h": "奉", "m": "받들 봉"}, {"id": 341, "lv": "5급Ⅱ", "h": "史", "m": "사기 사"}, {"id": 342, "lv": "5급Ⅱ", "h": "士", "m": "선비 사"}, {"id": 343, "lv": "5급Ⅱ", "h": "仕", "m": "섬길 사"}, {"id": 344, "lv": "5급Ⅱ", "h": "産", "m": "낳을 산"}, {"id": 345, "lv": "5급Ⅱ", "h": "商", "m": "장사 상"}, {"id": 346, "lv": "5급Ⅱ", "h": "相", "m": "서로 상"}, {"id": 347, "lv": "5급Ⅱ", "h": "鮮", "m": "고울 선"}, {"id": 348, "lv": "5급Ⅱ", "h": "仙", "m": "신선 선"}, {"id": 349, "lv": "5급Ⅱ", "h": "說", "m": "말씀 설 / 달랠 세"}, {"id": 350, "lv": "5급Ⅱ", "h": "性", "m": "성품 성"}, {"id": 351, "lv": "5급Ⅱ", "h": "洗", "m": "씻을 세"}, {"id": 352, "lv": "5급Ⅱ", "h": "歲", "m": "해 세"}, {"id": 353, "lv": "5급Ⅱ", "h": "束", "m": "묶을 속"}, {"id": 354, "lv": "5급Ⅱ", "h": "首", "m": "머리 수"}, {"id": 355, "lv": "5급Ⅱ", "h": "宿", "m": "잘 숙 / 별자리 수"}, {"id": 356, "lv": "5급Ⅱ", "h": "順", "m": "순할 순"}, {"id": 357, "lv": "5급Ⅱ", "h": "識", "m": "알 식"}, {"id": 358, "lv": "5급Ⅱ", "h": "臣", "m": "신하 신"}, {"id": 359, "lv": "5급Ⅱ", "h": "實", "m": "열매 실"}, {"id": 360, "lv": "5급Ⅱ", "h": "兒", "m": "아이 아"}, {"id": 361, "lv": "5급Ⅱ", "h": "惡", "m": "악할 악 / 미워할 오"}, {"id": 362, "lv": "5급Ⅱ", "h": "約", "m": "맺을 약"}, {"id": 363, "lv": "5급Ⅱ", "h": "養", "m": "기를 양"}, {"id": 364, "lv": "5급Ⅱ", "h": "要", "m": "요긴할 요"}, {"id": 365, "lv": "5급Ⅱ", "h": "友", "m": "벗 우"}, {"id": 366, "lv": "5급Ⅱ", "h": "雨", "m": "비 우"}, {"id": 367, "lv": "5급Ⅱ", "h": "雲", "m": "구름 운"}, {"id": 368, "lv": "5급Ⅱ", "h": "元", "m": "으뜸 원"}, {"id": 369, "lv": "5급Ⅱ", "h": "偉", "m": "클 위"}, {"id": 370, "lv": "5급Ⅱ", "h": "以", "m": "써 이"}, {"id": 371, "lv": "5급Ⅱ", "h": "任", "m": "맡길 임"}, {"id": 372, "lv": "5급Ⅱ", "h": "財", "m": "재물 재"}, {"id": 373, "lv": "5급Ⅱ", "h": "材", "m": "재목 재"}, {"id": 374, "lv": "5급Ⅱ", "h": "的", "m": "과녁 적"}, {"id": 375, "lv": "5급Ⅱ", "h": "傳", "m": "전할 전"}, {"id": 376, "lv": "5급Ⅱ", "h": "典", "m": "법 전"}, {"id": 377, "lv": "5급Ⅱ", "h": "展", "m": "펼 전"}, {"id": 378, "lv": "5급Ⅱ", "h": "節", "m": "마디 절"}, {"id": 379, "lv": "5급Ⅱ", "h": "切", "m": "끊을 절 / 온통 체"}, {"id": 380, "lv": "5급Ⅱ", "h": "店", "m": "가게 점"}, {"id": 381, "lv": "5급Ⅱ", "h": "情", "m": "뜻 정"}, {"id": 382, "lv": "5급Ⅱ", "h": "調", "m": "고를 조"}, {"id": 383, "lv": "5급Ⅱ", "h": "卒", "m": "마칠 졸"}, {"id": 384, "lv": "5급Ⅱ", "h": "種", "m": "씨 종"}, {"id": 385, "lv": "5급Ⅱ", "h": "週", "m": "주일 주"}, {"id": 386, "lv": "5급Ⅱ", "h": "州", "m": "고을 주"}, {"id": 387, "lv": "5급Ⅱ", "h": "知", "m": "알 지"}, {"id": 388, "lv": "5급Ⅱ", "h": "質", "m": "바탕 질"}, {"id": 389, "lv": "5급Ⅱ", "h": "着", "m": "붙을 착"}, {"id": 390, "lv": "5급Ⅱ", "h": "參", "m": "참여할 참"}, {"id": 391, "lv": "5급Ⅱ", "h": "責", "m": "꾸짖을 책"}, {"id": 392, "lv": "5급Ⅱ", "h": "充", "m": "채울 충"}, {"id": 393, "lv": "5급Ⅱ", "h": "宅", "m": "집 택"}, {"id": 394, "lv": "5급Ⅱ", "h": "品", "m": "물건 품"}, {"id": 395, "lv": "5급Ⅱ", "h": "必", "m": "반드시 필"}, {"id": 396, "lv": "5급Ⅱ", "h": "筆", "m": "붓 필"}, {"id": 397, "lv": "5급Ⅱ", "h": "害", "m": "해할 해"}, {"id": 398, "lv": "5급Ⅱ", "h": "化", "m": "될 화"}, {"id": 399, "lv": "5급Ⅱ", "h": "效", "m": "본받을 효"}, {"id": 400, "lv": "5급Ⅱ", "h": "凶", "m": "흉할 흉"}, {"id": 401, "lv": "5급", "h": "加", "m": "더할 가"}, {"id": 402, "lv": "5급", "h": "可", "m": "옳을 가"}, {"id": 403, "lv": "5급", "h": "改", "m": "고칠 개"}, {"id": 404, "lv": "5급", "h": "擧", "m": "들 거"}, {"id": 405, "lv": "5급", "h": "去", "m": "갈 거"}, {"id": 406, "lv": "5급", "h": "件", "m": "물건 건"}, {"id": 407, "lv": "5급", "h": "建", "m": "세울 건"}, {"id": 408, "lv": "5급", "h": "健", "m": "굳셀 건"}, {"id": 409, "lv": "5급", "h": "輕", "m": "가벼울 경"}, {"id": 410, "lv": "5급", "h": "競", "m": "다툴 경"}, {"id": 411, "lv": "5급", "h": "景", "m": "볕 경"}, {"id": 412, "lv": "5급", "h": "考", "m": "생각할 고"}, {"id": 413, "lv": "5급", "h": "固", "m": "굳을 고"}, {"id": 414, "lv": "5급", "h": "曲", "m": "굽을 곡"}, {"id": 415, "lv": "5급", "h": "橋", "m": "다리 교"}, {"id": 416, "lv": "5급", "h": "救", "m": "구원할 구"}, {"id": 417, "lv": "5급", "h": "貴", "m": "귀할 귀"}, {"id": 418, "lv": "5급", "h": "規", "m": "법 규"}, {"id": 419, "lv": "5급", "h": "給", "m": "줄 급"}, {"id": 420, "lv": "5급", "h": "汽", "m": "물끓는김 기"}, {"id": 421, "lv": "5급", "h": "期", "m": "기약할 기"}, {"id": 422, "lv": "5급", "h": "技", "m": "재주 기"}, {"id": 423, "lv": "5급", "h": "吉", "m": "길할 길"}, {"id": 424, "lv": "5급", "h": "壇", "m": "단 단"}, {"id": 425, "lv": "5급", "h": "談", "m": "말씀 담"}, {"id": 426, "lv": "5급", "h": "都", "m": "도읍 도"}, {"id": 427, "lv": "5급", "h": "島", "m": "섬 도"}, {"id": 428, "lv": "5급", "h": "落", "m": "떨어질 락"}, {"id": 429, "lv": "5급", "h": "冷", "m": "찰 랭"}, {"id": 430, "lv": "5급", "h": "量", "m": "헤아릴 량"}, {"id": 431, "lv": "5급", "h": "領", "m": "거느릴 령"}, {"id": 432, "lv": "5급", "h": "令", "m": "하여금 령"}, {"id": 433, "lv": "5급", "h": "料", "m": "헤아릴 료"}, {"id": 434, "lv": "5급", "h": "馬", "m": "말 마"}, {"id": 435, "lv": "5급", "h": "末", "m": "끝 말"}, {"id": 436, "lv": "5급", "h": "亡", "m": "망할 망"}, {"id": 437, "lv": "5급", "h": "買", "m": "살 매"}, {"id": 438, "lv": "5급", "h": "賣", "m": "팔 매"}, {"id": 439, "lv": "5급", "h": "無", "m": "없을 무"}, {"id": 440, "lv": "5급", "h": "倍", "m": "곱 배"}, {"id": 441, "lv": "5급", "h": "比", "m": "견줄 비"}, {"id": 442, "lv": "5급", "h": "費", "m": "쓸 비"}, {"id": 443, "lv": "5급", "h": "鼻", "m": "코 비"}, {"id": 444, "lv": "5급", "h": "氷", "m": "얼음 빙"}, {"id": 445, "lv": "5급", "h": "寫", "m": "베낄 사"}, {"id": 446, "lv": "5급", "h": "思", "m": "생각 사"}, {"id": 447, "lv": "5급", "h": "査", "m": "조사할 사"}, {"id": 448, "lv": "5급", "h": "賞", "m": "상줄 상"}, {"id": 449, "lv": "5급", "h": "序", "m": "차례 서"}, {"id": 450, "lv": "5급", "h": "善", "m": "착할 선"}, {"id": 451, "lv": "5급", "h": "選", "m": "가릴 선"}, {"id": 452, "lv": "5급", "h": "船", "m": "배 선"}, {"id": 453, "lv": "5급", "h": "示", "m": "보일 시"}, {"id": 454, "lv": "5급", "h": "案", "m": "책상 안"}, {"id": 455, "lv": "5급", "h": "漁", "m": "고기잡을 어"}, {"id": 456, "lv": "5급", "h": "魚", "m": "고기/물고기 어"}, {"id": 457, "lv": "5급", "h": "億", "m": "억 억"}, {"id": 458, "lv": "5급", "h": "熱", "m": "더울 열"}, {"id": 459, "lv": "5급", "h": "葉", "m": "잎 엽"}, {"id": 460, "lv": "5급", "h": "屋", "m": "집 옥"}, {"id": 461, "lv": "5급", "h": "完", "m": "완전할 완"}, {"id": 462, "lv": "5급", "h": "曜", "m": "빛날 요"}, {"id": 463, "lv": "5급", "h": "浴", "m": "목욕할 욕"}, {"id": 464, "lv": "5급", "h": "牛", "m": "소 우"}, {"id": 465, "lv": "5급", "h": "雄", "m": "수컷 웅"}, {"id": 466, "lv": "5급", "h": "原", "m": "언덕 원"}, {"id": 467, "lv": "5급", "h": "院", "m": "집 원"}, {"id": 468, "lv": "5급", "h": "願", "m": "원할 원"}, {"id": 469, "lv": "5급", "h": "位", "m": "자리 위"}, {"id": 470, "lv": "5급", "h": "耳", "m": "귀 이"}, {"id": 471, "lv": "5급", "h": "因", "m": "인할 인"}, {"id": 472, "lv": "5급", "h": "災", "m": "재앙 재"}, {"id": 473, "lv": "5급", "h": "再", "m": "두 재"}, {"id": 474, "lv": "5급", "h": "爭", "m": "다툴 쟁"}, {"id": 475, "lv": "5급", "h": "貯", "m": "쌓을 저"}, {"id": 476, "lv": "5급", "h": "赤", "m": "붉을 적"}, {"id": 477, "lv": "5급", "h": "停", "m": "머물 정"}, {"id": 478, "lv": "5급", "h": "操", "m": "잡을 조"}, {"id": 479, "lv": "5급", "h": "終", "m": "마칠 종"}, {"id": 480, "lv": "5급", "h": "罪", "m": "허물 죄"}, {"id": 481, "lv": "5급", "h": "止", "m": "그칠 지"}, {"id": 482, "lv": "5급", "h": "唱", "m": "부를 창"}, {"id": 483, "lv": "5급", "h": "鐵", "m": "쇠 철"}, {"id": 484, "lv": "5급", "h": "初", "m": "처음 초"}, {"id": 485, "lv": "5급", "h": "最", "m": "가장 최"}, {"id": 486, "lv": "5급", "h": "祝", "m": "빌 축"}, {"id": 487, "lv": "5급", "h": "致", "m": "이를 치"}, {"id": 488, "lv": "5급", "h": "則", "m": "법칙 칙"}, {"id": 489, "lv": "5급", "h": "他", "m": "다를 타"}, {"id": 490, "lv": "5급", "h": "打", "m": "칠 타"}, {"id": 491, "lv": "5급", "h": "卓", "m": "높을 탁"}, {"id": 492, "lv": "5급", "h": "炭", "m": "숯 탄"}, {"id": 493, "lv": "5급", "h": "板", "m": "널 판"}, {"id": 494, "lv": "5급", "h": "敗", "m": "패할 패"}, {"id": 495, "lv": "5급", "h": "河", "m": "물 하"}, {"id": 496, "lv": "5급", "h": "寒", "m": "찰 한"}, {"id": 497, "lv": "5급", "h": "許", "m": "허락할 허"}, {"id": 498, "lv": "5급", "h": "湖", "m": "호수 호"}, {"id": 499, "lv": "5급", "h": "患", "m": "근심 환"}, {"id": 500, "lv": "5급", "h": "黑", "m": "검을 흑"}, {"id": 501, "lv": "준4급", "h": "假", "m": "거짓 가"}, {"id": 502, "lv": "준4급", "h": "街", "m": "거리 가"}, {"id": 503, "lv": "준4급", "h": "減", "m": "덜 감"}, {"id": 504, "lv": "준4급", "h": "監", "m": "볼 감"}, {"id": 505, "lv": "준4급", "h": "講", "m": "욀 강"}, {"id": 506, "lv": "준4급", "h": "康", "m": "편안 강"}, {"id": 507, "lv": "준4급", "h": "個", "m": "낱 개"}, {"id": 508, "lv": "준4급", "h": "檢", "m": "검사할 검"}, {"id": 509, "lv": "준4급", "h": "潔", "m": "깨끗할 결"}, {"id": 510, "lv": "준4급", "h": "缺", "m": "이지러질 결"}, {"id": 511, "lv": "준4급", "h": "境", "m": "지경 경"}, {"id": 512, "lv": "준4급", "h": "經", "m": "지날/글 경"}, {"id": 513, "lv": "준4급", "h": "警", "m": "깨우칠 경"}, {"id": 514, "lv": "준4급", "h": "慶", "m": "경사 경"}, {"id": 515, "lv": "준4급", "h": "係", "m": "맬 계"}, {"id": 516, "lv": "준4급", "h": "故", "m": "연고 고"}, {"id": 517, "lv": "준4급", "h": "官", "m": "벼슬 관"}, {"id": 518, "lv": "준4급", "h": "求", "m": "구할 구"}, {"id": 519, "lv": "준4급", "h": "句", "m": "글귀 구"}, {"id": 520, "lv": "준4급", "h": "究", "m": "연구할 구"}, {"id": 521, "lv": "준4급", "h": "宮", "m": "집 궁"}, {"id": 522, "lv": "준4급", "h": "權", "m": "권세 권"}, {"id": 523, "lv": "준4급", "h": "極", "m": "다할/극진할 극"}, {"id": 524, "lv": "준4급", "h": "禁", "m": "금할 금"}, {"id": 525, "lv": "준4급", "h": "器", "m": "그릇 기"}, {"id": 526, "lv": "준4급", "h": "起", "m": "일어날 기"}, {"id": 527, "lv": "준4급", "h": "暖", "m": "따뜻할 난"}, {"id": 528, "lv": "준4급", "h": "難", "m": "어려울 난"}, {"id": 529, "lv": "준4급", "h": "怒", "m": "성낼 노"}, {"id": 530, "lv": "준4급", "h": "努", "m": "힘쓸 노"}, {"id": 531, "lv": "준4급", "h": "斷", "m": "끊을 단"}, {"id": 532, "lv": "준4급", "h": "單", "m": "홑 단"}, {"id": 533, "lv": "준4급", "h": "檀", "m": "박달나무 단"}, {"id": 534, "lv": "준4급", "h": "端", "m": "끝 단"}, {"id": 535, "lv": "준4급", "h": "達", "m": "통달할 달"}, {"id": 536, "lv": "준4급", "h": "擔", "m": "멜 담"}, {"id": 537, "lv": "준4급", "h": "黨", "m": "무리 당"}, {"id": 538, "lv": "준4급", "h": "帶", "m": "띠 대"}, {"id": 539, "lv": "준4급", "h": "隊", "m": "무리 대"}, {"id": 540, "lv": "준4급", "h": "導", "m": "인도할 도"}, {"id": 541, "lv": "준4급", "h": "毒", "m": "독 독"}, {"id": 542, "lv": "준4급", "h": "督", "m": "감독할 독"}, {"id": 543, "lv": "준4급", "h": "銅", "m": "구리 동"}, {"id": 544, "lv": "준4급", "h": "斗", "m": "말 두"}, {"id": 545, "lv": "준4급", "h": "豆", "m": "콩 두"}, {"id": 546, "lv": "준4급", "h": "得", "m": "얻을 득"}, {"id": 547, "lv": "준4급", "h": "燈", "m": "등 등"}, {"id": 548, "lv": "준4급", "h": "羅", "m": "벌일 라"}, {"id": 549, "lv": "준4급", "h": "兩", "m": "두 량"}, {"id": 550, "lv": "준4급", "h": "麗", "m": "고울 려"}, {"id": 551, "lv": "준4급", "h": "連", "m": "이을 련"}, {"id": 552, "lv": "준4급", "h": "列", "m": "벌릴 렬"}, {"id": 553, "lv": "준4급", "h": "錄", "m": "기록할 록"}, {"id": 554, "lv": "준4급", "h": "論", "m": "논할 론"}, {"id": 555, "lv": "준4급", "h": "留", "m": "머무를 류"}, {"id": 556, "lv": "준4급", "h": "律", "m": "법칙 률"}, {"id": 557, "lv": "준4급", "h": "滿", "m": "찰 만"}, {"id": 558, "lv": "준4급", "h": "脈", "m": "줄기 맥"}, {"id": 559, "lv": "준4급", "h": "毛", "m": "터럭 모"}, {"id": 560, "lv": "준4급", "h": "牧", "m": "칠 목"}, {"id": 561, "lv": "준4급", "h": "務", "m": "힘쓸 무"}, {"id": 562, "lv": "준4급", "h": "武", "m": "호반 무"}, {"id": 563, "lv": "준4급", "h": "未", "m": "아닐 미"}, {"id": 564, "lv": "준4급", "h": "味", "m": "맛 미"}, {"id": 565, "lv": "준4급", "h": "密", "m": "빽빽할 밀"}, {"id": 566, "lv": "준4급", "h": "博", "m": "넓을 박"}, {"id": 567, "lv": "준4급", "h": "防", "m": "막을 방"}, {"id": 568, "lv": "준4급", "h": "房", "m": "방 방"}, {"id": 569, "lv": "준4급", "h": "訪", "m": "찾을 방"}, {"id": 570, "lv": "준4급", "h": "拜", "m": "절 배"}, {"id": 571, "lv": "준4급", "h": "背", "m": "등 배"}, {"id": 572, "lv": "준4급", "h": "配", "m": "나눌/짝 배"}, {"id": 573, "lv": "준4급", "h": "罰", "m": "벌할 벌"}, {"id": 574, "lv": "준4급", "h": "伐", "m": "칠 벌"}, {"id": 575, "lv": "준4급", "h": "壁", "m": "벽 벽"}, {"id": 576, "lv": "준4급", "h": "邊", "m": "가 변"}, {"id": 577, "lv": "준4급", "h": "保", "m": "지킬 보"}, {"id": 578, "lv": "준4급", "h": "步", "m": "걸음 보"}, {"id": 579, "lv": "준4급", "h": "報", "m": "갚을/알릴 보"}, {"id": 580, "lv": "준4급", "h": "寶", "m": "보배 보"}, {"id": 581, "lv": "준4급", "h": "復", "m": "회복할 복 / 다시 부"}, {"id": 582, "lv": "준4급", "h": "府", "m": "마을 부"}, {"id": 583, "lv": "준4급", "h": "富", "m": "부자 부"}, {"id": 584, "lv": "준4급", "h": "副", "m": "버금 부"}, {"id": 585, "lv": "준4급", "h": "婦", "m": "며느리 부"}, {"id": 586, "lv": "준4급", "h": "佛", "m": "부처 불"}, {"id": 587, "lv": "준4급", "h": "飛", "m": "날 비"}, {"id": 588, "lv": "준4급", "h": "備", "m": "갖출 비"}, {"id": 589, "lv": "준4급", "h": "非", "m": "아닐 비"}, {"id": 590, "lv": "준4급", "h": "悲", "m": "슬플 비"}, {"id": 591, "lv": "준4급", "h": "貧", "m": "가난할 빈"}, {"id": 592, "lv": "준4급", "h": "寺", "m": "절 사"}, {"id": 593, "lv": "준4급", "h": "師", "m": "스승 사"}, {"id": 594, "lv": "준4급", "h": "謝", "m": "사례할 사"}, {"id": 595, "lv": "준4급", "h": "舍", "m": "집 사"}, {"id": 596, "lv": "준4급", "h": "殺", "m": "죽일 살 / 감할 쇄"}, {"id": 597, "lv": "준4급", "h": "常", "m": "항상 상"}, {"id": 598, "lv": "준4급", "h": "床", "m": "상 상"}, {"id": 599, "lv": "준4급", "h": "想", "m": "생각 상"}, {"id": 600, "lv": "준4급", "h": "狀", "m": "형상 상 / 문서 장"}, {"id": 601, "lv": "준4급", "h": "設", "m": "베풀 설"}, {"id": 602, "lv": "준4급", "h": "誠", "m": "정성 성"}, {"id": 603, "lv": "준4급", "h": "聲", "m": "소리 성"}, {"id": 604, "lv": "준4급", "h": "盛", "m": "성할 성"}, {"id": 605, "lv": "준4급", "h": "聖", "m": "성인 성"}, {"id": 606, "lv": "준4급", "h": "城", "m": "재 성"}, {"id": 607, "lv": "준4급", "h": "星", "m": "별 성"}, {"id": 608, "lv": "준4급", "h": "勢", "m": "형세 세"}, {"id": 609, "lv": "준4급", "h": "稅", "m": "세금 세"}, {"id": 610, "lv": "준4급", "h": "細", "m": "가늘 세"}, {"id": 611, "lv": "준4급", "h": "笑", "m": "웃음 소"}, {"id": 612, "lv": "준4급", "h": "掃", "m": "쓸 소"}, {"id": 613, "lv": "준4급", "h": "素", "m": "본디/흴 소"}, {"id": 614, "lv": "준4급", "h": "續", "m": "이을 속"}, {"id": 615, "lv": "준4급", "h": "俗", "m": "풍속 속"}, {"id": 616, "lv": "준4급", "h": "送", "m": "보낼 송"}, {"id": 617, "lv": "준4급", "h": "修", "m": "닦을 수"}, {"id": 618, "lv": "준4급", "h": "受", "m": "받을 수"}, {"id": 619, "lv": "준4급", "h": "守", "m": "지킬 수"}, {"id": 620, "lv": "준4급", "h": "授", "m": "줄 수"}, {"id": 621, "lv": "준4급", "h": "收", "m": "거둘 수"}, {"id": 622, "lv": "준4급", "h": "純", "m": "순수할 순"}, {"id": 623, "lv": "준4급", "h": "承", "m": "이을 승"}, {"id": 624, "lv": "준4급", "h": "詩", "m": "시 시"}, {"id": 625, "lv": "준4급", "h": "試", "m": "시험 시"}, {"id": 626, "lv": "준4급", "h": "視", "m": "볼 시"}, {"id": 627, "lv": "준4급", "h": "施", "m": "베풀 시"}, {"id": 628, "lv": "준4급", "h": "是", "m": "이/옳을 시"}, {"id": 629, "lv": "준4급", "h": "息", "m": "쉴 식"}, {"id": 630, "lv": "준4급", "h": "申", "m": "납 신"}, {"id": 631, "lv": "준4급", "h": "深", "m": "깊을 심"}, {"id": 632, "lv": "준4급", "h": "眼", "m": "눈 안"}, {"id": 633, "lv": "준4급", "h": "暗", "m": "어두울 암"}, {"id": 634, "lv": "준4급", "h": "壓", "m": "누를 압"}, {"id": 635, "lv": "준4급", "h": "液", "m": "진 액"}, {"id": 636, "lv": "준4급", "h": "羊", "m": "양 양"}, {"id": 637, "lv": "준4급", "h": "餘", "m": "남을 여"}, {"id": 638, "lv": "준4급", "h": "如", "m": "같을 여"}, {"id": 639, "lv": "준4급", "h": "逆", "m": "거스릴 역"}, {"id": 640, "lv": "준4급", "h": "煙", "m": "연기 연"}, {"id": 641, "lv": "준4급", "h": "硏", "m": "갈 연"}, {"id": 642, "lv": "준4급", "h": "演", "m": "펼 연"}, {"id": 643, "lv": "준4급", "h": "榮", "m": "영화 영"}, {"id": 644, "lv": "준4급", "h": "藝", "m": "재주 예"}, {"id": 645, "lv": "준4급", "h": "誤", "m": "그르칠 오"}, {"id": 646, "lv": "준4급", "h": "玉", "m": "구슬 옥"}, {"id": 647, "lv": "준4급", "h": "往", "m": "갈 왕"}, {"id": 648, "lv": "준4급", "h": "謠", "m": "노래 요"}, {"id": 649, "lv": "준4급", "h": "容", "m": "얼굴 용"}, {"id": 650, "lv": "준4급", "h": "圓", "m": "둥글 원"}, {"id": 651, "lv": "준4급", "h": "員", "m": "인원 원"}, {"id": 652, "lv": "준4급", "h": "衛", "m": "지킬 위"}, {"id": 653, "lv": "준4급", "h": "爲", "m": "하/할 위"}, {"id": 654, "lv": "준4급", "h": "肉", "m": "고기 육"}, {"id": 655, "lv": "준4급", "h": "恩", "m": "은혜 은"}, {"id": 656, "lv": "준4급", "h": "陰", "m": "그늘 음"}, {"id": 657, "lv": "준4급", "h": "應", "m": "응할 응"}, {"id": 658, "lv": "준4급", "h": "議", "m": "의논할 의"}, {"id": 659, "lv": "준4급", "h": "義", "m": "옳을 의"}, {"id": 660, "lv": "준4급", "h": "移", "m": "옮길 이"}, {"id": 661, "lv": "준4급", "h": "益", "m": "더할 익"}, {"id": 662, "lv": "준4급", "h": "印", "m": "도장 인"}, {"id": 663, "lv": "준4급", "h": "引", "m": "끌 인"}, {"id": 664, "lv": "준4급", "h": "認", "m": "알 인"}, {"id": 665, "lv": "준4급", "h": "將", "m": "장수 장"}, {"id": 666, "lv": "준4급", "h": "障", "m": "막을 장"}, {"id": 667, "lv": "준4급", "h": "低", "m": "낮을 저"}, {"id": 668, "lv": "준4급", "h": "敵", "m": "대적할 적"}, {"id": 669, "lv": "준4급", "h": "田", "m": "밭 전"}, {"id": 670, "lv": "준4급", "h": "絶", "m": "끊을 절"}, {"id": 671, "lv": "준4급", "h": "接", "m": "이을 접"}, {"id": 672, "lv": "준4급", "h": "政", "m": "정사 정"}, {"id": 673, "lv": "준4급", "h": "程", "m": "한도/길 정"}, {"id": 674, "lv": "준4급", "h": "精", "m": "정할 정"}, {"id": 675, "lv": "준4급", "h": "濟", "m": "건널 제"}, {"id": 676, "lv": "준4급", "h": "提", "m": "끌 제"}, {"id": 677, "lv": "준4급", "h": "制", "m": "절제할 제"}, {"id": 678, "lv": "준4급", "h": "製", "m": "지을 제"}, {"id": 679, "lv": "준4급", "h": "除", "m": "덜 제"}, {"id": 680, "lv": "준4급", "h": "際", "m": "즈음/가 제"}, {"id": 681, "lv": "준4급", "h": "祭", "m": "제사 제"}, {"id": 682, "lv": "준4급", "h": "鳥", "m": "새 조"}, {"id": 683, "lv": "준4급", "h": "助", "m": "도울 조"}, {"id": 684, "lv": "준4급", "h": "早", "m": "이를 조"}, {"id": 685, "lv": "준4급", "h": "造", "m": "지을 조"}, {"id": 686, "lv": "준4급", "h": "尊", "m": "높을 존"}, {"id": 687, "lv": "준4급", "h": "宗", "m": "마루 종"}, {"id": 688, "lv": "준4급", "h": "走", "m": "달릴 주"}, {"id": 689, "lv": "준4급", "h": "竹", "m": "대 죽"}, {"id": 690, "lv": "준4급", "h": "準", "m": "준할 준"}, {"id": 691, "lv": "준4급", "h": "衆", "m": "무리 중"}, {"id": 692, "lv": "준4급", "h": "增", "m": "더할 증"}, {"id": 693, "lv": "준4급", "h": "志", "m": "뜻 지"}, {"id": 694, "lv": "준4급", "h": "指", "m": "가리킬 지"}, {"id": 695, "lv": "준4급", "h": "支", "m": "지탱할 지"}, {"id": 696, "lv": "준4급", "h": "至", "m": "이를 지"}, {"id": 697, "lv": "준4급", "h": "職", "m": "직분 직"}, {"id": 698, "lv": "준4급", "h": "進", "m": "나아갈 진"}, {"id": 699, "lv": "준4급", "h": "眞", "m": "참 진"}, {"id": 700, "lv": "준4급", "h": "次", "m": "버금 차"}, {"id": 701, "lv": "준4급", "h": "察", "m": "살필 찰"}, {"id": 702, "lv": "준4급", "h": "創", "m": "비롯할 창"}, {"id": 703, "lv": "준4급", "h": "處", "m": "곳 처"}, {"id": 704, "lv": "준4급", "h": "請", "m": "청할 청"}, {"id": 705, "lv": "준4급", "h": "總", "m": "다 총"}, {"id": 706, "lv": "준4급", "h": "銃", "m": "총 총"}, {"id": 707, "lv": "준4급", "h": "築", "m": "쌓을 축"}, {"id": 708, "lv": "준4급", "h": "蓄", "m": "모을 축"}, {"id": 709, "lv": "준4급", "h": "忠", "m": "충성 충"}, {"id": 710, "lv": "준4급", "h": "蟲", "m": "벌레 충"}, {"id": 711, "lv": "준4급", "h": "取", "m": "가질 취"}, {"id": 712, "lv": "준4급", "h": "測", "m": "헤아릴 측"}, {"id": 713, "lv": "준4급", "h": "治", "m": "다스릴 치"}, {"id": 714, "lv": "준4급", "h": "置", "m": "둘 치"}, {"id": 715, "lv": "준4급", "h": "齒", "m": "이 치"}, {"id": 716, "lv": "준4급", "h": "侵", "m": "침노할 침"}, {"id": 717, "lv": "준4급", "h": "快", "m": "쾌할 쾌"}, {"id": 718, "lv": "준4급", "h": "態", "m": "모습 태"}, {"id": 719, "lv": "준4급", "h": "統", "m": "거느릴 통"}, {"id": 720, "lv": "준4급", "h": "退", "m": "물러날 퇴"}, {"id": 721, "lv": "준4급", "h": "波", "m": "물결 파"}, {"id": 722, "lv": "준4급", "h": "破", "m": "깨뜨릴 파"}, {"id": 723, "lv": "준4급", "h": "砲", "m": "대포 포"}, {"id": 724, "lv": "준4급", "h": "包", "m": "쌀 포"}, {"id": 725, "lv": "준4급", "h": "布", "m": "베/펼 포 / 보시 보"}, {"id": 726, "lv": "준4급", "h": "暴", "m": "사나울 폭 / 모질 포"}, {"id": 727, "lv": "준4급", "h": "票", "m": "표 표"}, {"id": 728, "lv": "준4급", "h": "豊", "m": "풍년 풍"}, {"id": 729, "lv": "준4급", "h": "限", "m": "한할 한"}, {"id": 730, "lv": "준4급", "h": "航", "m": "배 항"}, {"id": 731, "lv": "준4급", "h": "港", "m": "항구 항"}, {"id": 732, "lv": "준4급", "h": "解", "m": "풀 해"}, {"id": 733, "lv": "준4급", "h": "鄕", "m": "시골 향"}, {"id": 734, "lv": "준4급", "h": "香", "m": "향기 향"}, {"id": 735, "lv": "준4급", "h": "虛", "m": "빌 허"}, {"id": 736, "lv": "준4급", "h": "驗", "m": "시험 험"}, {"id": 737, "lv": "준4급", "h": "賢", "m": "어질 현"}, {"id": 738, "lv": "준4급", "h": "血", "m": "피 혈"}, {"id": 739, "lv": "준4급", "h": "協", "m": "화할 협"}, {"id": 740, "lv": "준4급", "h": "惠", "m": "은혜 혜"}, {"id": 741, "lv": "준4급", "h": "好", "m": "좋을 호"}, {"id": 742, "lv": "준4급", "h": "戶", "m": "집 호"}, {"id": 743, "lv": "준4급", "h": "護", "m": "도울 호"}, {"id": 744, "lv": "준4급", "h": "呼", "m": "부를 호"}, {"id": 745, "lv": "준4급", "h": "貨", "m": "재물 화"}, {"id": 746, "lv": "준4급", "h": "確", "m": "굳을 확"}, {"id": 747, "lv": "준4급", "h": "回", "m": "돌아올 회"}, {"id": 748, "lv": "준4급", "h": "吸", "m": "마실 흡"}, {"id": 749, "lv": "준4급", "h": "興", "m": "일 흥"}, {"id": 750, "lv": "준4급", "h": "希", "m": "바랄 희"}, {"id": 751, "lv": "4급", "h": "暇", "m": "틈/겨를 가"}, {"id": 752, "lv": "4급", "h": "刻", "m": "새길 각"}, {"id": 753, "lv": "4급", "h": "覺", "m": "깨달을 각"}, {"id": 754, "lv": "4급", "h": "簡", "m": "대쪽/간략할 간"}, {"id": 755, "lv": "4급", "h": "看", "m": "볼 간"}, {"id": 756, "lv": "4급", "h": "干", "m": "방패 간"}, {"id": 757, "lv": "4급", "h": "甘", "m": "달 감"}, {"id": 758, "lv": "4급", "h": "敢", "m": "감히/구태여 감"}, {"id": 759, "lv": "4급", "h": "甲", "m": "갑옷 갑"}, {"id": 760, "lv": "4급", "h": "降", "m": "내릴 강 / 항복할 항"}, {"id": 761, "lv": "4급", "h": "拒", "m": "막을 거"}, {"id": 762, "lv": "4급", "h": "居", "m": "살 거"}, {"id": 763, "lv": "4급", "h": "據", "m": "근거 거"}, {"id": 764, "lv": "4급", "h": "巨", "m": "클 거"}, {"id": 765, "lv": "4급", "h": "傑", "m": "뛰어날 걸"}, {"id": 766, "lv": "4급", "h": "儉", "m": "검소할 검"}, {"id": 767, "lv": "4급", "h": "擊", "m": "칠 격"}, {"id": 768, "lv": "4급", "h": "激", "m": "격할 격"}, {"id": 769, "lv": "4급", "h": "堅", "m": "굳을 견"}, {"id": 770, "lv": "4급", "h": "犬", "m": "개 견"}, {"id": 771, "lv": "4급", "h": "驚", "m": "놀랄 경"}, {"id": 772, "lv": "4급", "h": "更", "m": "고칠 경 / 다시 갱"}, {"id": 773, "lv": "4급", "h": "傾", "m": "기울 경"}, {"id": 774, "lv": "4급", "h": "鏡", "m": "거울 경"}, {"id": 775, "lv": "4급", "h": "階", "m": "섬돌 계"}, {"id": 776, "lv": "4급", "h": "鷄", "m": "닭 계"}, {"id": 777, "lv": "4급", "h": "季", "m": "계절 계"}, {"id": 778, "lv": "4급", "h": "系", "m": "이어맬 계"}, {"id": 779, "lv": "4급", "h": "繼", "m": "이을 계"}, {"id": 780, "lv": "4급", "h": "戒", "m": "경계할 계"}, {"id": 781, "lv": "4급", "h": "孤", "m": "외로울 고"}, {"id": 782, "lv": "4급", "h": "庫", "m": "곳집 고"}, {"id": 783, "lv": "4급", "h": "穀", "m": "곡식 곡"}, {"id": 784, "lv": "4급", "h": "困", "m": "곤할 곤"}, {"id": 785, "lv": "4급", "h": "骨", "m": "뼈 골"}, {"id": 786, "lv": "4급", "h": "孔", "m": "구멍 공"}, {"id": 787, "lv": "4급", "h": "攻", "m": "칠 공"}, {"id": 788, "lv": "4급", "h": "管", "m": "대롱/주관할 관"}, {"id": 789, "lv": "4급", "h": "鑛", "m": "쇳돌 광"}, {"id": 790, "lv": "4급", "h": "構", "m": "얽을 구"}, {"id": 791, "lv": "4급", "h": "君", "m": "임금 군"}, {"id": 792, "lv": "4급", "h": "群", "m": "무리 군"}, {"id": 793, "lv": "4급", "h": "屈", "m": "굽힐 굴"}, {"id": 794, "lv": "4급", "h": "窮", "m": "다할/궁할 궁"}, {"id": 795, "lv": "4급", "h": "券", "m": "문서 권"}, {"id": 796, "lv": "4급", "h": "勸", "m": "권할 권"}, {"id": 797, "lv": "4급", "h": "卷", "m": "책 권"}, {"id": 798, "lv": "4급", "h": "歸", "m": "돌아갈 귀"}, {"id": 799, "lv": "4급", "h": "均", "m": "고를 균"}, {"id": 800, "lv": "4급", "h": "劇", "m": "심할 극"}, {"id": 801, "lv": "4급", "h": "勤", "m": "부지런할 근"}, {"id": 802, "lv": "4급", "h": "筋", "m": "힘줄 근"}, {"id": 803, "lv": "4급", "h": "機", "m": "틀 기"}, {"id": 804, "lv": "4급", "h": "寄", "m": "부칠 기"}, {"id": 805, "lv": "4급", "h": "奇", "m": "기특할 기"}, {"id": 806, "lv": "4급", "h": "紀", "m": "벼리 기"}, {"id": 807, "lv": "4급", "h": "納", "m": "들일 납"}, {"id": 808, "lv": "4급", "h": "段", "m": "층계 단"}, {"id": 809, "lv": "4급", "h": "徒", "m": "무리 도"}, {"id": 810, "lv": "4급", "h": "盜", "m": "도둑 도"}, {"id": 811, "lv": "4급", "h": "逃", "m": "도망할 도"}, {"id": 812, "lv": "4급", "h": "亂", "m": "어지러울 란"}, {"id": 813, "lv": "4급", "h": "卵", "m": "알 란"}, {"id": 814, "lv": "4급", "h": "覽", "m": "볼 람"}, {"id": 815, "lv": "4급", "h": "略", "m": "간략할/약할 략"}, {"id": 816, "lv": "4급", "h": "糧", "m": "양식 량"}, {"id": 817, "lv": "4급", "h": "慮", "m": "생각할 려"}, {"id": 818, "lv": "4급", "h": "烈", "m": "매울 렬"}, {"id": 819, "lv": "4급", "h": "龍", "m": "용 룡"}, {"id": 820, "lv": "4급", "h": "柳", "m": "버들 류"}, {"id": 821, "lv": "4급", "h": "輪", "m": "바퀴 륜"}, {"id": 822, "lv": "4급", "h": "離", "m": "떠날 리"}, {"id": 823, "lv": "4급", "h": "妹", "m": "누이 매"}, {"id": 824, "lv": "4급", "h": "勉", "m": "힘쓸 면"}, {"id": 825, "lv": "4급", "h": "鳴", "m": "울 명"}, {"id": 826, "lv": "4급", "h": "模", "m": "본뜰 모"}, {"id": 827, "lv": "4급", "h": "墓", "m": "무덤 묘"}, {"id": 828, "lv": "4급", "h": "妙", "m": "묘할 묘"}, {"id": 829, "lv": "4급", "h": "舞", "m": "춤출 무"}, {"id": 830, "lv": "4급", "h": "拍", "m": "칠 박"}, {"id": 831, "lv": "4급", "h": "髮", "m": "터럭 발"}, {"id": 832, "lv": "4급", "h": "妨", "m": "방해할 방"}, {"id": 833, "lv": "4급", "h": "犯", "m": "범할 범"}, {"id": 834, "lv": "4급", "h": "範", "m": "법 범"}, {"id": 835, "lv": "4급", "h": "辯", "m": "말씀 변"}, {"id": 836, "lv": "4급", "h": "普", "m": "넓을 보"}, {"id": 837, "lv": "4급", "h": "伏", "m": "엎드릴 복"}, {"id": 838, "lv": "4급", "h": "複", "m": "겹칠 복"}, {"id": 839, "lv": "4급", "h": "否", "m": "아닐 부"}, {"id": 840, "lv": "4급", "h": "負", "m": "질 부"}, {"id": 841, "lv": "4급", "h": "粉", "m": "가루 분"}, {"id": 842, "lv": "4급", "h": "憤", "m": "분할 분"}, {"id": 843, "lv": "4급", "h": "批", "m": "비평할 비"}, {"id": 844, "lv": "4급", "h": "祕", "m": "숨길 비"}, {"id": 845, "lv": "4급", "h": "碑", "m": "비석 비"}, {"id": 846, "lv": "4급", "h": "辭", "m": "말씀 사"}, {"id": 847, "lv": "4급", "h": "私", "m": "사사 사"}, {"id": 848, "lv": "4급", "h": "絲", "m": "실 사"}, {"id": 849, "lv": "4급", "h": "射", "m": "쏠 사"}, {"id": 850, "lv": "4급", "h": "散", "m": "흩을 산"}, {"id": 851, "lv": "4급", "h": "傷", "m": "다칠 상"}, {"id": 852, "lv": "4급", "h": "象", "m": "코끼리 상"}, {"id": 853, "lv": "4급", "h": "宣", "m": "베풀 선"}, {"id": 854, "lv": "4급", "h": "舌", "m": "혀 설"}, {"id": 855, "lv": "4급", "h": "屬", "m": "붙일 속"}, {"id": 856, "lv": "4급", "h": "損", "m": "덜 손"}, {"id": 857, "lv": "4급", "h": "頌", "m": "기릴/칭송할 송"}, {"id": 858, "lv": "4급", "h": "松", "m": "소나무 송"}, {"id": 859, "lv": "4급", "h": "秀", "m": "빼어날 수"}, {"id": 860, "lv": "4급", "h": "叔", "m": "아재비 숙"}, {"id": 861, "lv": "4급", "h": "肅", "m": "엄숙할 숙"}, {"id": 862, "lv": "4급", "h": "崇", "m": "높을 숭"}, {"id": 863, "lv": "4급", "h": "氏", "m": "각시/성씨 씨"}, {"id": 864, "lv": "4급", "h": "額", "m": "이마 액"}, {"id": 865, "lv": "4급", "h": "樣", "m": "모양 양"}, {"id": 866, "lv": "4급", "h": "嚴", "m": "엄할 엄"}, {"id": 867, "lv": "4급", "h": "與", "m": "더불/줄 여"}, {"id": 868, "lv": "4급", "h": "域", "m": "지경 역"}, {"id": 869, "lv": "4급", "h": "易", "m": "바꿀 역 / 쉬울 이"}, {"id": 870, "lv": "4급", "h": "燃", "m": "탈 연"}, {"id": 871, "lv": "4급", "h": "鉛", "m": "납 연"}, {"id": 872, "lv": "4급", "h": "緣", "m": "인연 연"}, {"id": 873, "lv": "4급", "h": "延", "m": "늘일 연"}, {"id": 874, "lv": "4급", "h": "迎", "m": "맞을 영"}, {"id": 875, "lv": "4급", "h": "映", "m": "비칠 영"}, {"id": 876, "lv": "4급", "h": "營", "m": "경영할 영"}, {"id": 877, "lv": "4급", "h": "豫", "m": "미리 예"}, {"id": 878, "lv": "4급", "h": "優", "m": "넉넉할 우"}, {"id": 879, "lv": "4급", "h": "遇", "m": "만날 우"}, {"id": 880, "lv": "4급", "h": "郵", "m": "우편 우"}, {"id": 881, "lv": "4급", "h": "怨", "m": "원망할 원"}, {"id": 882, "lv": "4급", "h": "援", "m": "도울 원"}, {"id": 883, "lv": "4급", "h": "源", "m": "근원 원"}, {"id": 884, "lv": "4급", "h": "圍", "m": "에워쌀 위"}, {"id": 885, "lv": "4급", "h": "委", "m": "맡길 위"}, {"id": 886, "lv": "4급", "h": "威", "m": "위엄 위"}, {"id": 887, "lv": "4급", "h": "慰", "m": "위로할 위"}, {"id": 888, "lv": "4급", "h": "危", "m": "위태할 위"}, {"id": 889, "lv": "4급", "h": "遊", "m": "놀 유"}, {"id": 890, "lv": "4급", "h": "乳", "m": "젖 유"}, {"id": 891, "lv": "4급", "h": "儒", "m": "선비 유"}, {"id": 892, "lv": "4급", "h": "遺", "m": "남길 유"}, {"id": 893, "lv": "4급", "h": "隱", "m": "숨을 은"}, {"id": 894, "lv": "4급", "h": "依", "m": "의지할 의"}, {"id": 895, "lv": "4급", "h": "儀", "m": "거동 의"}, {"id": 896, "lv": "4급", "h": "疑", "m": "의심할 의"}, {"id": 897, "lv": "4급", "h": "異", "m": "다를 이"}, {"id": 898, "lv": "4급", "h": "仁", "m": "어질 인"}, {"id": 899, "lv": "4급", "h": "資", "m": "재물 자"}, {"id": 900, "lv": "4급", "h": "姿", "m": "모양 자"}, {"id": 901, "lv": "4급", "h": "姉", "m": "손윗누이 자"}, {"id": 902, "lv": "4급", "h": "殘", "m": "남을 잔"}, {"id": 903, "lv": "4급", "h": "雜", "m": "섞일 잡"}, {"id": 904, "lv": "4급", "h": "獎", "m": "장려할 장"}, {"id": 905, "lv": "4급", "h": "裝", "m": "꾸밀 장"}, {"id": 906, "lv": "4급", "h": "腸", "m": "창자 장"}, {"id": 907, "lv": "4급", "h": "張", "m": "베풀 장"}, {"id": 908, "lv": "4급", "h": "壯", "m": "장할 장"}, {"id": 909, "lv": "4급", "h": "帳", "m": "장막 장"}, {"id": 910, "lv": "4급", "h": "底", "m": "밑 저"}, {"id": 911, "lv": "4급", "h": "積", "m": "쌓을 적"}, {"id": 912, "lv": "4급", "h": "籍", "m": "문서 적"}, {"id": 913, "lv": "4급", "h": "適", "m": "맞을 적"}, {"id": 914, "lv": "4급", "h": "績", "m": "길쌈 적"}, {"id": 915, "lv": "4급", "h": "賊", "m": "도둑 적"}, {"id": 916, "lv": "4급", "h": "專", "m": "오로지 전"}, {"id": 917, "lv": "4급", "h": "轉", "m": "구를 전"}, {"id": 918, "lv": "4급", "h": "錢", "m": "돈 전"}, {"id": 919, "lv": "4급", "h": "折", "m": "꺾을 절"}, {"id": 920, "lv": "4급", "h": "點", "m": "점 점"}, {"id": 921, "lv": "4급", "h": "占", "m": "점령할/점칠 점"}, {"id": 922, "lv": "4급", "h": "靜", "m": "고요할 정"}, {"id": 923, "lv": "4급", "h": "丁", "m": "고무래/장정 정"}, {"id": 924, "lv": "4급", "h": "整", "m": "가지런할 정"}, {"id": 925, "lv": "4급", "h": "帝", "m": "임금 제"}, {"id": 926, "lv": "4급", "h": "條", "m": "가지 조"}, {"id": 927, "lv": "4급", "h": "潮", "m": "밀물/조수 조"}, {"id": 928, "lv": "4급", "h": "組", "m": "짤 조"}, {"id": 929, "lv": "4급", "h": "存", "m": "있을 존"}, {"id": 930, "lv": "4급", "h": "鍾", "m": "쇠북 종"}, {"id": 931, "lv": "4급", "h": "從", "m": "좇을 종"}, {"id": 932, "lv": "4급", "h": "座", "m": "자리 좌"}, {"id": 933, "lv": "4급", "h": "酒", "m": "술 주"}, {"id": 934, "lv": "4급", "h": "朱", "m": "붉을 주"}, {"id": 935, "lv": "4급", "h": "周", "m": "두루 주"}, {"id": 936, "lv": "4급", "h": "證", "m": "증거 증"}, {"id": 937, "lv": "4급", "h": "持", "m": "가질 지"}, {"id": 938, "lv": "4급", "h": "智", "m": "슬기/지혜 지"}, {"id": 939, "lv": "4급", "h": "誌", "m": "기록할 지"}, {"id": 940, "lv": "4급", "h": "織", "m": "짤 직"}, {"id": 941, "lv": "4급", "h": "珍", "m": "보배 진"}, {"id": 942, "lv": "4급", "h": "盡", "m": "다할 진"}, {"id": 943, "lv": "4급", "h": "陣", "m": "진칠 진"}, {"id": 944, "lv": "4급", "h": "差", "m": "다를 차"}, {"id": 945, "lv": "4급", "h": "讚", "m": "기릴 찬"}, {"id": 946, "lv": "4급", "h": "採", "m": "캘 채"}, {"id": 947, "lv": "4급", "h": "冊", "m": "책 책"}, {"id": 948, "lv": "4급", "h": "泉", "m": "샘 천"}, {"id": 949, "lv": "4급", "h": "聽", "m": "들을 청"}, {"id": 950, "lv": "4급", "h": "廳", "m": "관청 청"}, {"id": 951, "lv": "4급", "h": "招", "m": "부를 초"}, {"id": 952, "lv": "4급", "h": "推", "m": "밀 추"}, {"id": 953, "lv": "4급", "h": "縮", "m": "줄일 축"}, {"id": 954, "lv": "4급", "h": "就", "m": "나아갈 취"}, {"id": 955, "lv": "4급", "h": "趣", "m": "뜻 취"}, {"id": 956, "lv": "4급", "h": "層", "m": "층 층"}, {"id": 957, "lv": "4급", "h": "寢", "m": "잘 침"}, {"id": 958, "lv": "4급", "h": "針", "m": "바늘 침"}, {"id": 959, "lv": "4급", "h": "稱", "m": "일컬을 칭"}, {"id": 960, "lv": "4급", "h": "歎", "m": "탄식할 탄"}, {"id": 961, "lv": "4급", "h": "彈", "m": "탄알 탄"}, {"id": 962, "lv": "4급", "h": "脫", "m": "벗을 탈"}, {"id": 963, "lv": "4급", "h": "探", "m": "찾을 탐"}, {"id": 964, "lv": "4급", "h": "擇", "m": "가릴 택"}, {"id": 965, "lv": "4급", "h": "討", "m": "칠 토"}, {"id": 966, "lv": "4급", "h": "痛", "m": "아플 통"}, {"id": 967, "lv": "4급", "h": "投", "m": "던질 투"}, {"id": 968, "lv": "4급", "h": "鬪", "m": "싸움 투"}, {"id": 969, "lv": "4급", "h": "派", "m": "갈래 파"}, {"id": 970, "lv": "4급", "h": "判", "m": "판단할 판"}, {"id": 971, "lv": "4급", "h": "篇", "m": "책 편"}, {"id": 972, "lv": "4급", "h": "評", "m": "평할 평"}, {"id": 973, "lv": "4급", "h": "閉", "m": "닫을 폐"}, {"id": 974, "lv": "4급", "h": "胞", "m": "세포 포"}, {"id": 975, "lv": "4급", "h": "爆", "m": "불터질 폭"}, {"id": 976, "lv": "4급", "h": "標", "m": "표할 표"}, {"id": 977, "lv": "4급", "h": "疲", "m": "피곤할 피"}, {"id": 978, "lv": "4급", "h": "避", "m": "피할 피"}, {"id": 979, "lv": "4급", "h": "閑", "m": "한가할 한"}, {"id": 980, "lv": "4급", "h": "恨", "m": "한 한"}, {"id": 981, "lv": "4급", "h": "抗", "m": "겨룰 항"}, {"id": 982, "lv": "4급", "h": "核", "m": "씨 핵"}, {"id": 983, "lv": "4급", "h": "憲", "m": "법 헌"}, {"id": 984, "lv": "4급", "h": "險", "m": "험할 험"}, {"id": 985, "lv": "4급", "h": "革", "m": "가죽 혁"}, {"id": 986, "lv": "4급", "h": "顯", "m": "나타날 현"}, {"id": 987, "lv": "4급", "h": "刑", "m": "형벌 형"}, {"id": 988, "lv": "4급", "h": "或", "m": "혹 혹"}, {"id": 989, "lv": "4급", "h": "婚", "m": "혼인할 혼"}, {"id": 990, "lv": "4급", "h": "混", "m": "섞일 혼"}, {"id": 991, "lv": "4급", "h": "紅", "m": "붉을 홍"}, {"id": 992, "lv": "4급", "h": "華", "m": "빛날 화"}, {"id": 993, "lv": "4급", "h": "歡", "m": "기쁠 환"}, {"id": 994, "lv": "4급", "h": "環", "m": "고리 환"}, {"id": 995, "lv": "4급", "h": "況", "m": "상황 황"}, {"id": 996, "lv": "4급", "h": "灰", "m": "재 회"}, {"id": 997, "lv": "4급", "h": "厚", "m": "두터울 후"}, {"id": 998, "lv": "4급", "h": "候", "m": "기후 후"}, {"id": 999, "lv": "4급", "h": "揮", "m": "휘두를 휘"}, {"id": 1000, "lv": "4급", "h": "喜", "m": "기쁠 희"}];
+
+</script>
+    <script>
+      (function () {
+        var DATA = (window.HANJA_DATA || []).slice().sort(function (a, b) { return a.id - b.id; });
+        var LV = ["8급", "7급Ⅱ", "7급", "6급Ⅱ", "6급", "5급Ⅱ", "5급", "준4급", "4급"];
+        var lvIdx = {}; LV.forEach(function (l, i) { lvIdx[l] = i; });
+        var byId = {}; DATA.forEach(function (d) { byId[d.id] = d; });
+        var lvCount = LV.map(function (l) { return DATA.filter(function (d) { return d.lv === l; }).length; });
+        var $ = function (id) { return document.getElementById(id); };
+        var fmt = function (n) { return Number(n).toLocaleString("ko-KR"); };
+
+        /* storage: localStorage, or memory when blocked */
+        var KEY = "ari-hanja-v1";
+        var store = (function () {
+          var mem = null, ok = false;
+          try { localStorage.setItem("__ari", "1"); localStorage.removeItem("__ari"); ok = true; } catch (e) { ok = false; }
+          return {
+            get: function () {
+              if (ok) { try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { return mem; } }
+              return mem;
+            },
+            set: function (v) {
+              mem = v;
+              if (ok) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* keep memory */ } }
+            }
+          };
+        })();
+
+        var S = { start: 0, end: 8, order: "seq", target: "all", listFilter: "all", dir: "h2m", qtype: "h2m", qcount: "10" };
+        var review = {};
+        (function load() {
+          var v = null;
+          try { v = store.get(); } catch (e) { v = null; }
+          if (!v || typeof v !== "object") return;
+          if (v.start >= 0 && v.start <= 8) S.start = v.start | 0;
+          if (v.end >= 0 && v.end <= 8) S.end = v.end | 0;
+          if (S.start > S.end) { S.start = 0; S.end = 8; }
+          if (v.order === "shuffle" || v.order === "seq") S.order = v.order;
+          if (v.target === "review" || v.target === "all") S.target = v.target;
+          if (v.listFilter === "review" || v.listFilter === "all") S.listFilter = v.listFilter;
+          if (v.dir === "h2m" || v.dir === "m2h") S.dir = v.dir;
+          if (v.qtype === "h2m" || v.qtype === "m2h") S.qtype = v.qtype;
+          if (["10", "20", "50", "all"].indexOf(v.qcount) >= 0) S.qcount = v.qcount;
+          if (Array.isArray(v.review)) v.review.forEach(function (id) { if (byId[id]) review[id] = 1; });
+        })();
+        function save() {
+          try { store.set({ start: S.start, end: S.end, order: S.order, target: S.target, listFilter: S.listFilter, dir: S.dir, qtype: S.qtype, qcount: S.qcount, review: Object.keys(review).map(Number) }); } catch (e) {}
+        }
+        function reviewIds() { return Object.keys(review).map(Number).sort(function (a, b) { return a - b; }); }
+        function inRange() { return DATA.filter(function (d) { var i = lvIdx[d.lv]; return i >= S.start && i <= S.end; }); }
+        function rangeLabel() { return S.start === S.end ? LV[S.start] : LV[S.start] + "~" + LV[S.end]; }
+        function sumLv(a, b) { var n = 0; for (var i = a; i <= b; i++) n += lvCount[i]; return n; }
+
+        /* screens + back button */
+        var screens = ["home", "study", "done", "list", "quiz", "qdone"];
+        function showScreen(name) {
+          if (name !== "quiz" && typeof stopQuizTimer === "function") stopQuizTimer();
+          screens.forEach(function (s) { $("s-" + s).classList.toggle("is-active", s === name); });
+          if (name === "home") renderHome();
+        }
+        function go(name) {
+          if (name === "home") {
+            var st = null; try { st = history.state; } catch (e) {}
+            if (st && st.ari) { try { history.back(); return; } catch (e) {} }
+            showScreen("home"); return;
+          }
+          try {
+            var cur = history.state;
+            if (cur && cur.ari) history.replaceState({ ari: name }, ""); else history.pushState({ ari: name }, "");
+          } catch (e) {}
+          showScreen(name);
+        }
+        window.addEventListener("popstate", function () {
+          var st = null; try { st = history.state; } catch (e) {}
+          showScreen(st && st.ari && st.ari !== "study" && st.ari !== "quiz" ? st.ari : "home");
+        });
+
+        /* home */
+        var PRESETS = [
+          { name: "4급 신출만", s: 8, e: 8 },
+          { name: "준4급 신출만", s: 7, e: 7 },
+          { name: "5급까지", s: 0, e: 6 },
+          { name: "전체", s: 0, e: 8 }
+        ];
+        var selS = $("sel-start"), selE = $("sel-end");
+        LV.forEach(function (l, i) {
+          selS.add(new Option(l + " (" + lvCount[i] + "자)", i));
+          selE.add(new Option(l + " (누적 " + fmt(sumLv(0, i)) + "자)", i));
+        });
+        var presetBox = $("presets");
+        PRESETS.forEach(function (p, i) {
+          var b = document.createElement("button");
+          b.type = "button"; b.className = "x-preset"; b.dataset.i = i;
+          b.textContent = p.name + " (" + fmt(sumLv(p.s, p.e)) + "자)";
+          presetBox.appendChild(b);
+        });
+        presetBox.addEventListener("click", function (e) {
+          var b = e.target.closest(".x-preset"); if (!b) return;
+          var p = PRESETS[b.dataset.i]; S.start = p.s; S.end = p.e; save(); renderHome();
+        });
+        selS.addEventListener("change", function () { S.start = +selS.value; if (S.start > S.end) S.end = S.start; save(); renderHome(); });
+        selE.addEventListener("change", function () { S.end = +selE.value; if (S.end < S.start) S.start = S.end; save(); renderHome(); });
+        document.querySelectorAll("#s-home .x-seg").forEach(function (seg) {
+          seg.addEventListener("click", function (e) {
+            var b = e.target.closest("button"); if (!b) return;
+            S[seg.dataset.opt] = b.dataset.v; save(); renderHome();
+          });
+        });
+        function setSeg(seg, v) { seg.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false"); }); }
+        function renderHome() {
+          selS.value = S.start; selE.value = S.end;
+          $("range-count").innerHTML = rangeLabel() + " · <b>" + fmt(inRange().length) + "자</b>";
+          presetBox.querySelectorAll(".x-preset").forEach(function (b) {
+            var p = PRESETS[b.dataset.i]; b.setAttribute("aria-pressed", p.s === S.start && p.e === S.end ? "true" : "false");
+          });
+          document.querySelectorAll("#s-home .x-seg").forEach(function (seg) { setSeg(seg, S[seg.dataset.opt]); });
+          var n = reviewIds().length;
+          $("review-n").textContent = fmt(n) + "자";
+          $("btn-review").disabled = n === 0;
+          $("home-msg").textContent = "";
+        }
+        $("btn-start").addEventListener("click", function () {
+          var items = inRange();
+          if (S.target === "review") items = items.filter(function (d) { return review[d.id]; });
+          if (!items.length) { $("home-msg").textContent = "이 범위에는 아직 다시 볼 한자가 없어요."; return; }
+          startSession(items);
+        });
+        $("btn-quiz").addEventListener("click", function () {
+          var pool = inRange(), items = pool;
+          if (S.target === "review") items = items.filter(function (d) { return review[d.id]; });
+          if (!items.length) { $("home-msg").textContent = "이 범위에는 아직 다시 볼 한자가 없어요."; return; }
+          items = orderItems(items.slice());
+          if (S.qcount !== "all") items = items.slice(0, +S.qcount);
+          startQuiz(items, pool);
+        });
+        $("btn-review").addEventListener("click", function () {
+          var items = reviewIds().map(function (id) { return byId[id]; });
+          if (items.length) startSession(items);
+        });
+        $("btn-list").addEventListener("click", function () { renderList(); go("list"); $("list-scroll").scrollTop = 0; });
+
+        /* study */
+        var deck = [], idx = 0, results = {}, flipped = false;
+        var card = $("card");
+        function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+        function orderItems(a) {
+          if (S.order === "shuffle") shuffle(a); else a.sort(function (x, y) { return x.id - y.id; });
+          return a;
+        }
+        function startSession(items) {
+          deck = orderItems(items.slice());
+          idx = 0; results = {};
+          go("study");
+          renderCard(0);
+        }
+        function setFlip(v, instant) {
+          flipped = v;
+          if (instant) {
+            card.classList.add("x-noanim");
+            card.classList.toggle("is-flipped", v);
+            void card.offsetWidth;
+            card.classList.remove("x-noanim");
+          } else card.classList.toggle("is-flipped", v);
+          card.querySelector(".x-face--back").setAttribute("aria-hidden", v ? "false" : "true");
+          card.querySelector(".x-face--front").setAttribute("aria-hidden", v ? "true" : "false");
+        }
+        function renderCard(dir) {
+          var d = deck[idx]; if (!d) return;
+          setFlip(false, true);
+          $("c-han").textContent = d.h; $("c-han2").textContent = d.h;
+          $("c-lv").textContent = d.lv; $("c-lv2").textContent = d.lv;
+          var mean = $("c-mean"); mean.innerHTML = "";
+          fillMean(mean, d.m); fillMean($("c-meanf"), d.m);
+          var rev = S.dir === "m2h";
+          card.classList.toggle("is-rev", rev);
+          card.classList.toggle("is-review", !!review[d.id]);
+          card.setAttribute("aria-label", rev ? d.m + " 카드, 눌러서 한자 보기" : d.h + " 카드, 눌러서 훈음 보기");
+          $("prog-txt").textContent = fmt(idx + 1) + " / " + fmt(deck.length);
+          $("prog-fill").style.width = ((idx + 1) / deck.length * 100) + "%";
+          var bar = $("prog-bar"); bar.setAttribute("aria-valuemax", deck.length); bar.setAttribute("aria-valuenow", idx + 1);
+          $("btn-prev").disabled = idx === 0;
+          $("btn-next").textContent = idx === deck.length - 1 ? "끝내기 ›" : "다음 ›";
+          card.classList.remove("is-enter", "is-enter-back");
+          card.style.transform = "";
+          if (dir) { void card.offsetWidth; card.classList.add(dir > 0 ? "is-enter" : "is-enter-back"); }
+        }
+        function fillMean(el, m) {
+          el.innerHTML = "";
+          m.split(" / ").forEach(function (part) { var s = document.createElement("span"); s.textContent = part; el.appendChild(s); });
+        }
+        function next() { if (idx < deck.length - 1) { idx++; renderCard(1); } else finish(); }
+        function prev() { if (idx > 0) { idx--; renderCard(-1); } else { card.style.transform = ""; } }
+        function mark(kind) {
+          var d = deck[idx]; if (!d) return;
+          results[d.id] = kind;
+          if (kind === "know") delete review[d.id]; else review[d.id] = 1;
+          save(); next();
+        }
+        function finish() {
+          var k = 0, a = 0, chars = [];
+          deck.forEach(function (d) { if (results[d.id] === "know") k++; else if (results[d.id] === "again") { a++; chars.push(d.h); } });
+          $("d-know").textContent = fmt(k); $("d-again").textContent = fmt(a);
+          $("d-chars").textContent = chars.join(" ");
+          $("btn-d-review").disabled = reviewIds().length === 0;
+          go("done");
+        }
+        $("btn-know").addEventListener("click", function () { mark("know"); });
+        $("btn-again").addEventListener("click", function () { mark("again"); });
+        $("btn-next").addEventListener("click", next);
+        $("btn-prev").addEventListener("click", prev);
+        $("btn-close").addEventListener("click", function () { go("home"); });
+        $("btn-d-home").addEventListener("click", function () { go("home"); });
+        $("btn-d-review").addEventListener("click", function () {
+          var items = reviewIds().map(function (id) { return byId[id]; });
+          if (items.length) startSession(items);
+        });
+
+        /* tap to flip, swipe to move */
+        var px = 0, py = 0, dx = 0, drag = false, down = false, pid = null;
+        card.addEventListener("pointerdown", function (e) {
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+          down = true; drag = false; dx = 0; px = e.clientX; py = e.clientY; pid = e.pointerId;
+          try { card.setPointerCapture(pid); } catch (err) {}
+        });
+        card.addEventListener("pointermove", function (e) {
+          if (!down) return;
+          var mx = e.clientX - px, my = e.clientY - py;
+          if (!drag && Math.abs(mx) > 10 && Math.abs(mx) > Math.abs(my)) drag = true;
+          if (drag) { dx = mx; card.style.transform = "translateX(" + dx + "px) rotate(" + dx / 40 + "deg)"; }
+        });
+        function endPointer(e, cancelled) {
+          if (!down) return; down = false;
+          try { card.releasePointerCapture(pid); } catch (err) {}
+          var moved = Math.abs(e.clientX - px) + Math.abs(e.clientY - py);
+          if (drag) {
+            if (!cancelled && dx < -60) next();
+            else if (!cancelled && dx > 60 && idx > 0) prev();
+            else card.style.transform = "";
+            if (!(dx < -60 || (dx > 60 && idx > 0))) card.style.transform = "";
+          } else if (!cancelled && moved < 12) {
+            setFlip(!flipped);
+          }
+          drag = false;
+        }
+        card.addEventListener("pointerup", function (e) { endPointer(e, false); });
+        card.addEventListener("pointercancel", function (e) { endPointer(e, true); });
+        card.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+        card.addEventListener("dblclick", function (e) { e.preventDefault(); });
+
+        document.addEventListener("keydown", function (e) {
+          if (!$("s-study").classList.contains("is-active")) return;
+          if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+          else if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+          else if ((e.key === " " || e.key === "Enter") && document.activeElement === card) { e.preventDefault(); setFlip(!flipped); }
+          else if (e.key === "Escape") go("home");
+        });
+
+        /* quiz */
+        var Q = null, qTimer = null;
+        var qCard = $("q-card"), qChoices = $("q-choices"), qNext = $("q-next"), qFb = $("q-fb");
+        function stopQuizTimer() { clearTimeout(qTimer); qTimer = null; }
+        function parts(m) { return m.split(" / ").map(function (s) { return s.trim(); }); }
+        function pickWrong(d, pool) {
+          var usedM = {}, usedH = {}, out = [];
+          parts(d.m).forEach(function (p) { usedM[p] = 1; }); usedH[d.h] = 1;
+          var same = pool.filter(function (x) { return x.lv === d.lv; });
+          var other = pool.filter(function (x) { return x.lv !== d.lv; });
+          [same, other, DATA].forEach(function (list) {
+            if (out.length >= 3) return;
+            var l = shuffle(list.slice());
+            for (var k = 0; k < l.length && out.length < 3; k++) {
+              var x = l[k];
+              if (x.id === d.id || usedH[x.h]) continue;
+              var ps = parts(x.m);
+              if (usedM[x.m] || ps.some(function (p) { return usedM[p]; })) continue;
+              usedM[x.m] = 1; ps.forEach(function (p) { usedM[p] = 1; }); usedH[x.h] = 1;
+              out.push(x);
+            }
+          });
+          return out;
+        }
+        function startQuiz(items, pool) {
+          stopQuizTimer();
+          Q = { items: items.slice(), pool: pool, type: S.qtype, i: 0, score: 0, missed: [], locked: false, choices: [] };
+          go("quiz");
+          renderQuestion();
+        }
+        function renderQuestion() {
+          var d = Q.items[Q.i]; if (!d) return;
+          var m2h = Q.type === "m2h", n = Q.items.length;
+          Q.locked = false;
+          Q.choices = shuffle([d].concat(pickWrong(d, Q.pool)));
+          qCard.classList.remove("is-ok");
+          qCard.classList.toggle("is-m2h", m2h);
+          qCard.classList.toggle("is-review", !!review[d.id]);
+          $("q-lv").textContent = d.lv;
+          $("q-han").textContent = d.h;
+          fillMean($("q-mean"), d.m);
+          $("q-sub").textContent = m2h ? "알맞은 한자를 골라요" : "알맞은 훈음을 골라요";
+          qCard.setAttribute("aria-label", m2h ? "문제: " + d.m : "문제: " + d.h);
+          $("q-prog-txt").textContent = fmt(Q.i + 1) + " / " + fmt(n);
+          $("q-prog-fill").style.width = ((Q.i + 1) / n * 100) + "%";
+          var bar = $("q-prog-bar"); bar.setAttribute("aria-valuemax", n); bar.setAttribute("aria-valuenow", Q.i + 1);
+          $("q-score").textContent = "점수 " + fmt(Q.score);
+          qChoices.classList.remove("is-locked");
+          qChoices.innerHTML = "";
+          Q.choices.forEach(function (c, k) {
+            var b = document.createElement("button");
+            b.type = "button"; b.className = "x-choice" + (m2h ? " x-choice--han" : "");
+            b.dataset.k = k;
+            if (m2h) { b.textContent = c.h; b.lang = "zh-Hant"; b.setAttribute("aria-label", (k + 1) + "번 " + c.h); }
+            else { b.textContent = c.m; b.setAttribute("aria-label", (k + 1) + "번 " + c.m); }
+            qChoices.appendChild(b);
+          });
+          qFb.textContent = "";
+          qNext.hidden = true;
+          qNext.textContent = Q.i === n - 1 ? "결과 보기 ›" : "다음 ›";
+          qCard.classList.remove("is-enter");
+          void qCard.offsetWidth; qCard.classList.add("is-enter");
+        }
+        function answer(k) {
+          if (!Q || Q.locked) return;
+          var d = Q.items[Q.i], c = Q.choices[k]; if (!c) return;
+          Q.locked = true;
+          qChoices.classList.add("is-locked");
+          var btns = qChoices.querySelectorAll(".x-choice");
+          var ci = Q.choices.indexOf(d);
+          btns[ci].classList.add("is-correct");
+          var label = '<span class="x-qfb__h" lang="zh-Hant">' + d.h + "</span> " + d.m;
+          if (c === d) {
+            Q.score++;
+            $("q-score").textContent = "점수 " + fmt(Q.score);
+            qFb.innerHTML = "<b>✓ 정답!</b> " + label;
+            void qCard.offsetWidth; qCard.classList.add("is-ok");
+            qTimer = setTimeout(advance, 800);
+          } else {
+            btns[k].classList.add("is-wrong");
+            Q.missed.push(d);
+            review[d.id] = 1; save();
+            qCard.classList.add("is-review");
+            qFb.innerHTML = "정답: " + label + "<br>다시 볼 한자에 넣었어요";
+            qNext.hidden = false;
+            try { qNext.focus({ preventScroll: true }); } catch (e) {}
+          }
+        }
+        function advance() {
+          stopQuizTimer();
+          if (!Q) return;
+          if (Q.i < Q.items.length - 1) { Q.i++; renderQuestion(); } else finishQuiz();
+        }
+        function finishQuiz() {
+          var n = Q.items.length, pct = n ? Math.round(Q.score / n * 100) : 0;
+          $("qd-title").textContent = pct === 100 ? "만점! 대단해요 🎉" : pct >= 70 ? "잘했어요 👏" : "수고했어요! 다시 해 봐요 💪";
+          $("qd-score").textContent = fmt(Q.score) + " / " + fmt(n);
+          $("qd-pct").textContent = pct + "%";
+          $("qd-miss-n").textContent = fmt(Q.missed.length) + "자";
+          var ul = $("qd-miss"); ul.innerHTML = "";
+          Q.missed.forEach(function (d) {
+            var li = document.createElement("li");
+            var b = document.createElement("b"); b.lang = "zh-Hant"; b.textContent = d.h;
+            var s = document.createElement("span"); s.textContent = d.m;
+            var sm = document.createElement("small"); sm.textContent = d.lv; s.appendChild(sm);
+            li.appendChild(b); li.appendChild(s); ul.appendChild(li);
+          });
+          var none = !Q.missed.length;
+          $("qd-none").hidden = !none;
+          $("qd-retry").disabled = none;
+          $("qd-cards").disabled = none;
+          go("qdone");
+          var sc = document.querySelector("#s-qdone .x-qd"); if (sc) sc.scrollTop = 0;
+        }
+        qChoices.addEventListener("click", function (e) {
+          var b = e.target.closest(".x-choice"); if (!b) return;
+          answer(+b.dataset.k);
+        });
+        qNext.addEventListener("click", advance);
+        $("q-close").addEventListener("click", function () { stopQuizTimer(); go("home"); });
+        $("qd-home").addEventListener("click", function () { go("home"); });
+        $("qd-retry").addEventListener("click", function () {
+          if (Q && Q.missed.length) startQuiz(orderItems(Q.missed.slice()), Q.pool);
+        });
+        $("qd-cards").addEventListener("click", function () {
+          if (Q && Q.missed.length) startSession(Q.missed.slice());
+        });
+        document.addEventListener("keydown", function (e) {
+          if (!$("s-quiz").classList.contains("is-active") || !Q) return;
+          if (/^[1-4]$/.test(e.key)) { e.preventDefault(); answer(+e.key - 1); }
+          else if ((e.key === "Enter" || e.key === "ArrowRight") && !qNext.hidden && document.activeElement !== qNext) { e.preventDefault(); advance(); }
+          else if (e.key === "Escape") { stopQuizTimer(); go("home"); }
+        });
+
+        /* list */
+        var listEl = $("list"), filterSeg = $("list-filter"), open = {};
+        function renderList() {
+          setSeg(filterSeg, S.listFilter);
+          var items = inRange();
+          var only = S.listFilter === "review";
+          if (only) items = items.filter(function (d) { return review[d.id]; });
+          $("list-title").textContent = "목록 · " + rangeLabel() + " · " + fmt(items.length) + "자";
+          var html = "";
+          for (var i = S.start; i <= S.end; i++) {
+            var g = items.filter(function (d) { return lvIdx[d.lv] === i; });
+            if (!g.length) continue;
+            html += '<div class="x-group"><h2>' + LV[i] + " <small>" + fmt(g.length) + "자</small></h2><div class=\"x-grid\">";
+            g.forEach(function (d) {
+              var cls = "x-tile" + (review[d.id] ? " is-review" : "") + (open[d.id] ? " is-open" : "");
+              html += '<div class="' + cls + '" data-id="' + d.id + '"><button type="button" class="x-tile__main" aria-expanded="' + (open[d.id] ? "true" : "false") + '"><span class="x-tile__h" lang="zh-Hant">' + d.h + '</span><span class="x-tile__m">' + d.m.replace(/ \/ /g, "<br>") + '</span></button><button type="button" class="x-tile__star" aria-pressed="' + (review[d.id] ? "true" : "false") + '" aria-label="' + d.h + ' 다시 볼 한자에 넣기/빼기"></button></div>';
+            });
+            html += "</div></div>";
+          }
+          listEl.innerHTML = html || '<p class="x-empty">' + (only ? "이 범위에는 다시 볼 한자가 없어요." : "한자가 없어요.") + "</p>";
+        }
+        filterSeg.addEventListener("click", function (e) {
+          var b = e.target.closest("button"); if (!b) return;
+          S.listFilter = b.dataset.v; save(); renderList(); $("list-scroll").scrollTop = 0;
+        });
+        function toggleReview(tile) {
+          var id = +tile.dataset.id;
+          if (review[id]) delete review[id]; else review[id] = 1;
+          tile.classList.toggle("is-review", !!review[id]);
+          tile.querySelector(".x-tile__star").setAttribute("aria-pressed", review[id] ? "true" : "false");
+          save();
+        }
+        var lpTimer = null, lpFired = false, lpX = 0, lpY = 0;
+        listEl.addEventListener("pointerdown", function (e) {
+          var main = e.target.closest(".x-tile__main"); if (!main) return;
+          lpFired = false; lpX = e.clientX; lpY = e.clientY;
+          clearTimeout(lpTimer);
+          lpTimer = setTimeout(function () {
+            lpFired = true; toggleReview(main.parentNode);
+            try { if (navigator.vibrate) navigator.vibrate(15); } catch (err) {}
+          }, 550);
+        });
+        listEl.addEventListener("pointermove", function (e) { if (Math.abs(e.clientX - lpX) + Math.abs(e.clientY - lpY) > 10) clearTimeout(lpTimer); });
+        ["pointerup", "pointercancel", "pointerleave"].forEach(function (t) { listEl.addEventListener(t, function () { clearTimeout(lpTimer); }); });
+        $("list-scroll").addEventListener("scroll", function () { clearTimeout(lpTimer); }, { passive: true });
+        listEl.addEventListener("contextmenu", function (e) { if (e.target.closest(".x-tile")) e.preventDefault(); });
+        listEl.addEventListener("click", function (e) {
+          var star = e.target.closest(".x-tile__star");
+          if (star) { toggleReview(star.parentNode); return; }
+          var main = e.target.closest(".x-tile__main"); if (!main) return;
+          if (lpFired) { lpFired = false; return; }
+          var tile = main.parentNode, id = +tile.dataset.id;
+          if (open[id]) delete open[id]; else open[id] = 1;
+          tile.classList.toggle("is-open", !!open[id]);
+          main.setAttribute("aria-expanded", open[id] ? "true" : "false");
+        });
+        $("btn-list-close").addEventListener("click", function () { go("home"); });
+
+        try { history.replaceState(null, ""); } catch (e) {}
+        renderHome();
+      })();
+    </script>
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}</script>
+</body>
+</html>
